@@ -20,17 +20,19 @@ public interface Listeners {
 
     interface SettingActions
     {
-        void news();
-        void openWhatsApp();
+        void order();
+        void charge();
+        void returns();
         void terms();
         void aboutApp();
-        void contactUs();
-        void changeLanguage();
         void logout();
-        void openTwitter();
-        void openFacebook();
-        void openInstagram();
         void favorite();
+        void bankAccount();
+        void share();
+        void rateApp();
+        void arLang();
+        void enLang();
+        void profile();
 
     }
 

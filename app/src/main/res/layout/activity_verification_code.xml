@@ -10,6 +10,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/bg"
 
         >
 
@@ -35,8 +36,8 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:textColor="@color/gray6"
-                    android:layout_marginTop="100dp"
+                    android:textColor="@color/gray8"
+                    android:layout_marginTop="150dp"
                     android:textSize="18sp"
                     android:text="@string/enter_verification_code"
                     />

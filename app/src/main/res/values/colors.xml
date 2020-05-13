@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#00a182</color>
-    <color name="colorPrimaryDark">#00a182</color>
+    <color name="colorPrimaryDark">#ffc333</color>
     <color name="colorAccent">#00a182</color>
     <color name="second">#ffc333</color>
     <color name="white">#fff</color>
@@ -22,6 +22,7 @@
     <color name="transparent">#00000000</color>
     <color name="white_200">#55ffffff</color>
     <color name="black_trans">#55000000</color>
+    <color name="second_trans">#22CD9A1F</color>
 
     <color name="red">#920a0c</color>
     <color name="red2">#ff0000</color>

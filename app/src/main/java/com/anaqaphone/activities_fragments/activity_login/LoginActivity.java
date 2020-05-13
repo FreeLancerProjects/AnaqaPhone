@@ -13,6 +13,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.anaqaphone.R;
+import com.anaqaphone.activities_fragments.activity_home.HomeActivity;
 import com.anaqaphone.activities_fragments.activity_verification_code.VerificationCodeActivity;
 import com.anaqaphone.adapters.CountriesAdapter;
 import com.anaqaphone.databinding.ActivityLoginBinding;
@@ -114,6 +115,8 @@ public class LoginActivity extends AppCompatActivity implements Listeners.LoginL
         if (loginModel.isDataValid(this))
         {
             Common.CloseKeyBoard(this,binding.edtPhone);
+
+
             navigateToVerificationCodeActivity();
         }
     }

@@ -65,7 +65,7 @@
     <string name="resend">لم أستلم كود التفعيل</string>
     <string name="inv_sms_code">الكود غير صحيح</string>
 
-    <string name="rate_app">التقييم</string>
+    <string name="rate_app">قيم التطبيق</string>
     <string name="sign_up">إنشاء حساب</string>
     <string name="user_found">المستخدم موجود</string>
     <string name="download">تنزيل</string>
@@ -145,4 +145,14 @@
     <string name="welcome_in_anaqa_phone">اهلا بك في اناقة الهاتف</string>
     <string name="enter_verification_code">ادخل كود التفعيل</string>
     <string name="cannot_signup">لا يمكن التسجيل دون الموافقة على الشروط والاحكام</string>
+    <string name="favorite_offers">عروضنا المفضلة</string>
+    <string name="show_all">عرض الكل</string>
+    <string name="mobile_accessories">إكسسوارات الجوال</string>
+    <string name="return1">إرجاع</string>
+    <string name="charge">رصيدي</string>
+    <string name="bank_accounts">الحسابات البنكية</string>
+    <string name="offers">العروض</string>
+    <string name="filter">فلتر</string>
+    <string name="normal">مربع</string>
+
 </resources>

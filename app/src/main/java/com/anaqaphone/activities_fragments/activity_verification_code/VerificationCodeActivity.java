@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.anaqaphone.R;
+import com.anaqaphone.activities_fragments.activity_home.HomeActivity;
 import com.anaqaphone.activities_fragments.activity_signup.SignUpActivity;
 import com.anaqaphone.databinding.ActivityVerificationCodeBinding;
 import com.anaqaphone.language.Language;
@@ -249,9 +250,9 @@ public class VerificationCodeActivity extends AppCompatActivity {
 
 
     private void navigateToHomeActivity() {
-        /*Intent intent = new Intent(this, HomeActivity.class);
+        Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
-        finish();*/
+        finish();
     }
 
     private void navigateToSignUpActivity() {

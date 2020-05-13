@@ -28,7 +28,7 @@
     <string name="yesterday">yesterday</string>
 
 
-    <string name="share">share</string>
+    <string name="share">Share</string>
     <string name="edit">Edit</string>
     <string name="price">Price</string>
     <string name="delete">Delete</string>
@@ -139,4 +139,13 @@
     <string name="welcome_in_anaqa_phone">Welcome In Anaqa Phone</string>
     <string name="enter_verification_code">Enter Verification Code</string>
     <string name="cannot_signup">Cannot sign up without accepting terms and conditions</string>
+    <string name="favorite_offers">Favorite Offers</string>
+    <string name="show_all">Show All</string>
+    <string name="mobile_accessories">Mobile ِِِAccessories</string>
+    <string name="return1">Return</string>
+    <string name="charge">Charge</string>
+    <string name="bank_accounts">Bank Accounts</string>
+    <string name="offers">Offers</string>
+    <string name="filter">Filter</string>
+    <string name="normal">Square</string>
 </resources>

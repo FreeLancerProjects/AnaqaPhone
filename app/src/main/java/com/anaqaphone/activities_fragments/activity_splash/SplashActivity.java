@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.anaqaphone.R;
+import com.anaqaphone.activities_fragments.activity_home.HomeActivity;
 import com.anaqaphone.activities_fragments.activity_login.LoginActivity;
 import com.anaqaphone.databinding.ActivitySplashBinding;
 import com.anaqaphone.language.Language;
@@ -24,7 +25,6 @@ import io.paperdb.Paper;
 public class SplashActivity extends AppCompatActivity {
 
     private ActivitySplashBinding binding;
-    private Animation animation;
     private Preferences preferences;
 
     @Override
@@ -38,39 +38,21 @@ public class SplashActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_splash);
         preferences = Preferences.getInstance();
 
-        animation = AnimationUtils.loadAnimation(this,R.anim.lanuch);
-        binding.image.startAnimation(animation);
-        animation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-                binding.image.setVisibility(View.VISIBLE);
-            }
+        new Handler().postDelayed(()->{
 
-            @Override
-            public void onAnimationEnd(Animation animation) {
+            String session = preferences.getSession(SplashActivity.this);
+            if (session.equals(Tags.session_login)) {
+                Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
+                startActivity(intent);
+                finish();
+            } else {
+                Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
 
-                new Handler().postDelayed(()->{
-
-                    String session = preferences.getSession(SplashActivity.this);
-                    if (session.equals(Tags.session_login)) {
-                        /*Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
-                        startActivity(intent);
-                        finish();*/
-                    } else {
-                        Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
-                        startActivity(intent);
-                        finish();
-
-
-                    }
-                },3000);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
 
             }
-        });
+        },3000);
 
     }
 }

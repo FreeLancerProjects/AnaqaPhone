@@ -23,6 +23,7 @@ import androidx.databinding.DataBindingUtil;
 
 import com.anaqaphone.R;
 import com.anaqaphone.activities_fragments.activity_about_app.AboutAppActivity;
+import com.anaqaphone.activities_fragments.activity_home.HomeActivity;
 import com.anaqaphone.databinding.ActivitySignUpBinding;
 import com.anaqaphone.interfaces.Listeners;
 import com.anaqaphone.language.Language;
@@ -122,6 +123,9 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
 
     @Override
     public void checkDataValid() {
+
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
 
         if (signUpModel.isDataValid(this)) {
             Common.CloseKeyBoard(this, binding.edtName);
@@ -253,6 +257,8 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
     }
 
     private void signUp() {
+
+
         if (uri==null)
         {
             signUpWithoutImage();
@@ -400,8 +406,8 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
     }
 
     private void navigateToHomeActivity() {
-        /*Intent intent = new Intent(this, HomeActivity.class);
+        Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
-        finish();*/
+        finish();
     }
 }
