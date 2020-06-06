@@ -17,8 +17,11 @@ import com.anaqaphone.activities_fragments.activity_home.HomeActivity;
 import com.anaqaphone.activities_fragments.activity_signup.SignUpActivity;
 import com.anaqaphone.databinding.ActivityVerificationCodeBinding;
 import com.anaqaphone.language.Language;
+import com.anaqaphone.models.UserModel;
 import com.anaqaphone.preferences.Preferences;
+import com.anaqaphone.remote.Api;
 import com.anaqaphone.share.Common;
+import com.anaqaphone.tags.Tags;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
@@ -192,8 +195,8 @@ public class VerificationCodeActivity extends AppCompatActivity {
     private void login() {
 
 
-        navigateToSignUpActivity();
-      /*  Log.e("3","3");
+//        navigateToSignUpActivity();
+//      /*  Log.e("3","3");
         ProgressDialog dialog = Common.createProgressDialog(this,getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
@@ -244,7 +247,7 @@ public class VerificationCodeActivity extends AppCompatActivity {
                             Log.e("Error",e.getMessage()+"__");
                         }
                     }
-                });*/
+                });
 
     }
 

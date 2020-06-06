@@ -28,9 +28,12 @@ import com.anaqaphone.databinding.ActivitySignUpBinding;
 import com.anaqaphone.interfaces.Listeners;
 import com.anaqaphone.language.Language;
 import com.anaqaphone.models.SignUpModel;
+import com.anaqaphone.models.UserModel;
 import com.anaqaphone.preferences.Preferences;
+import com.anaqaphone.remote.Api;
 import com.anaqaphone.share.Common;
 
+import com.anaqaphone.tags.Tags;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
@@ -55,7 +58,6 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
     private Preferences preferences;
     private String phone;
     private String phone_code;
-
     @Override
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
@@ -269,11 +271,11 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
     }
 
     private void signUpWithoutImage() {
-        /*ProgressDialog dialog = Common.createProgressDialog(this,getString(R.string.wait));
+        ProgressDialog dialog = Common.createProgressDialog(this,getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
         Api.getService(Tags.base_url)
-                .signUpWithoutImage(signUpModel.getName(),signUpModel.getPhone_code(),signUpModel.getPhone(),signUpModel.getEmail(),signUpModel.getPassword(),Tags.type)
+                .signUpWithoutImage(signUpModel.getName(),signUpModel.getPhone_code(),signUpModel.getPhone(),signUpModel.getEmail())
                 .enqueue(new Callback<UserModel>() {
                     @Override
                     public void onResponse(Call<UserModel> call, Response<UserModel> response) {
@@ -338,27 +340,25 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
                             Log.e("Error",e.getMessage()+"__");
                         }
                     }
-                });*/
+                });
     }
 
     private void signUpWithImage() {
 
-       /* ProgressDialog dialog = Common.createProgressDialog(this,getString(R.string.wait));
+        ProgressDialog dialog = Common.createProgressDialog(this,getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
         RequestBody name_part = Common.getRequestBodyText(signUpModel.getName());
         RequestBody phone_code_part = Common.getRequestBodyText(signUpModel.getPhone_code());
         RequestBody phone_part = Common.getRequestBodyText(signUpModel.getPhone());
         RequestBody email_part = Common.getRequestBodyText(signUpModel.getEmail());
-        RequestBody password_part = Common.getRequestBodyText(signUpModel.getPassword());
 
-        RequestBody type_part = Common.getRequestBodyText(Tags.type);
 
-        MultipartBody.Part image = Common.getMultiPart(this,uri,"image");
+        MultipartBody.Part image = Common.getMultiPart(this,uri,"logo");
 
 
         Api.getService(Tags.base_url)
-                .signUpWithImage(name_part,phone_code_part,phone_part,email_part,password_part,type_part,image)
+                .signUpWithImage(name_part,phone_code_part,phone_part,email_part,image)
                 .enqueue(new Callback<UserModel>() {
                     @Override
                     public void onResponse(Call<UserModel> call, Response<UserModel> response) {
@@ -402,7 +402,7 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
                         }
                     }
                 });
-*/
+
     }
 
     private void navigateToHomeActivity() {

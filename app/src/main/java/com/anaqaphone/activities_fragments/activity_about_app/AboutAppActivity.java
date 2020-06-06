@@ -16,6 +16,9 @@ import com.anaqaphone.R;
 import com.anaqaphone.databinding.ActivityAboutAppBinding;
 import com.anaqaphone.interfaces.Listeners;
 import com.anaqaphone.language.Language;
+import com.anaqaphone.models.SettingModel;
+import com.anaqaphone.remote.Api;
+import com.anaqaphone.tags.Tags;
 
 
 import java.io.IOException;
@@ -75,25 +78,24 @@ public class AboutAppActivity extends AppCompatActivity implements Listeners.Bac
         getAppData();
 
     }
-
     private void getAppData()
     {
 
-       /* Api.getService(Tags.base_url)
-                .getSettings(lang)
-                .enqueue(new Callback<AppDataModel>() {
+        Api.getService(Tags.base_url)
+                .getSetting(lang)
+                .enqueue(new Callback<SettingModel>() {
                     @Override
-                    public void onResponse(Call<AppDataModel> call, Response<AppDataModel> response) {
+                    public void onResponse(Call<SettingModel> call, Response<SettingModel> response) {
                         binding.progBar.setVisibility(View.GONE);
                         if (response.isSuccessful() && response.body() != null) {
 
                             if (type==1)
                             {
 
-                                binding.setContent(response.body().getTerms_condition());
+                                binding.setContent(response.body().getData().getTerm_conditions());
                             }else
                             {
-                                binding.setContent(response.body().getCompany_about());
+                                binding.setContent(response.body().getData().getAbout_app());
 
                             }
 
@@ -116,7 +118,7 @@ public class AboutAppActivity extends AppCompatActivity implements Listeners.Bac
                     }
 
                     @Override
-                    public void onFailure(Call<AppDataModel> call, Throwable t) {
+                    public void onFailure(Call<SettingModel> call, Throwable t) {
                         try {
                             binding.progBar.setVisibility(View.GONE);
 
@@ -132,7 +134,7 @@ public class AboutAppActivity extends AppCompatActivity implements Listeners.Bac
                         } catch (Exception e) {
                         }
                     }
-                });*/
+                });
 
     }
 

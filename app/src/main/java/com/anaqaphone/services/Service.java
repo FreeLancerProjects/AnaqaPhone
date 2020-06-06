@@ -3,6 +3,10 @@ package com.anaqaphone.services;
 
 import com.anaqaphone.models.PlaceGeocodeData;
 import com.anaqaphone.models.PlaceMapDetailsData;
+import com.anaqaphone.models.SettingModel;
+import com.anaqaphone.models.Slider_Model;
+import com.anaqaphone.models.UserModel;
+
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -34,7 +38,35 @@ public interface Service {
                                       @Query(value = "key") String key);
 
 
+    @FormUrlEncoded
+    @POST("api/login")
+    Call<UserModel> login(@Field("phone_code") String phone_code,
+                          @Field("phone") String phone
+
+    );
+    @FormUrlEncoded
+    @POST("api/api/register")
+    Call<UserModel> signUpWithoutImage(
+            @Field("name") String name,
+            @Field("phone") String phone,
+            @Field("phone_code") String phone_code,
+            @Field("email") String email
+    );
+    @Multipart
+    @POST("api/register")
+    Call<UserModel> signUpWithImage(@Part("name") RequestBody name,
+                                              @Part("email") RequestBody email,
+                                              @Part("phone_code") RequestBody phone_code,
+                                              @Part("phone") RequestBody phone,
+                                              @Part MultipartBody.Part logo
 
 
+    );
+    @GET("api/show-setting")
+    Call<SettingModel> getSetting(
+            @Header("lang")String lang
 
+    );
+    @GET("api/slider")
+    Call<Slider_Model> get_slider();
 }
