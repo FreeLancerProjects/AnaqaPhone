@@ -44,6 +44,7 @@ public interface Service {
                           @Field("phone") String phone
 
     );
+
     @FormUrlEncoded
     @POST("api/register")
     Call<UserModel> signUpWithoutImage(
@@ -52,21 +53,24 @@ public interface Service {
             @Field("phone") String phone,
             @Field("email") String email
     );
+
     @Multipart
     @POST("api/register")
     Call<UserModel> signUpWithImage(@Part("name") RequestBody name,
-                                              @Part("email") RequestBody email,
-                                              @Part("phone_code") RequestBody phone_code,
-                                              @Part("phone") RequestBody phone,
-                                              @Part MultipartBody.Part logo
+                                    @Part("email") RequestBody email,
+                                    @Part("phone_code") RequestBody phone_code,
+                                    @Part("phone") RequestBody phone,
+                                    @Part MultipartBody.Part logo
 
 
     );
+
     @GET("api/setting")
     Call<SettingModel> getSetting(
-            @Header("lang")String lang
+            @Header("lang") String lang
 
     );
+
     @GET("api/slider")
     Call<Slider_Model> get_slider();
 }
