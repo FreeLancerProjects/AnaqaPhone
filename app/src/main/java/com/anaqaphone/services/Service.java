@@ -45,11 +45,11 @@ public interface Service {
 
     );
     @FormUrlEncoded
-    @POST("api/api/register")
+    @POST("api/register")
     Call<UserModel> signUpWithoutImage(
             @Field("name") String name,
-            @Field("phone") String phone,
             @Field("phone_code") String phone_code,
+            @Field("phone") String phone,
             @Field("email") String email
     );
     @Multipart
@@ -62,7 +62,7 @@ public interface Service {
 
 
     );
-    @GET("api/show-setting")
+    @GET("api/setting")
     Call<SettingModel> getSetting(
             @Header("lang")String lang
 

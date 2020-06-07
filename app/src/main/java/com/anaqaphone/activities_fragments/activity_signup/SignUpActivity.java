@@ -126,8 +126,8 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
     @Override
     public void checkDataValid() {
 
-        Intent intent = new Intent(this, HomeActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(this, HomeActivity.class);
+//        startActivity(intent);
 
         if (signUpModel.isDataValid(this)) {
             Common.CloseKeyBoard(this, binding.edtName);
