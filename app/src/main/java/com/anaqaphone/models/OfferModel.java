@@ -11,7 +11,7 @@ public class OfferModel implements Serializable {
     private int departemnt_id;
     private int markter_id;
     private double price;
-    private String contents;
+    private String content;
     private String details;
     private String features;
     private String model;
@@ -48,8 +48,8 @@ public class OfferModel implements Serializable {
         return price;
     }
 
-    public String getContents() {
-        return contents;
+    public String getContent() {
+        return content;
     }
 
     public String getDetails() {

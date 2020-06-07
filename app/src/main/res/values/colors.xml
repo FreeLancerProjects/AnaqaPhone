@@ -23,6 +23,7 @@
     <color name="white_200">#55ffffff</color>
     <color name="black_trans">#55000000</color>
     <color name="second_trans">#22CD9A1F</color>
+    <color name="circle_bg">#99017B60</color>
 
     <color name="red">#920a0c</color>
     <color name="red2">#ff0000</color>

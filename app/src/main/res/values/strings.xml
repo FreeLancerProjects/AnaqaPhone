@@ -148,4 +148,10 @@
     <string name="offers">Offers</string>
     <string name="filter">Filter</string>
     <string name="normal">Square</string>
+    <string name="model_num">Model Number :</string>
+    <string name="ryal">Ryal</string>
+    <string name="shamil_daribat_alqimih_almudafih">(shamil daribat alqimih almudafih)</string>
+    <string name="main_advantages">Main Advantages</string>
+    <string name="overview">OverView</string>
+
 </resources>

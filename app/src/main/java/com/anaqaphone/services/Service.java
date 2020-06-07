@@ -1,6 +1,7 @@
 package com.anaqaphone.services;
 
 
+import com.anaqaphone.models.OfferModel;
 import com.anaqaphone.models.PlaceGeocodeData;
 import com.anaqaphone.models.PlaceMapDetailsData;
 import com.anaqaphone.models.SettingModel;
@@ -73,4 +74,6 @@ public interface Service {
 
     @GET("api/slider")
     Call<Slider_Model> get_slider();
+    @GET("api/product")
+    Call<OfferModel> Product_detials(@Query("product_id") int product_id);
 }

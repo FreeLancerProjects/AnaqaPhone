@@ -154,5 +154,9 @@
     <string name="offers">العروض</string>
     <string name="filter">فلتر</string>
     <string name="normal">مربع</string>
-
+    <string name="model_num">رقم الموديل :</string>
+    <string name="ryal">ريال</string>
+    <string name="shamil_daribat_alqimih_almudafih">(شامل ضريبة القيمه المضافه)</string>
+    <string name="main_advantages">المميزات الاساسيه</string>
+    <string name="overview">نظره عامه</string>
 </resources>
