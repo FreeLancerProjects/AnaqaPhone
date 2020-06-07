@@ -1,42 +1,34 @@
 {
   "project_info": {
-    "project_number": "102649592366",
-    "firebase_url": "https://anaqaphone.firebaseio.com",
-    "project_id": "anaqaphone",
-    "storage_bucket": "anaqaphone.appspot.com"
+    "project_number": "592659530919",
+    "firebase_url": "https://anaqa-phone.firebaseio.com",
+    "project_id": "anaqa-phone",
+    "storage_bucket": "anaqa-phone.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:102649592366:android:07fdeee713e4bf7e783dbf",
+        "mobilesdk_app_id": "1:592659530919:android:142ff9eb1275911afb0782",
         "android_client_info": {
           "package_name": "com.anaqaphone"
         }
       },
       "oauth_client": [
         {
-          "client_id": "102649592366-mu3r3m5njpf5gebi4hnoflp5rh37pju5.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.anaqaphone",
-            "certificate_hash": "0b354f3a0c02eaba29510595124a7d68aea8edf3"
-          }
-        },
-        {
-          "client_id": "102649592366-stkg8ug4klqm0emc9amft7ii7p20co8h.apps.googleusercontent.com",
+          "client_id": "592659530919-s1lkst858n57ub2m0kne6k6n4ausf6h5.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDJAsBioNneskGOKasClDAzWo1aAywQVmY"
+          "current_key": "AIzaSyAu2CuUlLm-8RA69KajjxtvANnZB9jz7lo"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "102649592366-stkg8ug4klqm0emc9amft7ii7p20co8h.apps.googleusercontent.com",
+              "client_id": "592659530919-s1lkst858n57ub2m0kne6k6n4ausf6h5.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
