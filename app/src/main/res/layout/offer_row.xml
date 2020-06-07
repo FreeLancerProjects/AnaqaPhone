@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="model"
+            type="com.anaqaphone.models.OfferModel" />
+        <import type="android.view.View"/>
+    </data>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="20dp"
+        app:contentPadding="5dp"
+        app:cardElevation="3dp"
+        android:layout_margin="3dp"
+
+        >
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                >
+                <FrameLayout
+                    android:layout_width="50dp"
+                    android:layout_height="70dp">
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/image"
+                        android:layout_width="50dp"
+                        android:layout_height="70dp"
+                        android:layout_marginTop="8dp"
+                        image="@{model.image}"
+                        />
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="70dp"
+                    android:layout_marginTop="8dp"
+                    image="@{model.image}"
+                    />
+                </FrameLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:lines="2"
+                    android:maxLines="2"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="@{model.title}"
+                    android:textColor="@color/gray4"
+                    android:textSize="13sp" />
+                <TextView
+                    android:id="@+id/tvAfterDiscount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:textSize="12sp"
+                    android:textColor="@color/colorPrimary"
+                    android:singleLine="true"
+                    android:clickable="false"
+                    android:longClickable="false"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    priceBeforeDiscount="@{model}"
+                    android:visibility='@{model.offer==null?View.INVISIBLE:(model.offer.offer_status.equals("open")?View.VISIBLE:View.INVISIBLE)}'
+
+                    />
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="10dp"
+
+                    >
+
+                    <LinearLayout
+                        android:id="@+id/llAdd"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        >
+                        <ImageView
+                            android:id="@+id/imageAddToCart"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_plus"
+                            android:tint="@color/gray3"
+
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:textSize="13sp"
+                            android:textColor="@color/gray6"
+                            android:singleLine="true"
+                            android:clickable="false"
+                            android:longClickable="false"
+                            priceOffer="@{model}"
+                            />
+
+                    </LinearLayout>
+
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@drawable/offer_bg"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:visibility='@{model.offer==null?View.GONE:(model.offer.offer_status.equals("open")?View.VISIBLE:View.GONE),default=gone}'
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="9sp"
+                    android:textColor="@color/white"
+                    android:text="@string/discount"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="9sp"
+                    android:textColor="@color/white"
+                    android:text='@{model.offer.offer_type.equals("per")?model.offer.offer_value+"%":model.offer.offer_value+@string/sar}'
+                    />
+
+            </LinearLayout>
+
+        </FrameLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

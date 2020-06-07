@@ -50,11 +50,12 @@ public class Fragment_Main extends Fragment {
     private String lang;
     private TimerTask timerTask;
     private Timer timer;
-    private int current_page = 0,NUM_PAGES;
+    private int current_page = 0, NUM_PAGES;
     private LinearLayoutManager manager;
     private boolean isLoading = false;
     private UserModel userModel;
     private SlidingImage_Adapter slidingImage__adapter;
+
     public static Fragment_Main newInstance() {
         return new Fragment_Main();
     }
@@ -69,8 +70,8 @@ public class Fragment_Main extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initView();
-get_slider();
-change_slide_image();
+        get_slider();
+        change_slide_image();
     }
 
     private void initView() {
@@ -88,10 +89,8 @@ change_slide_image();
         binding.progBarAccessories.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity, R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
 
 
-
-
-
     }
+
     private void get_slider() {
 
         Api.getService(Tags.base_url).get_slider().enqueue(new Callback<Slider_Model>() {
@@ -99,7 +98,7 @@ change_slide_image();
             public void onResponse(Call<Slider_Model> call, Response<Slider_Model> response) {
                 binding.progBarSlider.setVisibility(View.GONE);
 
-                if (response.isSuccessful()&&response.body()!=null&&response.body().getData()!=null) {
+                if (response.isSuccessful() && response.body() != null && response.body().getData() != null) {
                     if (response.body().getData().size() > 0) {
                         NUM_PAGES = response.body().getData().size();
                         slidingImage__adapter = new SlidingImage_Adapter(activity, response.body().getData());
@@ -138,6 +137,7 @@ change_slide_image();
         });
 
     }
+
     private void change_slide_image() {
         final Handler handler = new Handler();
         final Runnable Update = new Runnable() {

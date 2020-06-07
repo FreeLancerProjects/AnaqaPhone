@@ -4,18 +4,14 @@ package com.anaqaphone.adapters;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
-import androidx.databinding.DataBindingUtil;
 import androidx.viewpager.widget.PagerAdapter;
-
-
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.anaqaphone.R;
-import com.anaqaphone.activities_fragments.activity_home.HomeActivity;
-import com.anaqaphone.databinding.SliderBinding;
 import com.anaqaphone.models.Slider_Model;
 import com.anaqaphone.tags.Tags;
 import com.squareup.picasso.Picasso;
@@ -24,15 +20,12 @@ import java.util.List;
 
 
 public class SlidingImage_Adapter extends PagerAdapter {
-
-
     List<Slider_Model.Data> IMAGES;
     private LayoutInflater inflater;
-     Context context;
-
+    Context context;
     public SlidingImage_Adapter(Context context, List<Slider_Model.Data> IMAGES) {
         this.context = context;
-        this.IMAGES=IMAGES;
+        this.IMAGES = IMAGES;
         inflater = LayoutInflater.from(context);
     }
 
@@ -48,12 +41,16 @@ public class SlidingImage_Adapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup view, int position) {
-        SliderBinding rowBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.slider, view, false);
+        View imageLayout = inflater.inflate(R.layout.slider, view, false);
 
+        assert imageLayout != null;
+        final RoundedImageView imageView = imageLayout
+                .findViewById(R.id.image);
+        Slider_Model.Data slider = IMAGES.get(position);
+        Picasso.get().load(Uri.parse(Tags.IMAGE_URL + slider.getImage())).fit().into(imageView);
+        view.addView(imageLayout, 0);
 
-        Picasso.get().load(Uri.parse(Tags.IMAGE_URL + IMAGES.get(position).getImage())).fit().into(rowBinding.image);
-        return rowBinding.getRoot();
-
+        return imageLayout;
     }
 
     @Override
