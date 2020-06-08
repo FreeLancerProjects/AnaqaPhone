@@ -32,4 +32,7 @@
     <color name="color1">#eb6035</color>
     <color name="color2">#fc4e4f</color>
     <color name="color3">#fd7173</color>
+
+    <color name="offer_grid_1">#ffc333</color>
+    <color name="offer_grid_2">#C18D0F</color>
 </resources>

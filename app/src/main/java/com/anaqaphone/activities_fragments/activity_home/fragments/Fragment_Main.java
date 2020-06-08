@@ -21,8 +21,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.anaqaphone.R;
 import com.anaqaphone.activities_fragments.activity_home.HomeActivity;
+import com.anaqaphone.activities_fragments.activity_product_details.ProductDetailsActivity;
+import com.anaqaphone.adapters.OffersAdapter;
 import com.anaqaphone.adapters.SlidingImage_Adapter;
 import com.anaqaphone.databinding.FragmentMainBinding;
+import com.anaqaphone.models.ProductDataModel;
 import com.anaqaphone.models.Slider_Model;
 import com.anaqaphone.models.UserModel;
 import com.anaqaphone.preferences.Preferences;
@@ -55,7 +58,8 @@ public class Fragment_Main extends Fragment {
     private boolean isLoading = false;
     private UserModel userModel;
     private SlidingImage_Adapter slidingImage__adapter;
-
+    private List<ProductDataModel.Data> offersDataList;
+    private OffersAdapter offersAdapter;
     public static Fragment_Main newInstance() {
         return new Fragment_Main();
     }
@@ -72,6 +76,7 @@ public class Fragment_Main extends Fragment {
         initView();
         get_slider();
         change_slide_image();
+        getOffersProducts();
     }
 
     private void initView() {
@@ -88,6 +93,10 @@ public class Fragment_Main extends Fragment {
         binding.progBarOffer.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity, R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
         binding.progBarAccessories.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity, R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
 
+
+        binding.recViewFavoriteOffers.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
+        offersAdapter = new OffersAdapter(offersDataList, activity, this);
+        binding.recViewFavoriteOffers.setAdapter(offersAdapter);
 
     }
 
@@ -155,5 +164,199 @@ public class Fragment_Main extends Fragment {
                 handler.post(Update);
             }
         }, 3000, 3000);
+    }
+
+    public void setItemDataOffers(ProductDataModel.Data model) {
+
+        Intent intent = new Intent(activity, ProductDetailsActivity.class);
+        intent.putExtra("id",model.getId());
+        startActivityForResult(intent,100);
+    }
+
+    public void like_dislike(int type, ProductDataModel.Data productModel, String action, int pos) {
+
+       /* try {
+            Api.getService(Tags.base_url)
+                    .addFavoriteProduct(lang,userModel.getUser().getToken(),action,productModel.getId())
+                    .enqueue(new Callback<ResponseBody>() {
+                        @Override
+                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                            if (response.isSuccessful()) {
+                                if (action.equals("favourite"))
+                                {
+                                    productModel.setIs_favourite(true);
+
+                                }else {
+                                    productModel.setIs_favourite(false);
+
+                                }
+                                if (type==1)
+                                {
+                                    mostSellerDataList.set(pos,productModel);
+                                    mostSellerAdapter.notifyItemChanged(pos);
+                                }else {
+                                    mostRateDataList.set(pos,productModel);
+                                    mostRateAdapter.notifyItemChanged(pos);
+                                }
+                            } else {
+
+                                if (action.equals("favourite"))
+                                {
+                                    productModel.setIs_favourite(false);
+
+                                }else {
+                                    productModel.setIs_favourite(true);
+
+                                }
+                                if (type==1)
+                                {
+                                    mostSellerDataList.set(pos,productModel);
+                                    mostSellerAdapter.notifyItemChanged(pos);
+                                }else {
+                                    mostRateDataList.set(pos,productModel);
+                                    mostRateAdapter.notifyItemChanged(pos);
+                                }
+
+                                if (response.code() == 500) {
+                                    Toast.makeText(activity, "Server Error", Toast.LENGTH_SHORT).show();
+
+
+                                } else {
+                                    Toast.makeText(activity, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+
+                                    try {
+
+                                        Log.e("error", response.code() + "_" + response.errorBody().string());
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+                            try {
+                                if (action.equals("favourite"))
+                                {
+                                    productModel.setIs_favourite(false);
+
+                                }else {
+                                    productModel.setIs_favourite(true);
+
+                                }
+                                if (type==1)
+                                {
+                                    mostSellerDataList.set(pos,productModel);
+                                    mostSellerAdapter.notifyItemChanged(pos);
+                                }else {
+                                    mostRateDataList.set(pos,productModel);
+                                    mostRateAdapter.notifyItemChanged(pos);
+                                }
+                                if (t.getMessage() != null) {
+                                    Log.e("error", t.getMessage());
+                                    if (t.getMessage().toLowerCase().contains("failed to connect") || t.getMessage().toLowerCase().contains("unable to resolve host")) {
+                                        Toast.makeText(activity, R.string.something, Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(activity, t.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                            } catch (Exception e) {
+                            }
+                        }
+                    });
+        } catch (Exception e) {
+
+        }*/
+    }
+
+    public void getOffersProducts() {
+
+        try {
+            int uid;
+
+            if (userModel != null) {
+                uid=userModel.getUser().getId();
+            }else {
+                uid=0;
+            }
+            Api.getService(Tags.base_url).
+                    getOffersProducts("off",uid).
+                    enqueue(new Callback<ProductDataModel>() {
+                        @Override
+                        public void onResponse(Call<ProductDataModel> call, Response<ProductDataModel> response) {
+                            binding.progBarOffer.setVisibility(View.GONE);
+
+                            if (response.isSuccessful() && response.body() != null && response.body().getData() != null) {
+
+                                offersDataList.clear();
+                                offersDataList.addAll(response.body().getData());
+                                if (offersDataList.size() > 0) {
+                                    offersAdapter.notifyDataSetChanged();
+                                } else {
+
+                                }
+
+                            } else {
+                                try {
+
+                                    Log.e("error", response.code() + "_" + response.errorBody().string());
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+
+                                if (response.code() == 500) {
+                                    Toast.makeText(activity, "Server Error", Toast.LENGTH_SHORT).show();
+
+
+                                } else {
+                                    Toast.makeText(activity, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+
+
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ProductDataModel> call, Throwable t) {
+                            binding.progBarOffer.setVisibility(View.GONE);
+                            try {
+                                if (t.getMessage() != null) {
+                                    Log.e("error", t.getMessage());
+                                    if (t.getMessage().toLowerCase().contains("failed to connect") || t.getMessage().toLowerCase().contains("unable to resolve host")) {
+                                        Toast.makeText(activity, R.string.something, Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(activity, t.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                            } catch (Exception e) {
+                            }
+
+
+                        }
+                    });
+        }catch (Exception e){
+
+        }
+
+
+
+    }
+
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==100&&resultCode== RESULT_OK)
+        {
+            getOffersProducts();
+        }
+    }
+
+    public void updateCartCount(int itemCount) {
+        activity.updateCartCount(itemCount);
     }
 }

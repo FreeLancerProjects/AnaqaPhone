@@ -19,7 +19,7 @@
 
         <variable
             name="model"
-            type="com.anaqaphone.models.OfferModel" />
+            type="com.anaqaphone.models.ProductDataModel.Data" />
 
         <variable
             name="marketName"

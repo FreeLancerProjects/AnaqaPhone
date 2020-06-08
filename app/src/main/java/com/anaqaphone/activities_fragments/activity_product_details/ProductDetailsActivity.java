@@ -1,12 +1,10 @@
 package com.anaqaphone.activities_fragments.activity_product_details;
 
-import android.animation.Animator;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -17,25 +15,23 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 //import com.anaqaphone.Animate.CircleAnimationUtil;
 import com.anaqaphone.R;
 import com.anaqaphone.adapters.ProductDetialsSlidingImage_Adapter;
-import com.anaqaphone.adapters.SlidingImage_Adapter;
 import com.anaqaphone.databinding.ActivityProductDetailsBinding;
 import com.anaqaphone.interfaces.Listeners;
 import com.anaqaphone.language.Language;
 
-import com.anaqaphone.models.OfferModel;
+import com.anaqaphone.models.ProductDataModel;
 import com.anaqaphone.models.UserModel;
 import com.anaqaphone.preferences.Preferences;
 import com.anaqaphone.remote.Api;
 import com.anaqaphone.share.Common;
 import com.anaqaphone.tags.Tags;
-import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -48,7 +44,7 @@ import retrofit2.Response;
 public class ProductDetailsActivity extends AppCompatActivity implements Listeners.BackListener {
     private ActivityProductDetailsBinding binding;
     private String lang;
-    private OfferModel offerModel;
+    private ProductDataModel.Data productDataModel;
     private int product_id;
     private Preferences preferences;
     private TimerTask timerTask;
@@ -109,7 +105,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements Listene
         binding.setBackListener(this);
         binding.setLang(lang);
 
-        binding.setModel(offerModel);
+        binding.setModel(productDataModel);
         binding.tab.setupWithViewPager(binding.pager);
         binding.progBarSlider.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(this, R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
 
@@ -127,12 +123,12 @@ public class ProductDetailsActivity extends AppCompatActivity implements Listene
         try {
             Api.getService(Tags.base_url)
                     .Product_detials(product_id)
-                    .enqueue(new Callback<OfferModel>() {
+                    .enqueue(new Callback<ProductDataModel>() {
                         @Override
-                        public void onResponse(Call<OfferModel> call, Response<OfferModel> response) {
+                        public void onResponse(Call<ProductDataModel> call, Response<ProductDataModel> response) {
                             dialog.dismiss();
                             if (response.isSuccessful() && response.body() != null) {
-                                UPDATEUI(response.body());
+                                UPDATEUI(response.body().getData());
                             } else {
                                 if (response.code() == 500) {
                                     Toast.makeText(ProductDetailsActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
@@ -152,7 +148,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements Listene
                         }
 
                         @Override
-                        public void onFailure(Call<OfferModel> call, Throwable t) {
+                        public void onFailure(Call<ProductDataModel> call, Throwable t) {
                             try {
                                 dialog.dismiss();
                                 if (t.getMessage() != null) {
@@ -173,14 +169,14 @@ public class ProductDetailsActivity extends AppCompatActivity implements Listene
         }
     }
 
-    private void UPDATEUI(OfferModel body) {
+    private void UPDATEUI(List<ProductDataModel.Data> body) {
 
-        binding.setModel(body);
+        binding.setModel(body.get(product_id));
         binding.progBarSlider.setVisibility(View.GONE);
 
 
-                NUM_PAGES =body.getProducts_images().size();
-                slidingImage__adapter = new ProductDetialsSlidingImage_Adapter(this, body.getProducts_images());
+                NUM_PAGES =body.get(product_id).getProducts_images().size();
+                slidingImage__adapter = new ProductDetialsSlidingImage_Adapter(this, body.get(product_id).getProducts_images());
                 binding.pager.setAdapter(slidingImage__adapter);
     }
 

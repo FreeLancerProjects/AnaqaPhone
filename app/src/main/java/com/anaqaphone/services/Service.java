@@ -1,7 +1,7 @@
 package com.anaqaphone.services;
 
 
-import com.anaqaphone.models.OfferModel;
+import com.anaqaphone.models.ProductDataModel;
 import com.anaqaphone.models.PlaceGeocodeData;
 import com.anaqaphone.models.PlaceMapDetailsData;
 import com.anaqaphone.models.SettingModel;
@@ -10,9 +10,7 @@ import com.anaqaphone.models.UserModel;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
-import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -74,6 +72,13 @@ public interface Service {
 
     @GET("api/slider")
     Call<Slider_Model> get_slider();
+
+
     @GET("api/product")
-    Call<OfferModel> Product_detials(@Query("product_id") int product_id);
+    Call<ProductDataModel> Product_detials(@Query("product_id") int product_id);
+
+    @GET("api/offers")
+    Call<ProductDataModel> getOffersProducts(@Query("pagination") String pagination,
+                                             @Query("user_id") int user_id);
+
 }

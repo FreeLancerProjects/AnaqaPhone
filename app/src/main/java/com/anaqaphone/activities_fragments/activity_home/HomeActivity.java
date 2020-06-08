@@ -35,8 +35,10 @@ import com.anaqaphone.models.NotFireModel;
 import com.anaqaphone.models.UserModel;
 import com.anaqaphone.preferences.Preferences;
 import com.anaqaphone.share.Common;
+import com.anaqaphone.singleton.CartSingleton;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
+import com.aurelhubert.ahbottomnavigation.notification.AHNotification;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 
@@ -64,6 +66,7 @@ public class HomeActivity extends AppCompatActivity {
     private UserModel userModel;
     private String lang;
     private String token;
+    private CartSingleton singleton;
 
 
     protected void attachBaseContext(Context newBase) {
@@ -605,5 +608,36 @@ public class HomeActivity extends AppCompatActivity {
         {
             fragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
+    }
+
+
+    public void updateCartCount(int count){
+
+
+        if (count==0){
+            AHNotification notification = new AHNotification.Builder()
+                    .setBackgroundColor(ContextCompat.getColor(this,R.color.colorAccent))
+                    .setTextColor(ContextCompat.getColor(this,R.color.white))
+                    .setText(null)
+                    .build();
+            binding.ahBottomNav.setNotification(notification,1);
+
+        }else {
+            AHNotification notification = new AHNotification.Builder()
+                    .setBackgroundColor(ContextCompat.getColor(this,R.color.colorAccent))
+                    .setTextColor(ContextCompat.getColor(this,R.color.white))
+                    .setText(String.valueOf(count))
+                    .build();
+            binding.ahBottomNav.setNotification(notification,1);
+        }
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        singleton = CartSingleton.newInstance();
+        if (singleton.getItemCartModelList()!=null){
+            updateCartCount(singleton.getItemCount());
+        }
+
     }
 }
