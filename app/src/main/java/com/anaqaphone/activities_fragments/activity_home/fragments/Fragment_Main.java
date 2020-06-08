@@ -60,6 +60,7 @@ public class Fragment_Main extends Fragment {
     private SlidingImage_Adapter slidingImage__adapter;
     private List<ProductDataModel.Data> offersDataList;
     private OffersAdapter offersAdapter;
+
     public static Fragment_Main newInstance() {
         return new Fragment_Main();
     }
@@ -80,7 +81,7 @@ public class Fragment_Main extends Fragment {
     }
 
     private void initView() {
-
+        offersDataList = new ArrayList<>();
         activity = (HomeActivity) getActivity();
         preferences = Preferences.getInstance();
         userModel = preferences.getUserData(activity);
@@ -169,8 +170,8 @@ public class Fragment_Main extends Fragment {
     public void setItemDataOffers(ProductDataModel.Data model) {
 
         Intent intent = new Intent(activity, ProductDetailsActivity.class);
-        intent.putExtra("id",model.getId());
-        startActivityForResult(intent,100);
+        intent.putExtra("id", model.getId());
+        startActivityForResult(intent, 100);
     }
 
     public void like_dislike(int type, ProductDataModel.Data productModel, String action, int pos) {
@@ -277,12 +278,12 @@ public class Fragment_Main extends Fragment {
             int uid;
 
             if (userModel != null) {
-                uid=userModel.getUser().getId();
-            }else {
-                uid=0;
+                uid = userModel.getUser().getId();
+            } else {
+                uid = 0;
             }
             Api.getService(Tags.base_url).
-                    getOffersProducts("off",uid).
+                    getOffersProducts("off", uid).
                     enqueue(new Callback<ProductDataModel>() {
                         @Override
                         public void onResponse(Call<ProductDataModel> call, Response<ProductDataModel> response) {
@@ -337,21 +338,18 @@ public class Fragment_Main extends Fragment {
 
                         }
                     });
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
-
 
 
     }
 
 
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode==100&&resultCode== RESULT_OK)
-        {
+        if (requestCode == 100 && resultCode == RESULT_OK) {
             getOffersProducts();
         }
     }
