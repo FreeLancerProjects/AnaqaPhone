@@ -36,6 +36,7 @@ public interface Listeners {
 
     }
 
+
     interface PaymentTypeAction
     {
         void onCredit();
@@ -44,6 +45,7 @@ public interface Listeners {
         void onNext();
         void onPrevious();
     }
+
 
     interface NextPreviousAction
     {

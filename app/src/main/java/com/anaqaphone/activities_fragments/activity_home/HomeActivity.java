@@ -628,7 +628,7 @@ public class HomeActivity extends AppCompatActivity {
                     .setTextColor(ContextCompat.getColor(this,R.color.white))
                     .setText(String.valueOf(count))
                     .build();
-            binding.ahBottomNav.setNotification(notification,1);
+            binding.ahBottomNav.setNotification(notification,2);
         }
     }
     @Override

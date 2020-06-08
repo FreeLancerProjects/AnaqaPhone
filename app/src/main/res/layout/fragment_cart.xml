@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
 
+        <variable
+            name="action"
+            type="com.anaqaphone.interfaces.Listeners.SettingActions" />
+        <variable
+            name="lang"
+            type="String" />
+    </data>
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/bg"
         >
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -29,6 +38,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:gravity="center_vertical"
                 >
+
                 <LinearLayout
                     android:id="@+id/llTotal"
                     android:layout_width="wrap_content"
@@ -71,7 +81,6 @@
                     android:textColor="@color/white"
                     android:textSize="17sp"
                     android:text="@string/checkout"
-                    android:visibility="gone"
                     />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

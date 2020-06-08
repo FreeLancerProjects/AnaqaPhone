@@ -85,7 +85,7 @@ public class Fragment_Main extends Fragment {
         activity = (HomeActivity) getActivity();
         preferences = Preferences.getInstance();
         userModel = preferences.getUserData(activity);
-
+        offersDataList=new ArrayList<>();
         Paper.init(activity);
         lang = Paper.book().read("lang", "ar");
 
