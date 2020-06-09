@@ -19,9 +19,11 @@ import androidx.fragment.app.Fragment;
 import com.anaqaphone.BuildConfig;
 import com.anaqaphone.R;
 import com.anaqaphone.activities_fragments.activity_about_app.AboutAppActivity;
+import com.anaqaphone.activities_fragments.activity_client_profile.ClientProfileActivity;
 import com.anaqaphone.activities_fragments.activity_home.HomeActivity;
 import com.anaqaphone.activities_fragments.activity_my_favorite.MyFavoriteActivity;
 import com.anaqaphone.activities_fragments.activity_order.OrderActivity;
+import com.anaqaphone.activities_fragments.bank_activity.BanksActivity;
 import com.anaqaphone.databinding.FragmentMoreBinding;
 import com.anaqaphone.interfaces.Listeners;
 import com.anaqaphone.models.UserModel;
@@ -128,7 +130,8 @@ public class Fragment_More extends Fragment implements Listeners.SettingActions{
 
     @Override
     public void bankAccount() {
-
+        Intent intent = new Intent(activity, BanksActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -178,7 +181,8 @@ public class Fragment_More extends Fragment implements Listeners.SettingActions{
 
     @Override
     public void profile() {
-
+        Intent intent = new Intent(activity, ClientProfileActivity.class);
+        startActivity(intent);
     }
 
 

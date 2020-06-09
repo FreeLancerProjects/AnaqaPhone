@@ -4,14 +4,14 @@ import java.io.Serializable;
 
 public class SettingModel implements Serializable {
 
-    private Data data;
+    private Data settings;
 
-    public Data getData() {
-        return data;
+    public Data getSettings() {
+        return settings;
     }
 
     public static class Data implements Serializable{
-        private String term_conditions;
+        private String termis_condition;
         private String about_app;
         private String whatsapp;
         private String instagram;
@@ -19,8 +19,8 @@ public class SettingModel implements Serializable {
         private String twitter;
         private String offer_muted;
 
-        public String getTerm_conditions() {
-            return term_conditions;
+        public String getTermis_condition() {
+            return termis_condition;
         }
 
         public String getAbout_app() {

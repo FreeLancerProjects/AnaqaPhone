@@ -1,11 +1,13 @@
 package com.anaqaphone.services;
 
 
+import com.anaqaphone.models.BankDataModel;
 import com.anaqaphone.models.ProductDataModel;
 import com.anaqaphone.models.MainCategoryDataModel;
 import com.anaqaphone.models.PlaceGeocodeData;
 import com.anaqaphone.models.PlaceMapDetailsData;
 import com.anaqaphone.models.SettingModel;
+import com.anaqaphone.models.SingleProductDataModel;
 import com.anaqaphone.models.Slider_Model;
 import com.anaqaphone.models.UserModel;
 
@@ -65,7 +67,7 @@ public interface Service {
 
     );
 
-    @GET("api/setting")
+    @GET("api/sttings")
     Call<SettingModel> getSetting(
             @Header("lang") String lang
 
@@ -78,11 +80,13 @@ public interface Service {
     @GET("api/offers")
     Call<ProductDataModel> getOffersProducts(@Query("pagination") String pagination,
                                              @Query("user_id") int user_id);
-
-    Call<ProductDataModel> Product_detials(@Query("product_id") int product_id);
+    @GET("api/product")
+    Call<SingleProductDataModel> Product_detials(@Query("product_id") int product_id);
 
     @GET("api/category")
     Call<MainCategoryDataModel> getMainCategory(
             @Query("pagination") String pagination
     );
+    @GET("api/banks")
+    Call<BankDataModel> getBanks();
 }

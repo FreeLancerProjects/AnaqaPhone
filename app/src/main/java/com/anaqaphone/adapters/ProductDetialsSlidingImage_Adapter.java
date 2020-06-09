@@ -13,6 +13,7 @@ import androidx.viewpager.widget.PagerAdapter;
 
 import com.anaqaphone.R;
 import com.anaqaphone.models.ProductDataModel;
+import com.anaqaphone.models.SingleProductDataModel;
 import com.anaqaphone.tags.Tags;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
@@ -21,10 +22,10 @@ import java.util.List;
 
 
 public class ProductDetialsSlidingImage_Adapter extends PagerAdapter {
-    List<ProductDataModel.Data.ProductsImages> IMAGES;
+    List<SingleProductDataModel.ProductsImages> IMAGES;
     private LayoutInflater inflater;
     Context context;
-    public ProductDetialsSlidingImage_Adapter(Context context, List<ProductDataModel.Data.ProductsImages> IMAGES) {
+    public ProductDetialsSlidingImage_Adapter(Context context, List<SingleProductDataModel.ProductsImages> IMAGES) {
         this.context = context;
         this.IMAGES = IMAGES;
         inflater = LayoutInflater.from(context);
@@ -47,8 +48,8 @@ public class ProductDetialsSlidingImage_Adapter extends PagerAdapter {
         assert imageLayout != null;
         final RoundedImageView imageView = imageLayout
                 .findViewById(R.id.image);
-        ProductDataModel.Data.ProductsImages slider = IMAGES.get(position);
-        Picasso.get().load(Uri.parse(Tags.IMAGE_URL + slider.getImage())).fit().into(imageView);
+        SingleProductDataModel.ProductsImages slider = IMAGES.get(position);
+        Picasso.get().load(Uri.parse(Tags.IMAGE_URL + slider.getFull_file())).fit().into(imageView);
         view.addView(imageLayout, 0);
 
         return imageLayout;

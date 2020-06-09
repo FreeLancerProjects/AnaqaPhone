@@ -92,10 +92,10 @@ public class AboutAppActivity extends AppCompatActivity implements Listeners.Bac
                             if (type==1)
                             {
 
-                                binding.setContent(response.body().getData().getTerm_conditions());
+                                binding.setContent(response.body().getSettings().getTermis_condition());
                             }else
                             {
-                                binding.setContent(response.body().getData().getAbout_app());
+                                binding.setContent(response.body().getSettings().getAbout_app());
 
                             }
 

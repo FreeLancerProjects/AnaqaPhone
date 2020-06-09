@@ -96,7 +96,7 @@ public class Fragment_Main extends Fragment {
 
 
         binding.recViewFavoriteOffers.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
-        offersAdapter = new OffersAdapter(offersDataList, activity, this);
+        offersAdapter = new OffersAdapter(offersDataList, activity, this,1);
         binding.recViewFavoriteOffers.setAdapter(offersAdapter);
 
     }
@@ -170,7 +170,7 @@ public class Fragment_Main extends Fragment {
     public void setItemDataOffers(ProductDataModel.Data model) {
 
         Intent intent = new Intent(activity, ProductDetailsActivity.class);
-        intent.putExtra("id", model.getId());
+        intent.putExtra("product_id", model.getId());
         startActivityForResult(intent, 100);
     }
 

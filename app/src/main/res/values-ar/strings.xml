@@ -160,6 +160,9 @@
     <string name="main_advantages">المميزات الاساسيه</string>
     <string name="overview">نظره عامه</string>
     <string name="discount">discount</string>
+    <string name="account_number">رقم الحساب : </string>
+    <string name="account_iban">رقم الايبان :</string>
+    <string name="banks">Banks</string>
     <string name="visa">Visa</string>
     <string name="paypal">Paypal</string>
     <string name="cash_on_delivery">Cash On Delivery</string>

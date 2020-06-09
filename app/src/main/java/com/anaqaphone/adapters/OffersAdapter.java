@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import com.anaqaphone.R;
 import com.anaqaphone.activities_fragments.activity_home.fragments.Fragment_Main;
+import com.anaqaphone.databinding.OfferListRowBinding;
 import com.anaqaphone.databinding.OfferRowBinding;
 import com.anaqaphone.models.ItemCartModel;
 import com.anaqaphone.models.ProductDataModel;
@@ -24,15 +25,15 @@ public class OffersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private LayoutInflater inflater;
     private Fragment fragment;
     private CartSingleton cartSingleton;
+    private int type;
 
-    public OffersAdapter(List<ProductDataModel.Data> list, Context context, Fragment fragment) {
+    public OffersAdapter(List<ProductDataModel.Data> list, Context context, Fragment fragment, int type) {
         this.list = list;
         this.context = context;
         inflater = LayoutInflater.from(context);
         this.fragment = fragment;
         cartSingleton = CartSingleton.newInstance();
-
-
+this.type=type;
 
     }
 
@@ -40,52 +41,91 @@ public class OffersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-
-        OfferRowBinding binding = DataBindingUtil.inflate(inflater, R.layout.offer_row, parent, false);
-        return new MyHolder(binding);
-
+if(type==1) {
+    OfferRowBinding binding = DataBindingUtil.inflate(inflater, R.layout.offer_row, parent, false);
+    return new MyHolder(binding);
+}
+else {
+    OfferListRowBinding binding = DataBindingUtil.inflate(inflater, R.layout.offer_list_row, parent, false);
+    return new MyHolderList(binding);
+}
 
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+if(holder instanceof  MyHolder) {
+    MyHolder myHolder = (MyHolder) holder;
 
-        MyHolder myHolder = (MyHolder) holder;
+    myHolder.binding.setModel(list.get(position));
+    myHolder.binding.llAddToCart.setOnClickListener(v -> {
+        int count = Integer.parseInt(myHolder.binding.tvCounter.getText().toString());
+        ItemCartModel itemCartModel = new ItemCartModel(list.get(position).getId(), list.get(position).getTitle(), list.get(position).getPrice(), count, list.get(position).getImage());
+        cartSingleton.addItem(itemCartModel);
+        Fragment_Main fragment_main = (Fragment_Main) fragment;
+        fragment_main.updateCartCount(cartSingleton.getItemCount());
 
-        myHolder.binding.setModel(list.get(position));
-        myHolder.binding.llAddToCart.setOnClickListener(v -> {
-            int count = Integer.parseInt(myHolder.binding.tvCounter.getText().toString());
-            ItemCartModel itemCartModel = new ItemCartModel(list.get(position).getId(), list.get(position).getTitle(), list.get(position).getPrice(), count, list.get(position).getImage());
-            cartSingleton.addItem(itemCartModel);
+        Toast.makeText(context, R.string.added_suc, Toast.LENGTH_SHORT).show();
+    });
+    myHolder.itemView.setOnClickListener(view -> {
+        if (fragment instanceof Fragment_Main) {
+
             Fragment_Main fragment_main = (Fragment_Main) fragment;
-            fragment_main.updateCartCount(cartSingleton.getItemCount());
+            fragment_main.setItemDataOffers(list.get(myHolder.getAdapterPosition()));
+        }
+    });
 
-            Toast.makeText(context, R.string.added_suc, Toast.LENGTH_SHORT).show();
-        });
-        myHolder.itemView.setOnClickListener(view -> {
-            if (fragment instanceof Fragment_Main) {
+    myHolder.binding.checkbox.setOnClickListener(v -> {
+        if (fragment instanceof Fragment_Main) {
 
-                Fragment_Main fragment_main = (Fragment_Main) fragment;
-                fragment_main.setItemDataOffers(list.get(myHolder.getAdapterPosition()));
+            Fragment_Main fragment_main = (Fragment_Main) fragment;
+
+            if (myHolder.binding.checkbox.isChecked()) {
+                fragment_main.like_dislike(2, list.get(myHolder.getAdapterPosition()), "favourite", myHolder.getAdapterPosition());
+            } else {
+                fragment_main.like_dislike(2, list.get(myHolder.getAdapterPosition()), "unfavourite", myHolder.getAdapterPosition());
+
             }
-        });
+        }
 
-        myHolder.binding.checkbox.setOnClickListener(v -> {
-            if (fragment instanceof Fragment_Main) {
+    });
+}
+else {
+    MyHolderList myHolder = (MyHolderList) holder;
 
-                Fragment_Main fragment_main = (Fragment_Main) fragment;
+    myHolder.binding.setModel(list.get(position));
+    myHolder.binding.llAddToCart.setOnClickListener(v -> {
+        int count = Integer.parseInt(myHolder.binding.tvCounter.getText().toString());
+        ItemCartModel itemCartModel = new ItemCartModel(list.get(position).getId(), list.get(position).getTitle(), list.get(position).getPrice(), count, list.get(position).getImage());
+        cartSingleton.addItem(itemCartModel);
+        Fragment_Main fragment_main = (Fragment_Main) fragment;
+        fragment_main.updateCartCount(cartSingleton.getItemCount());
 
-                if (myHolder.binding.checkbox.isChecked())
-                {
-                    fragment_main.like_dislike(2,list.get(myHolder.getAdapterPosition()),"favourite",myHolder.getAdapterPosition());
-                }else {
-                    fragment_main.like_dislike(2,list.get(myHolder.getAdapterPosition()),"unfavourite",myHolder.getAdapterPosition());
+        Toast.makeText(context, R.string.added_suc, Toast.LENGTH_SHORT).show();
+    });
+    myHolder.itemView.setOnClickListener(view -> {
+        if (fragment instanceof Fragment_Main) {
 
-                }
+            Fragment_Main fragment_main = (Fragment_Main) fragment;
+            fragment_main.setItemDataOffers(list.get(myHolder.getAdapterPosition()));
+        }
+    });
+
+    myHolder.binding.checkbox.setOnClickListener(v -> {
+        if (fragment instanceof Fragment_Main) {
+
+            Fragment_Main fragment_main = (Fragment_Main) fragment;
+
+            if (myHolder.binding.checkbox.isChecked()) {
+                fragment_main.like_dislike(2, list.get(myHolder.getAdapterPosition()), "favourite", myHolder.getAdapterPosition());
+            } else {
+                fragment_main.like_dislike(2, list.get(myHolder.getAdapterPosition()), "unfavourite", myHolder.getAdapterPosition());
+
             }
+        }
 
-        });
-
+    });
+}
     }
 
     @Override
@@ -120,6 +160,47 @@ public class OffersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         }
     }
+    public class MyHolderList extends RecyclerView.ViewHolder {
+        public OfferListRowBinding binding;
 
+        public MyHolderList(@NonNull OfferListRowBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
+            binding.imgIncrease.setOnClickListener(v -> {
+                        int count = Integer.parseInt(binding.tvCounter.getText().toString()) + 1;
+                        binding.tvCounter.setText(String.valueOf(count));
 
+                    }
+
+            );
+            binding.imgDecrease.setOnClickListener(v -> {
+                        int count = Integer.parseInt(binding.tvCounter.getText().toString());
+                        if (count > 1) {
+                            count = count - 1;
+
+                            binding.tvCounter.setText(String.valueOf(count));
+
+                        }
+                    }
+
+            );
+
+        }
+    }
+    @Override
+    public int getItemViewType(int position) {
+
+        if (type==1)
+        {
+
+            return type;
+        }else
+        {
+            return type;
+        }
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
 }

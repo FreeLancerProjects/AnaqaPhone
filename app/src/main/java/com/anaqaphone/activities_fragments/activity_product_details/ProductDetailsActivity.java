@@ -24,6 +24,7 @@ import com.anaqaphone.interfaces.Listeners;
 import com.anaqaphone.language.Language;
 
 import com.anaqaphone.models.ProductDataModel;
+import com.anaqaphone.models.SingleProductDataModel;
 import com.anaqaphone.models.UserModel;
 import com.anaqaphone.preferences.Preferences;
 import com.anaqaphone.remote.Api;
@@ -44,7 +45,7 @@ import retrofit2.Response;
 public class ProductDetailsActivity extends AppCompatActivity implements Listeners.BackListener {
     private ActivityProductDetailsBinding binding;
     private String lang;
-    private ProductDataModel.Data productDataModel;
+    private SingleProductDataModel productDataModel;
     private int product_id;
     private Preferences preferences;
     private TimerTask timerTask;
@@ -94,7 +95,8 @@ public class ProductDetailsActivity extends AppCompatActivity implements Listene
             product_id = intent.getIntExtra("product_id", 0);
 
         }
-        product_id=1;
+
+    //    product_id=1;
     }
 
 
@@ -123,12 +125,12 @@ public class ProductDetailsActivity extends AppCompatActivity implements Listene
         try {
             Api.getService(Tags.base_url)
                     .Product_detials(product_id)
-                    .enqueue(new Callback<ProductDataModel>() {
+                    .enqueue(new Callback<SingleProductDataModel>() {
                         @Override
-                        public void onResponse(Call<ProductDataModel> call, Response<ProductDataModel> response) {
+                        public void onResponse(Call<SingleProductDataModel> call, Response<SingleProductDataModel> response) {
                             dialog.dismiss();
                             if (response.isSuccessful() && response.body() != null) {
-                                UPDATEUI(response.body().getData());
+                                UPDATEUI(response.body());
                             } else {
                                 if (response.code() == 500) {
                                     Toast.makeText(ProductDetailsActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
@@ -148,7 +150,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements Listene
                         }
 
                         @Override
-                        public void onFailure(Call<ProductDataModel> call, Throwable t) {
+                        public void onFailure(Call<SingleProductDataModel> call, Throwable t) {
                             try {
                                 dialog.dismiss();
                                 if (t.getMessage() != null) {
@@ -169,14 +171,14 @@ public class ProductDetailsActivity extends AppCompatActivity implements Listene
         }
     }
 
-    private void UPDATEUI(List<ProductDataModel.Data> body) {
+    private void UPDATEUI(SingleProductDataModel body) {
 
-        binding.setModel(body.get(product_id));
+        binding.setModel(body);
         binding.progBarSlider.setVisibility(View.GONE);
 
 
-                NUM_PAGES =body.get(product_id).getProducts_images().size();
-                slidingImage__adapter = new ProductDetialsSlidingImage_Adapter(this, body.get(product_id).getProducts_images());
+                NUM_PAGES =body.getProducts_images().size();
+                slidingImage__adapter = new ProductDetialsSlidingImage_Adapter(this, body.getProducts_images());
                 binding.pager.setAdapter(slidingImage__adapter);
     }
 

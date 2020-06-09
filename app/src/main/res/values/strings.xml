@@ -154,6 +154,9 @@
     <string name="main_advantages">Main Advantages</string>
     <string name="overview">OverView</string>
     <string name="discount">discount</string>
+    <string name="account_number">Account Number</string>
+    <string name="account_iban">Account Iban</string>
+    <string name="banks">Banks</string>
     <string name="visa">Visa</string>
     <string name="paypal">Paypal</string>
     <string name="cash_on_delivery">Cash On Delivery</string>
