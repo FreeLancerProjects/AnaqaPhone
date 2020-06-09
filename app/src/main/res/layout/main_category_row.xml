@@ -16,8 +16,8 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="10dp"
@@ -29,30 +29,30 @@
 
         <FrameLayout
             android:id="@+id/fl"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clickable="false"
-                android:longClickable="false">
+                android:longClickable="false"
+                android:layout_gravity="center"
+                >
 
-                <com.makeramen.roundedimageview.RoundedImageView
+                <ImageView
                     android:id="@+id/image"
                     image="@{model.icon}"
-                    android:layout_width="100dp"
-                    android:layout_height="80dp"
-                    android:scaleType="fitXY"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:riv_border_width="0dp"
-                    app:riv_corner_radius="5dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                >
 
-                    >
 
-
-                </com.makeramen.roundedimageview.RoundedImageView>
+                </ImageView>
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,8 @@
 package com.anaqaphone.adapters;
 
 import android.content.Context;
+import android.graphics.Paint;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -10,28 +12,36 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import com.anaqaphone.R;
 import com.anaqaphone.activities_fragments.activity_home.fragments.Fragment_Main;
+import com.anaqaphone.activities_fragments.activity_home.fragments.Fragment_Offer;
 import com.anaqaphone.databinding.OfferListRowBinding;
 import com.anaqaphone.databinding.OfferRowBinding;
 import com.anaqaphone.models.ItemCartModel;
 import com.anaqaphone.models.ProductDataModel;
+import com.anaqaphone.models.SingleProductDataModel;
 import com.anaqaphone.singleton.CartSingleton;
 
 import java.util.List;
+import java.util.Locale;
+
+import io.paperdb.Paper;
 
 public class OffersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<ProductDataModel.Data> list;
+    private final String lang;
+    private List<SingleProductDataModel> list;
     private Context context;
     private LayoutInflater inflater;
     private Fragment fragment;
     private CartSingleton cartSingleton;
     private int type;
 
-    public OffersAdapter(List<ProductDataModel.Data> list, Context context, Fragment fragment, int type) {
+    public OffersAdapter(List<SingleProductDataModel> list, Context context, Fragment fragment, int type) {
         this.list = list;
         this.context = context;
         inflater = LayoutInflater.from(context);
         this.fragment = fragment;
+        lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
+
         cartSingleton = CartSingleton.newInstance();
 this.type=type;
 
@@ -56,15 +66,21 @@ else {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 if(holder instanceof  MyHolder) {
     MyHolder myHolder = (MyHolder) holder;
-
+    myHolder.binding.tvOldprice.setPaintFlags( myHolder.binding.tvOldprice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
     myHolder.binding.setModel(list.get(position));
+    myHolder.binding.setLang(lang);
     myHolder.binding.llAddToCart.setOnClickListener(v -> {
         int count = Integer.parseInt(myHolder.binding.tvCounter.getText().toString());
         ItemCartModel itemCartModel = new ItemCartModel(list.get(position).getId(), list.get(position).getTitle(), list.get(position).getPrice(), count, list.get(position).getImage());
         cartSingleton.addItem(itemCartModel);
-        Fragment_Main fragment_main = (Fragment_Main) fragment;
-        fragment_main.updateCartCount(cartSingleton.getItemCount());
-
+        if(fragment instanceof Fragment_Main) {
+            Fragment_Main fragment_main = (Fragment_Main) fragment;
+            fragment_main.updateCartCount(cartSingleton.getItemCount());
+        }
+        else if(fragment instanceof Fragment_Offer){
+            Fragment_Offer fragment_offer = (Fragment_Offer) fragment;
+            fragment_offer.updateCartCount(cartSingleton.getItemCount());
+        }
         Toast.makeText(context, R.string.added_suc, Toast.LENGTH_SHORT).show();
     });
     myHolder.itemView.setOnClickListener(view -> {
@@ -73,6 +89,11 @@ if(holder instanceof  MyHolder) {
             Fragment_Main fragment_main = (Fragment_Main) fragment;
             fragment_main.setItemDataOffers(list.get(myHolder.getAdapterPosition()));
         }
+        else if(fragment instanceof Fragment_Offer){
+            Fragment_Offer fragment_offer = (Fragment_Offer) fragment;
+            fragment_offer.setItemDataOffers(list.get(myHolder.getAdapterPosition()));
+        }
+
     });
 
     myHolder.binding.checkbox.setOnClickListener(v -> {
@@ -87,20 +108,37 @@ if(holder instanceof  MyHolder) {
 
             }
         }
+        else if(fragment instanceof Fragment_Offer){
+            Fragment_Offer fragment_offer = (Fragment_Offer) fragment;
+            if (myHolder.binding.checkbox.isChecked()) {
+                fragment_offer.like_dislike(2, list.get(myHolder.getAdapterPosition()), "favourite", myHolder.getAdapterPosition());
+            } else {
+                fragment_offer.like_dislike(2, list.get(myHolder.getAdapterPosition()), "unfavourite", myHolder.getAdapterPosition());
+
+            }
+        }
 
     });
 }
 else {
-    MyHolderList myHolder = (MyHolderList) holder;
 
+    MyHolderList myHolder = (MyHolderList) holder;
+    myHolder.binding.tvOldprice.setPaintFlags( myHolder.binding.tvOldprice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
+    Log.e("llldll",list.get(position).getHave_offer());
     myHolder.binding.setModel(list.get(position));
     myHolder.binding.llAddToCart.setOnClickListener(v -> {
         int count = Integer.parseInt(myHolder.binding.tvCounter.getText().toString());
         ItemCartModel itemCartModel = new ItemCartModel(list.get(position).getId(), list.get(position).getTitle(), list.get(position).getPrice(), count, list.get(position).getImage());
         cartSingleton.addItem(itemCartModel);
-        Fragment_Main fragment_main = (Fragment_Main) fragment;
-        fragment_main.updateCartCount(cartSingleton.getItemCount());
-
+        if(fragment instanceof Fragment_Main) {
+            Fragment_Main fragment_main = (Fragment_Main) fragment;
+            fragment_main.updateCartCount(cartSingleton.getItemCount());
+        }
+        else if(fragment instanceof Fragment_Offer){
+            Fragment_Offer fragment_offer = (Fragment_Offer) fragment;
+            fragment_offer.updateCartCount(cartSingleton.getItemCount());
+        }
         Toast.makeText(context, R.string.added_suc, Toast.LENGTH_SHORT).show();
     });
     myHolder.itemView.setOnClickListener(view -> {
@@ -109,6 +147,11 @@ else {
             Fragment_Main fragment_main = (Fragment_Main) fragment;
             fragment_main.setItemDataOffers(list.get(myHolder.getAdapterPosition()));
         }
+        else if(fragment instanceof Fragment_Offer){
+            Fragment_Offer fragment_offer = (Fragment_Offer) fragment;
+            fragment_offer.setItemDataOffers(list.get(myHolder.getAdapterPosition()));
+        }
+
     });
 
     myHolder.binding.checkbox.setOnClickListener(v -> {
@@ -120,6 +163,15 @@ else {
                 fragment_main.like_dislike(2, list.get(myHolder.getAdapterPosition()), "favourite", myHolder.getAdapterPosition());
             } else {
                 fragment_main.like_dislike(2, list.get(myHolder.getAdapterPosition()), "unfavourite", myHolder.getAdapterPosition());
+
+            }
+        }
+        else if(fragment instanceof Fragment_Offer){
+            Fragment_Offer fragment_offer = (Fragment_Offer) fragment;
+            if (myHolder.binding.checkbox.isChecked()) {
+                fragment_offer.like_dislike(2, list.get(myHolder.getAdapterPosition()), "favourite", myHolder.getAdapterPosition());
+            } else {
+                fragment_offer.like_dislike(2, list.get(myHolder.getAdapterPosition()), "unfavourite", myHolder.getAdapterPosition());
 
             }
         }

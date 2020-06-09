@@ -5,6 +5,7 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,10 +23,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.anaqaphone.R;
 import com.anaqaphone.activities_fragments.activity_home.HomeActivity;
 import com.anaqaphone.activities_fragments.activity_product_details.ProductDetailsActivity;
+import com.anaqaphone.adapters.CategoryProduct_Adapter;
+import com.anaqaphone.adapters.MainCategoryProducts_Adapter;
 import com.anaqaphone.adapters.OffersAdapter;
 import com.anaqaphone.adapters.SlidingImage_Adapter;
 import com.anaqaphone.databinding.FragmentMainBinding;
+import com.anaqaphone.models.CategoryProductDataModel;
 import com.anaqaphone.models.ProductDataModel;
+import com.anaqaphone.models.SingleProductDataModel;
 import com.anaqaphone.models.Slider_Model;
 import com.anaqaphone.models.UserModel;
 import com.anaqaphone.preferences.Preferences;
@@ -58,9 +63,10 @@ public class Fragment_Main extends Fragment {
     private boolean isLoading = false;
     private UserModel userModel;
     private SlidingImage_Adapter slidingImage__adapter;
-    private List<ProductDataModel.Data> offersDataList;
+    private List<SingleProductDataModel> offersDataList;
     private OffersAdapter offersAdapter;
-
+    private List<CategoryProductDataModel.Data> categoryProductDataModels;
+    private MainCategoryProducts_Adapter categoryProducts_adapter;
     public static Fragment_Main newInstance() {
         return new Fragment_Main();
     }
@@ -78,10 +84,12 @@ public class Fragment_Main extends Fragment {
         get_slider();
         change_slide_image();
         getOffersProducts();
+        getCategoryProducts();
     }
 
     private void initView() {
         offersDataList = new ArrayList<>();
+        categoryProductDataModels=new ArrayList<>();
         activity = (HomeActivity) getActivity();
         preferences = Preferences.getInstance();
         userModel = preferences.getUserData(activity);
@@ -98,7 +106,9 @@ public class Fragment_Main extends Fragment {
         binding.recViewFavoriteOffers.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
         offersAdapter = new OffersAdapter(offersDataList, activity, this,1);
         binding.recViewFavoriteOffers.setAdapter(offersAdapter);
-
+        binding.recViewAccessories.setLayoutManager(new LinearLayoutManager(activity));
+        categoryProducts_adapter = new MainCategoryProducts_Adapter(categoryProductDataModels, activity, this);
+        binding.recViewAccessories.setAdapter(categoryProducts_adapter);
     }
 
     private void get_slider() {
@@ -167,14 +177,14 @@ public class Fragment_Main extends Fragment {
         }, 3000, 3000);
     }
 
-    public void setItemDataOffers(ProductDataModel.Data model) {
+    public void setItemDataOffers(SingleProductDataModel model) {
 
         Intent intent = new Intent(activity, ProductDetailsActivity.class);
         intent.putExtra("product_id", model.getId());
         startActivityForResult(intent, 100);
     }
 
-    public void like_dislike(int type, ProductDataModel.Data productModel, String action, int pos) {
+    public void like_dislike(int type, SingleProductDataModel productModel, String action, int pos) {
 
        /* try {
             Api.getService(Tags.base_url)
@@ -345,6 +355,78 @@ public class Fragment_Main extends Fragment {
 
     }
 
+    public void getCategoryProducts() {
+
+        try {
+            int uid;
+
+            if (userModel != null) {
+                uid = userModel.getUser().getId();
+            } else {
+                uid = 0;
+            }
+            Api.getService(Tags.base_url).
+                    getCategoryProducts("off", uid).
+                    enqueue(new Callback<CategoryProductDataModel>() {
+                        @Override
+                        public void onResponse(Call<CategoryProductDataModel> call, Response<CategoryProductDataModel> response) {
+                            binding.progBarAccessories.setVisibility(View.GONE);
+
+                            if (response.isSuccessful() && response.body() != null && response.body().getData() != null) {
+
+                                categoryProductDataModels.clear();
+                                categoryProductDataModels.addAll(response.body().getData());
+                                if (categoryProductDataModels.size() > 0) {
+                                    categoryProducts_adapter.notifyDataSetChanged();
+                                } else {
+
+                                }
+
+                            } else {
+                                try {
+
+                                    Log.e("error", response.code() + "_" + response.errorBody().string());
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+
+                                if (response.code() == 500) {
+                                    Toast.makeText(activity, "Server Error", Toast.LENGTH_SHORT).show();
+
+
+                                } else {
+                                    Toast.makeText(activity, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+
+
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<CategoryProductDataModel> call, Throwable t) {
+                            binding.progBarAccessories.setVisibility(View.GONE);
+                            try {
+                                if (t.getMessage() != null) {
+                                    Log.e("error", t.getMessage());
+                                    if (t.getMessage().toLowerCase().contains("failed to connect") || t.getMessage().toLowerCase().contains("unable to resolve host")) {
+                                        Toast.makeText(activity, R.string.something, Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(activity, t.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                            } catch (Exception e) {
+                            }
+
+
+                        }
+                    });
+        } catch (Exception e) {
+
+        }
+
+
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -353,8 +435,8 @@ public class Fragment_Main extends Fragment {
             getOffersProducts();
         }
     }
-
     public void updateCartCount(int itemCount) {
         activity.updateCartCount(itemCount);
+
     }
 }

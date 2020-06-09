@@ -1,5 +1,6 @@
 package com.anaqaphone.activities_fragments.activity_product_details;
 
+import android.animation.Animator;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -23,12 +24,14 @@ import com.anaqaphone.databinding.ActivityProductDetailsBinding;
 import com.anaqaphone.interfaces.Listeners;
 import com.anaqaphone.language.Language;
 
+import com.anaqaphone.models.ItemCartModel;
 import com.anaqaphone.models.ProductDataModel;
 import com.anaqaphone.models.SingleProductDataModel;
 import com.anaqaphone.models.UserModel;
 import com.anaqaphone.preferences.Preferences;
 import com.anaqaphone.remote.Api;
 import com.anaqaphone.share.Common;
+import com.anaqaphone.singleton.CartSingleton;
 import com.anaqaphone.tags.Tags;
 
 import java.io.IOException;
@@ -53,6 +56,9 @@ public class ProductDetailsActivity extends AppCompatActivity implements Listene
     private int current_page = 0, NUM_PAGES;
     private UserModel userModel;
     private ProductDetialsSlidingImage_Adapter slidingImage__adapter;
+    private CartSingleton cartSingleton;
+    private SingleProductDataModel singleProductDataModel;
+
     @Override
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
@@ -69,6 +75,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements Listene
         change_slide_image();
 
     }
+
     private void change_slide_image() {
         final Handler handler = new Handler();
         final Runnable Update = new Runnable() {
@@ -96,12 +103,13 @@ public class ProductDetailsActivity extends AppCompatActivity implements Listene
 
         }
 
-    //    product_id=1;
+        //    product_id=1;
     }
 
 
     private void initView() {
         Paper.init(this);
+        cartSingleton = CartSingleton.newInstance();
         preferences = Preferences.getInstance();
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
         binding.setBackListener(this);
@@ -111,10 +119,10 @@ public class ProductDetailsActivity extends AppCompatActivity implements Listene
         binding.tab.setupWithViewPager(binding.pager);
         binding.progBarSlider.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(this, R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
 
-        binding.tvOldprice.setPaintFlags( binding.tvOldprice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        binding.tvOldprice.setPaintFlags(binding.tvOldprice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
 
-        //  binding.flAddToCart.setOnClickListener(v -> addToCart(offerModel));
+        binding.flAddToCart.setOnClickListener(v -> addToCart(singleProductDataModel));
 
     }
 
@@ -174,60 +182,20 @@ public class ProductDetailsActivity extends AppCompatActivity implements Listene
     private void UPDATEUI(SingleProductDataModel body) {
 
         binding.setModel(body);
+        this.singleProductDataModel = body;
         binding.progBarSlider.setVisibility(View.GONE);
 
 
-                NUM_PAGES =body.getProducts_images().size();
-                slidingImage__adapter = new ProductDetialsSlidingImage_Adapter(this, body.getProducts_images());
-                binding.pager.setAdapter(slidingImage__adapter);
+        NUM_PAGES = body.getProducts_images().size();
+        slidingImage__adapter = new ProductDetialsSlidingImage_Adapter(this, body.getProducts_images());
+        binding.pager.setAdapter(slidingImage__adapter);
     }
 
 
-//    public void addToCart(OfferModel offerModel) {
-//        if (market.getMarkter_status().equals("open")) {
-//            if (market.getId() == createOrderModel.getMarkter_id()) {
-//                ItemCartModel model = new ItemCartModel(offerModel.getId(), offerModel.getId(), offerModel.getImage(), offerModel.getTitle(), 1);
-//                model.setPrice_before_discount(Double.parseDouble(offerModel.getPrice()));
-//
-//                if (offerModel.getOffer() == null) {
-//                    model.setPrice(Double.parseDouble(offerModel.getPrice()));
-//                    model.setOffer_id(0);
-//                } else {
-//
-//                    if (offerModel.getOffer().getOffer_status().trim().equals("open")) {
-//                        if (offerModel.getOffer().getOffer_type().trim().equals("per")) {
-//                            double price_before_discount = Double.parseDouble(offerModel.getPrice());
-//                            double price_after_discount = price_before_discount - (price_before_discount * (offerModel.getOffer().getOffer_value() / 100));
-//                            model.setPrice(price_after_discount);
-//                            model.setOffer_id(offerModel.getOffer().getId());
-//                        } else {
-//                            double price_before_discount = Double.parseDouble(offerModel.getPrice());
-//                            double price_after_discount = price_before_discount - offerModel.getOffer().getOffer_value();
-//                            model.setPrice(price_after_discount);
-//                            model.setOffer_id(offerModel.getOffer().getId());
-//                        }
-//                    } else {
-//                        model.setPrice(Double.parseDouble(offerModel.getPrice()));
-//                        model.setOffer_id(0);
-//                    }
-//                }
-//
-//
-//                createOrderModel.addNewProduct(model);
-//                preferences.create_update_cart(this, createOrderModel);
-//                // binding.setCartCount(createOrderModel.getProducts().size());
-//                makeFlyAnimation(binding.image, createOrderModel.getProducts().size());
-//                isDataAdded = true;
-//                //Toast.makeText(this, getString(R.string.added_suc), Toast.LENGTH_SHORT).show();
-//            } else {
-//                Common.CreateDialogAlert(this, getString(R.string.diff_market));
-//            }
-//        } else {
-//            Common.CreateDialogAlert(this, getString(R.string.market_not_available));
-//
-//        }
-//
-//    }
+    public void addToCart(SingleProductDataModel singleProductDataModel) {
+        ItemCartModel itemCartModel = new ItemCartModel(singleProductDataModel.getId(), singleProductDataModel.getTitle(), singleProductDataModel.getPrice(), 1, singleProductDataModel.getImage());
+        cartSingleton.addItem(itemCartModel);
+    }
 
 //    public void makeFlyAnimation(RoundedImageView targetView, int quantity) {
 //

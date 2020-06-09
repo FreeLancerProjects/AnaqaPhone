@@ -64,15 +64,15 @@ public class MainCategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         myHolder.binding.cardView.setCardBackgroundColor(Color.parseColor(mainDepartments.getBackground()));
         myHolder.binding.setModel(mainDepartments);
         myHolder.binding.setLang(lang);
-myHolder.itemView.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-        if(fragment instanceof  Fragment_Offer){
-            fragment_offer=(Fragment_Offer)fragment;
-
-        }
-    }
-});
+        myHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (fragment instanceof Fragment_Offer) {
+                    fragment_offer = (Fragment_Offer) fragment;
+                    fragment_offer.setDepartment(list.get(holder.getLayoutPosition()).getId() + "");
+                }
+            }
+        });
 
     }
 

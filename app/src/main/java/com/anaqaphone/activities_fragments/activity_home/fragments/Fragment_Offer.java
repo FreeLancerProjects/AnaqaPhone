@@ -1,13 +1,16 @@
 package com.anaqaphone.activities_fragments.activity_home.fragments;
 
 import android.app.Activity;
+import android.app.DownloadManager;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,15 +24,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.anaqaphone.R;
 import com.anaqaphone.activities_fragments.activity_home.HomeActivity;
+import com.anaqaphone.activities_fragments.activity_product_details.ProductDetailsActivity;
 import com.anaqaphone.adapters.MainCategoryAdapter;
 import com.anaqaphone.adapters.OffersAdapter;
 import com.anaqaphone.databinding.FragmentCartBinding;
 import com.anaqaphone.databinding.FragmentOfferBinding;
 import com.anaqaphone.models.MainCategoryDataModel;
 import com.anaqaphone.models.ProductDataModel;
+import com.anaqaphone.models.SingleProductDataModel;
 import com.anaqaphone.models.UserModel;
 import com.anaqaphone.preferences.Preferences;
 import com.anaqaphone.remote.Api;
+import com.anaqaphone.share.Common;
 import com.anaqaphone.tags.Tags;
 
 import java.io.IOException;
@@ -55,8 +61,9 @@ public class Fragment_Offer extends Fragment {
     private List<MainCategoryDataModel.Data> mainDepartmentsList;
     private int square = 1, list = 2;
     private int displayType = square;
-    private List<ProductDataModel.Data> offersDataList;
+    private List<SingleProductDataModel> offersDataList;
     private OffersAdapter offersAdapter;
+    private String query = "all", department_id = "all";
 
     public static Fragment_Offer newInstance() {
         return new Fragment_Offer();
@@ -80,7 +87,7 @@ public class Fragment_Offer extends Fragment {
 
     private void initView() {
         mainDepartmentsList = new ArrayList<>();
-        offersDataList=new ArrayList<>();
+        offersDataList = new ArrayList<>();
         activity = (HomeActivity) getActivity();
         Paper.init(activity);
         lang = Paper.book().read("lang", "ar");
@@ -98,7 +105,7 @@ public class Fragment_Offer extends Fragment {
 
         binding.recViewCaregory.setAdapter(adapter);
         binding.recViewOffer.setLayoutManager(new GridLayoutManager(activity, 2));
-        offersAdapter = new OffersAdapter(offersDataList, activity, this,displayType);
+        offersAdapter = new OffersAdapter(offersDataList, activity, this, displayType);
         binding.recViewOffer.setAdapter(offersAdapter);
         binding.llType.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,7 +136,20 @@ public class Fragment_Offer extends Fragment {
                 }
             }
         });
-
+        binding.edtSearch.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+             query = binding.edtSearch.getText().toString();
+                if (!TextUtils.isEmpty(query)) {
+                    Common.CloseKeyBoard(activity,binding.edtSearch);
+                    getOffersProducts();
+                    return false;
+                }
+                else {
+                    query="all";
+                }
+            }
+            return false;
+        });
     }
 
     private void getMainCategory() {
@@ -192,7 +212,7 @@ public class Fragment_Offer extends Fragment {
     }
 
     public void getOffersProducts() {
-
+        offersDataList.clear();
         try {
             int uid;
 
@@ -202,7 +222,7 @@ public class Fragment_Offer extends Fragment {
                 uid = 0;
             }
             Api.getService(Tags.base_url).
-                    getOffersProducts("off", uid).
+                    getOffersProducts("off", uid, query, department_id).
                     enqueue(new Callback<ProductDataModel>() {
                         @Override
                         public void onResponse(Call<ProductDataModel> call, Response<ProductDataModel> response) {
@@ -262,6 +282,117 @@ public class Fragment_Offer extends Fragment {
         }
 
 
+    }
+
+    public void setDepartment(String s) {
+        department_id = s;
+        getOffersProducts();
+    }
+    public void updateCartCount(int itemCount) {
+        activity.updateCartCount(itemCount);
+    }
+    public void setItemDataOffers(SingleProductDataModel model) {
+
+        Intent intent = new Intent(activity, ProductDetailsActivity.class);
+        intent.putExtra("product_id", model.getId());
+        startActivityForResult(intent, 100);
+    }
+    public void like_dislike(int type, SingleProductDataModel productModel, String action, int pos) {
+
+       /* try {
+            Api.getService(Tags.base_url)
+                    .addFavoriteProduct(lang,userModel.getUser().getToken(),action,productModel.getId())
+                    .enqueue(new Callback<ResponseBody>() {
+                        @Override
+                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                            if (response.isSuccessful()) {
+                                if (action.equals("favourite"))
+                                {
+                                    productModel.setIs_favourite(true);
+
+                                }else {
+                                    productModel.setIs_favourite(false);
+
+                                }
+                                if (type==1)
+                                {
+                                    mostSellerDataList.set(pos,productModel);
+                                    mostSellerAdapter.notifyItemChanged(pos);
+                                }else {
+                                    mostRateDataList.set(pos,productModel);
+                                    mostRateAdapter.notifyItemChanged(pos);
+                                }
+                            } else {
+
+                                if (action.equals("favourite"))
+                                {
+                                    productModel.setIs_favourite(false);
+
+                                }else {
+                                    productModel.setIs_favourite(true);
+
+                                }
+                                if (type==1)
+                                {
+                                    mostSellerDataList.set(pos,productModel);
+                                    mostSellerAdapter.notifyItemChanged(pos);
+                                }else {
+                                    mostRateDataList.set(pos,productModel);
+                                    mostRateAdapter.notifyItemChanged(pos);
+                                }
+
+                                if (response.code() == 500) {
+                                    Toast.makeText(activity, "Server Error", Toast.LENGTH_SHORT).show();
+
+
+                                } else {
+                                    Toast.makeText(activity, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+
+                                    try {
+
+                                        Log.e("error", response.code() + "_" + response.errorBody().string());
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+                            try {
+                                if (action.equals("favourite"))
+                                {
+                                    productModel.setIs_favourite(false);
+
+                                }else {
+                                    productModel.setIs_favourite(true);
+
+                                }
+                                if (type==1)
+                                {
+                                    mostSellerDataList.set(pos,productModel);
+                                    mostSellerAdapter.notifyItemChanged(pos);
+                                }else {
+                                    mostRateDataList.set(pos,productModel);
+                                    mostRateAdapter.notifyItemChanged(pos);
+                                }
+                                if (t.getMessage() != null) {
+                                    Log.e("error", t.getMessage());
+                                    if (t.getMessage().toLowerCase().contains("failed to connect") || t.getMessage().toLowerCase().contains("unable to resolve host")) {
+                                        Toast.makeText(activity, R.string.something, Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(activity, t.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                            } catch (Exception e) {
+                            }
+                        }
+                    });
+        } catch (Exception e) {
+
+        }*/
     }
 
 }

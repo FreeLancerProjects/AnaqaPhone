@@ -6,7 +6,11 @@
 
         <variable
             name="model"
-            type="com.anaqaphone.models.ProductDataModel.Data" />
+            type="com.anaqaphone.models.SingleProductDataModel" />
+
+        <variable
+            name="lang"
+            type="String" />
 
         <import type="android.view.View" />
     </data>
@@ -16,13 +20,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="7dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="8dp"
         app:cardElevation="3dp"
         app:contentPadding="5dp">
 
         <FrameLayout
-            android:layout_width="match_parent"
+            android:layout_width="160dp"
             android:layout_height="wrap_content">
 
             <LinearLayout
@@ -40,9 +46,9 @@
                         android:id="@+id/checkbox"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="top"
                         android:layout_margin="5dp"
                         android:button="@drawable/checkbox_bg"
+
 
                         />
 
@@ -60,13 +66,13 @@
 
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:ellipsize="end"
                     android:gravity="center"
                     android:maxLines="2"
-                    android:text='@{model.title}'
+                    android:text='@{model.title.length()>21?model.title.substring(0,21):model.title}'
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
@@ -76,23 +82,21 @@
                     android:orientation="vertical">
 
 
+                    <TextView
+                        android:id="@+id/tvOldprice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="3dp"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:singleLine="true"
+                        android:text='@{model.old_price+@string/sar}'
+                        android:textColor="@color/gray6"
+                        android:textSize="15sp"
+                        android:visibility='@{model.have_offer.equals("yes")?View.VISIBLE:View.INVISIBLE,default=invisible}'
 
-
-                        <TextView
-                            android:id="@+id/old_price"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="3dp"
-                            android:ellipsize="end"
-                            android:maxLines="2"
-                            android:layout_gravity="center"
-                            android:singleLine="true"
-                            android:text='@{model.old_price+@string/sar}'
-                            android:textColor="@color/gray6"
-                            android:textSize="15sp"
-                            android:visibility='@{model.have_offer.equals("yes")?View.VISIBLE:View.GONE,default=gone}'
-
-                            />
+                        />
 
 
                     <TextView
@@ -101,8 +105,8 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:ellipsize="end"
-                        android:maxLines="2"
                         android:gravity="center"
+                        android:maxLines="2"
                         android:text='@{model.price+@string/sar}'
                         android:textColor="@color/colorPrimary"
                         android:textSize="15sp" />
@@ -189,6 +193,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="end"
                 android:background="@drawable/offer_bg"
                 android:gravity="center"
                 android:orientation="vertical"

@@ -15,7 +15,7 @@
             />
         <variable
             name="model"
-            type="com.anaqaphone.models.ProductDataModel.Data" />
+            type="com.anaqaphone.models.SingleProductDataModel" />
     </data>
 
 
