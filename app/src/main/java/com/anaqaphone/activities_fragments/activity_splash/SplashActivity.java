@@ -2,6 +2,7 @@ package com.anaqaphone.activities_fragments.activity_splash;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -38,21 +39,34 @@ public class SplashActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_splash);
         preferences = Preferences.getInstance();
 
-        new Handler().postDelayed(()->{
-
-            String session = preferences.getSession(SplashActivity.this);
-            if (session.equals(Tags.session_login)) {
-                Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
-                startActivity(intent);
-                finish();
-            } else {
-                Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
-                startActivity(intent);
-                finish();
-
-
+        String path = "android.resource://"+getPackageName()+"/"+R.raw.splash_vid;
+        binding.videoView.setVideoPath(path);
+        binding.videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mediaPlayer) {
+                binding.videoView.start();
             }
-        },3000);
+        });
+
+        binding.videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mediaPlayer) {
+
+                String session = preferences.getSession(SplashActivity.this);
+
+                if (session.equals(Tags.session_login))
+                {
+                    Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
+                    startActivity(intent);
+                    finish();
+                }else
+                {
+                    Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+        });
 
     }
 }
