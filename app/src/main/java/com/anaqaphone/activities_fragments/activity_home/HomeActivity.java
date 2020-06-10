@@ -34,8 +34,10 @@ import com.anaqaphone.language.Language;
 import com.anaqaphone.models.NotFireModel;
 import com.anaqaphone.models.UserModel;
 import com.anaqaphone.preferences.Preferences;
+import com.anaqaphone.remote.Api;
 import com.anaqaphone.share.Common;
 import com.anaqaphone.singleton.CartSingleton;
+import com.anaqaphone.tags.Tags;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.aurelhubert.ahbottomnavigation.notification.AHNotification;
@@ -409,15 +411,15 @@ public class HomeActivity extends AppCompatActivity {
 
     private void updateTokenFireBase() {
 
-        /*FirebaseInstanceId.getInstance()
+        FirebaseInstanceId.getInstance()
                 .getInstanceId().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 token = task.getResult().getToken();
 
                 try {
-
+Log.e("llll",userModel.getUser().getToken());
                     Api.getService(Tags.base_url)
-                            .updateToken(userModel.getUser().getToken(), token, "android")
+                            .updatePhoneToken(userModel.getUser().getToken(), token, "android")
                             .enqueue(new Callback<ResponseBody>() {
                                 @Override
                                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -456,7 +458,7 @@ public class HomeActivity extends AppCompatActivity {
                 }
 
             }
-        });*/
+        });
     }
 
 
@@ -464,7 +466,7 @@ public class HomeActivity extends AppCompatActivity {
         if (userModel != null) {
 
 
-          /*  ProgressDialog dialog = Common.createProgressDialog(this, getString(R.string.wait));
+            ProgressDialog dialog = Common.createProgressDialog(this, getString(R.string.wait));
             dialog.show();
 
 
@@ -474,7 +476,7 @@ public class HomeActivity extends AppCompatActivity {
                     token = task.getResult().getToken();
 
                     Api.getService(Tags.base_url)
-                            .logout("Bearer " + userModel.getUser().getToken(), token)
+                            .logout(userModel.getUser().getToken(),token,"android")
                             .enqueue(new Callback<ResponseBody>() {
                                 @Override
                                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -525,7 +527,7 @@ public class HomeActivity extends AppCompatActivity {
                             });
 
                 }
-            });*/
+            });
 
 
         } else {

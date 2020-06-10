@@ -23,6 +23,7 @@ public class UserModel implements Serializable {
         private String longitude;
         private String address;
         private long logout_time;
+        private String token;
 
         public int getId() {
             return id;
@@ -74,6 +75,10 @@ public class UserModel implements Serializable {
 
         public long getLogout_time() {
             return logout_time;
+        }
+
+        public String getToken() {
+            return token;
         }
     }
 }

@@ -96,6 +96,10 @@ public class SingleProductDataModel implements Serializable {
         return user_like;
     }
 
+    public void setUser_like(UserLike user_like) {
+        this.user_like = user_like;
+    }
+
     public class Department implements Serializable {
         private int id;
         private String title;

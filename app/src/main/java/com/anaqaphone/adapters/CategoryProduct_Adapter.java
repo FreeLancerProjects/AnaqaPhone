@@ -95,9 +95,9 @@ public class CategoryProduct_Adapter extends RecyclerView.Adapter<RecyclerView.V
                 Fragment_Main fragment_main = (Fragment_Main) fragment;
 
                 if (myHolder.binding.checkbox.isChecked()) {
-                    fragment_main.like_dislike(2, list.get(myHolder.getAdapterPosition()), "favourite", myHolder.getAdapterPosition());
+                    fragment_main.like_dislike( list.get(myHolder.getAdapterPosition()), myHolder.getAdapterPosition(),1);
                 } else {
-                    fragment_main.like_dislike(2, list.get(myHolder.getAdapterPosition()), "unfavourite", myHolder.getAdapterPosition());
+                    fragment_main.like_dislike( list.get(myHolder.getAdapterPosition()), myHolder.getAdapterPosition(),1);
 
                 }
             }

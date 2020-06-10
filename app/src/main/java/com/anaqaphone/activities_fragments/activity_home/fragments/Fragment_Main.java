@@ -5,7 +5,6 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,13 +16,11 @@ import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.anaqaphone.R;
 import com.anaqaphone.activities_fragments.activity_home.HomeActivity;
 import com.anaqaphone.activities_fragments.activity_product_details.ProductDetailsActivity;
-import com.anaqaphone.adapters.CategoryProduct_Adapter;
 import com.anaqaphone.adapters.MainCategoryProducts_Adapter;
 import com.anaqaphone.adapters.OffersAdapter;
 import com.anaqaphone.adapters.SlidingImage_Adapter;
@@ -184,49 +181,26 @@ public class Fragment_Main extends Fragment {
         startActivityForResult(intent, 100);
     }
 
-    public void like_dislike(int type, SingleProductDataModel productModel, String action, int pos) {
+    public void like_dislike(SingleProductDataModel productModel, int pos, int i) {
 
-       /* try {
+        try {
+            Log.e("llll",userModel.getUser().getToken());
+
             Api.getService(Tags.base_url)
-                    .addFavoriteProduct(lang,userModel.getUser().getToken(),action,productModel.getId())
+                    .addFavoriteProduct(userModel.getUser().getToken(),productModel.getId()+"")
                     .enqueue(new Callback<ResponseBody>() {
                         @Override
                         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                             if (response.isSuccessful()) {
-                                if (action.equals("favourite"))
-                                {
-                                    productModel.setIs_favourite(true);
+if(i==1){
+    getCategoryProducts();
+}
+else {
+    getOffersProducts();
+}
 
-                                }else {
-                                    productModel.setIs_favourite(false);
-
-                                }
-                                if (type==1)
-                                {
-                                    mostSellerDataList.set(pos,productModel);
-                                    mostSellerAdapter.notifyItemChanged(pos);
-                                }else {
-                                    mostRateDataList.set(pos,productModel);
-                                    mostRateAdapter.notifyItemChanged(pos);
-                                }
                             } else {
 
-                                if (action.equals("favourite"))
-                                {
-                                    productModel.setIs_favourite(false);
-
-                                }else {
-                                    productModel.setIs_favourite(true);
-
-                                }
-                                if (type==1)
-                                {
-                                    mostSellerDataList.set(pos,productModel);
-                                    mostSellerAdapter.notifyItemChanged(pos);
-                                }else {
-                                    mostRateDataList.set(pos,productModel);
-                                    mostRateAdapter.notifyItemChanged(pos);
-                                }
 
                                 if (response.code() == 500) {
                                     Toast.makeText(activity, "Server Error", Toast.LENGTH_SHORT).show();
@@ -248,22 +222,7 @@ public class Fragment_Main extends Fragment {
                         @Override
                         public void onFailure(Call<ResponseBody> call, Throwable t) {
                             try {
-                                if (action.equals("favourite"))
-                                {
-                                    productModel.setIs_favourite(false);
 
-                                }else {
-                                    productModel.setIs_favourite(true);
-
-                                }
-                                if (type==1)
-                                {
-                                    mostSellerDataList.set(pos,productModel);
-                                    mostSellerAdapter.notifyItemChanged(pos);
-                                }else {
-                                    mostRateDataList.set(pos,productModel);
-                                    mostRateAdapter.notifyItemChanged(pos);
-                                }
                                 if (t.getMessage() != null) {
                                     Log.e("error", t.getMessage());
                                     if (t.getMessage().toLowerCase().contains("failed to connect") || t.getMessage().toLowerCase().contains("unable to resolve host")) {
@@ -279,7 +238,7 @@ public class Fragment_Main extends Fragment {
                     });
         } catch (Exception e) {
 
-        }*/
+        }
     }
 
     public void getOffersProducts() {

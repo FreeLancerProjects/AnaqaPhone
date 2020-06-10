@@ -44,6 +44,7 @@ import java.util.List;
 import java.util.Locale;
 
 import io.paperdb.Paper;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -297,49 +298,19 @@ public class Fragment_Offer extends Fragment {
         intent.putExtra("product_id", model.getId());
         startActivityForResult(intent, 100);
     }
-    public void like_dislike(int type, SingleProductDataModel productModel, String action, int pos) {
+    public void like_dislike( SingleProductDataModel productModel, int pos) {
 
-       /* try {
+       try {
             Api.getService(Tags.base_url)
-                    .addFavoriteProduct(lang,userModel.getUser().getToken(),action,productModel.getId())
+                    .addFavoriteProduct(userModel.getUser().getToken(),productModel.getId()+"")
                     .enqueue(new Callback<ResponseBody>() {
                         @Override
                         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                             if (response.isSuccessful()) {
-                                if (action.equals("favourite"))
-                                {
-                                    productModel.setIs_favourite(true);
 
-                                }else {
-                                    productModel.setIs_favourite(false);
-
-                                }
-                                if (type==1)
-                                {
-                                    mostSellerDataList.set(pos,productModel);
-                                    mostSellerAdapter.notifyItemChanged(pos);
-                                }else {
-                                    mostRateDataList.set(pos,productModel);
-                                    mostRateAdapter.notifyItemChanged(pos);
-                                }
+                                getOffersProducts();
                             } else {
 
-                                if (action.equals("favourite"))
-                                {
-                                    productModel.setIs_favourite(false);
-
-                                }else {
-                                    productModel.setIs_favourite(true);
-
-                                }
-                                if (type==1)
-                                {
-                                    mostSellerDataList.set(pos,productModel);
-                                    mostSellerAdapter.notifyItemChanged(pos);
-                                }else {
-                                    mostRateDataList.set(pos,productModel);
-                                    mostRateAdapter.notifyItemChanged(pos);
-                                }
 
                                 if (response.code() == 500) {
                                     Toast.makeText(activity, "Server Error", Toast.LENGTH_SHORT).show();
@@ -361,22 +332,7 @@ public class Fragment_Offer extends Fragment {
                         @Override
                         public void onFailure(Call<ResponseBody> call, Throwable t) {
                             try {
-                                if (action.equals("favourite"))
-                                {
-                                    productModel.setIs_favourite(false);
 
-                                }else {
-                                    productModel.setIs_favourite(true);
-
-                                }
-                                if (type==1)
-                                {
-                                    mostSellerDataList.set(pos,productModel);
-                                    mostSellerAdapter.notifyItemChanged(pos);
-                                }else {
-                                    mostRateDataList.set(pos,productModel);
-                                    mostRateAdapter.notifyItemChanged(pos);
-                                }
                                 if (t.getMessage() != null) {
                                     Log.e("error", t.getMessage());
                                     if (t.getMessage().toLowerCase().contains("failed to connect") || t.getMessage().toLowerCase().contains("unable to resolve host")) {
@@ -392,7 +348,7 @@ public class Fragment_Offer extends Fragment {
                     });
         } catch (Exception e) {
 
-        }*/
+        }
     }
 
 }

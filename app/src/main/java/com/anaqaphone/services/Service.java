@@ -1,6 +1,8 @@
 package com.anaqaphone.services;
 
 
+import android.app.DownloadManager;
+
 import com.anaqaphone.models.BankDataModel;
 import com.anaqaphone.models.CategoryProductDataModel;
 import com.anaqaphone.models.ProductDataModel;
@@ -14,6 +16,7 @@ import com.anaqaphone.models.UserModel;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -49,6 +52,22 @@ public interface Service {
     );
 
     @FormUrlEncoded
+    @POST("api/logout")
+    Call<ResponseBody> logout(@Header("Authorization") String user_token,
+                              @Field("phone_token") String phone_token,
+                              @Field("soft_type") String soft_type
+
+
+    );
+
+    @FormUrlEncoded
+    @POST("api/update-firebase")
+    Call<ResponseBody> updatePhoneToken(@Header("Authorization") String Authorization,
+                                        @Field("phone_token") String phone_token,
+                                        @Field("soft_type") String soft_type
+    );
+
+    @FormUrlEncoded
     @POST("api/register")
     Call<UserModel> signUpWithoutImage(
             @Field("name") String name,
@@ -81,15 +100,18 @@ public interface Service {
     @GET("api/offers")
     Call<ProductDataModel> getOffersProducts(@Query("pagination") String pagination,
                                              @Query("user_id") int user_id);
+
     @GET("api/category-product")
     Call<CategoryProductDataModel> getCategoryProducts(@Query("pagination") String pagination,
                                                        @Query("user_id") int user_id);
+
     @GET("api/genaral-search")
     Call<ProductDataModel> getOffersProducts(@Query("pagination") String pagination,
                                              @Query("user_id") int user_id,
                                              @Query("search_name") String search_name,
                                              @Query("departemnt_id") String departemnt_id
     );
+
     @GET("api/product")
     Call<SingleProductDataModel> Product_detials(@Query("product_id") int product_id);
 
@@ -97,6 +119,14 @@ public interface Service {
     Call<MainCategoryDataModel> getMainCategory(
             @Query("pagination") String pagination
     );
+
     @GET("api/banks")
     Call<BankDataModel> getBanks();
+
+    @FormUrlEncoded
+    @POST("api/favorite-action")
+    Call<ResponseBody> addFavoriteProduct(
+            @Header("Authorization") String user_token,
+            @Field("product_id") String product_id)
+            ;
 }
