@@ -19,11 +19,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.anaqaphone.R;
+import com.anaqaphone.activities_fragments.activity_product_details.ProductDetailsActivity;
+import com.anaqaphone.adapters.FavouriteProduct_Adapter;
 import com.anaqaphone.databinding.ActivityMyFavoriteBinding;
 import com.anaqaphone.interfaces.Listeners;
 import com.anaqaphone.language.Language;
+import com.anaqaphone.models.FavouriteDataModel;
+import com.anaqaphone.models.SingleProductDataModel;
 import com.anaqaphone.models.UserModel;
 import com.anaqaphone.preferences.Preferences;
+import com.anaqaphone.remote.Api;
+import com.anaqaphone.tags.Tags;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +54,8 @@ public class MyFavoriteActivity extends AppCompatActivity implements Listeners.B
     private int selected_pos = -1;
     private boolean isFavoriteChange = false;
     private boolean isItemAdded = false;
-
+    private List<FavouriteDataModel.FavouriteData> favouriteDataList;
+    private FavouriteProduct_Adapter favouriteProduct_adapter;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -64,7 +72,7 @@ public class MyFavoriteActivity extends AppCompatActivity implements Listeners.B
 
 
     private void initView() {
-
+        favouriteDataList = new ArrayList<>();
         Paper.init(this);
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
         binding.setBackListener(this);
@@ -75,37 +83,37 @@ public class MyFavoriteActivity extends AppCompatActivity implements Listeners.B
         userModel = preferences.getUserData(this);
 
 
-        manager = new GridLayoutManager(this,1);
+        manager = new GridLayoutManager(this, 1);
         binding.recView.setLayoutManager(manager);
-        /*adapter = new MyFavoriteAdapter(this, productModelList, this);
-        binding.recView.setAdapter(adapter);
-        binding.recView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                if (dy > 0) {
-                    int total = binding.recView.getAdapter().getItemCount();
-
-                    int lastVisibleItem = manager.findLastCompletelyVisibleItemPosition();
-
-
-                    if (total > 6 && (total - lastVisibleItem) == 2 && !isLoading) {
-                        isLoading = true;
-                        int page = current_page + 1;
-                        productModelList.add(null);
-                        adapter.notifyDataSetChanged();
-                        loadMore(page);
-                    }
-                }
-            }
-        });*/
+        favouriteProduct_adapter = new FavouriteProduct_Adapter(favouriteDataList, this);
+        binding.recView.setAdapter(favouriteProduct_adapter);
+//        binding.recView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            @Override
+//            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+//                super.onScrolled(recyclerView, dx, dy);
+//                if (dy > 0) {
+//                    int total = binding.recView.getAdapter().getItemCount();
+//
+//                    int lastVisibleItem = manager.findLastCompletelyVisibleItemPosition();
+//
+//
+//                    if (total > 6 && (total - lastVisibleItem) == 2 && !isLoading) {
+//                        isLoading = true;
+//                        int page = current_page + 1;
+//                        productModelList.add(null);
+//                        adapter.notifyDataSetChanged();
+//                        loadMore(page);
+//                    }
+//                }
+//            }
+//        });*/
         getData();
     }
 
 
     public void getData() {
 
-       /* try {
+        try {
 
             String token;
             if (userModel == null) {
@@ -114,16 +122,16 @@ public class MyFavoriteActivity extends AppCompatActivity implements Listeners.B
                 token = userModel.getUser().getToken();
             }
             Api.getService(Tags.base_url)
-                    .getMyFavoriteProducts(lang, token, "on", 1)
-                    .enqueue(new Callback<ProductDataModel>() {
+                    .getMyFavoriteProducts(userModel.getUser().getToken(), "off")
+                    .enqueue(new Callback<FavouriteDataModel>() {
                         @Override
-                        public void onResponse(Call<ProductDataModel> call, Response<ProductDataModel> response) {
+                        public void onResponse(Call<FavouriteDataModel> call, Response<FavouriteDataModel> response) {
                             binding.progBar.setVisibility(View.GONE);
                             if (response.isSuccessful() && response.body() != null && response.body().getData() != null) {
-                                productModelList.clear();
-                                productModelList.addAll(response.body().getData());
-                                if (productModelList.size() > 0) {
-                                    adapter.notifyDataSetChanged();
+                                favouriteDataList.clear();
+                                favouriteDataList.addAll(response.body().getData());
+                                if (favouriteDataList.size() > 0) {
+                                    favouriteProduct_adapter.notifyDataSetChanged();
                                     binding.tvNoData.setVisibility(View.GONE);
                                 } else {
                                     binding.tvNoData.setVisibility(View.VISIBLE);
@@ -139,7 +147,7 @@ public class MyFavoriteActivity extends AppCompatActivity implements Listeners.B
 
                                     try {
 
-                                        Log.e("error", response.code() + "_" + response.errorBody().string());
+                                        Log.e("errorsss", response.code() + "_" + response.errorBody().string());
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
@@ -148,7 +156,7 @@ public class MyFavoriteActivity extends AppCompatActivity implements Listeners.B
                         }
 
                         @Override
-                        public void onFailure(Call<ProductDataModel> call, Throwable t) {
+                        public void onFailure(Call<FavouriteDataModel> call, Throwable t) {
                             try {
                                 binding.progBar.setVisibility(View.GONE);
 
@@ -167,7 +175,7 @@ public class MyFavoriteActivity extends AppCompatActivity implements Listeners.B
                     });
         } catch (Exception e) {
 
-        }*/
+        }
     }
 
     private void loadMore(int page) {
@@ -360,8 +368,7 @@ public class MyFavoriteActivity extends AppCompatActivity implements Listeners.B
         } else if (isFavoriteChange) {
             setResult(RESULT_OK);
 
-        }else if (isItemAdded)
-        {
+        } else if (isItemAdded) {
             Intent intent = getIntent();
             intent.putExtra("action", 1);
             setResult(RESULT_OK, intent);
@@ -370,9 +377,72 @@ public class MyFavoriteActivity extends AppCompatActivity implements Listeners.B
         finish();
     }
 
+    public void setItemDataOffers(SingleProductDataModel model) {
+
+        Intent intent = new Intent(this, ProductDetailsActivity.class);
+        intent.putExtra("product_id", model.getId());
+        startActivityForResult(intent, 100);
+    }
+
+    public void like_dislike(SingleProductDataModel productModel, int pos, int i) {
+
+        try {
+            Log.e("llll", userModel.getUser().getToken());
+
+            Api.getService(Tags.base_url)
+                    .addFavoriteProduct(userModel.getUser().getToken(), productModel.getId() + "")
+                    .enqueue(new Callback<ResponseBody>() {
+                        @Override
+                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                            if (response.isSuccessful()) {
+                                favouriteDataList.remove(pos);
+                                favouriteProduct_adapter.notifyItemRemoved(pos);
+                            } else {
+
+
+                                if (response.code() == 500) {
+                                    Toast.makeText(MyFavoriteActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
+
+
+                                } else {
+                                    Toast.makeText(MyFavoriteActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+
+                                    try {
+
+                                        Log.e("error", response.code() + "_" + response.errorBody().string());
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+                            try {
+
+                                if (t.getMessage() != null) {
+                                    Log.e("error", t.getMessage());
+                                    if (t.getMessage().toLowerCase().contains("failed to connect") || t.getMessage().toLowerCase().contains("unable to resolve host")) {
+                                        Toast.makeText(MyFavoriteActivity.this, R.string.something, Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(MyFavoriteActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                            } catch (Exception e) {
+                            }
+                        }
+                    });
+        } catch (Exception e) {
+
+        }
+    }
+
 
     @Override
     public void onBackPressed() {
         back();
     }
+
 }

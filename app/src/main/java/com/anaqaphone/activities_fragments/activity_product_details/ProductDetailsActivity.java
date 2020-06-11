@@ -195,6 +195,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements Listene
     public void addToCart(SingleProductDataModel singleProductDataModel) {
         ItemCartModel itemCartModel = new ItemCartModel(singleProductDataModel.getId(), singleProductDataModel.getTitle(), singleProductDataModel.getPrice(), 1, singleProductDataModel.getImage());
         cartSingleton.addItem(itemCartModel);
+        Toast.makeText(this, getResources().getString(R.string.add_to_cart), Toast.LENGTH_SHORT).show();
     }
 
 //    public void makeFlyAnimation(RoundedImageView targetView, int quantity) {

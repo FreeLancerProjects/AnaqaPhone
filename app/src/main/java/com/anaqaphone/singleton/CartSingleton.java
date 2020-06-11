@@ -43,6 +43,7 @@ public class CartSingleton {
         {
             if (itemCartModel.getItem_id()==itemCartModelList.get(i).getItem_id())
             {
+
                 pos = i;
                 return pos;
             }

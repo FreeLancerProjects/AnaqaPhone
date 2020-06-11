@@ -5,6 +5,9 @@ import android.app.DownloadManager;
 
 import com.anaqaphone.models.BankDataModel;
 import com.anaqaphone.models.CategoryProductDataModel;
+import com.anaqaphone.models.FavouriteDataModel;
+import com.anaqaphone.models.NotificationCount;
+import com.anaqaphone.models.NotificationDataModel;
 import com.anaqaphone.models.ProductDataModel;
 import com.anaqaphone.models.MainCategoryDataModel;
 import com.anaqaphone.models.PlaceGeocodeData;
@@ -129,4 +132,28 @@ public interface Service {
             @Header("Authorization") String Authorization,
             @Field("product_id") String product_id)
             ;
+
+    @GET("api/my-favorites")
+    Call<FavouriteDataModel> getMyFavoriteProducts(
+            @Header("Authorization") String Authorization,
+            @Query("pagination") String pagination
+    )
+            ;
+    @GET("api/my-notification")
+    Call<NotificationDataModel> getNotification(
+            @Query("pagination") String pagination
+            , @Header("Authorization") String user_token
+
+
+    );
+
+    @FormUrlEncoded
+    @POST("api/delete-notification")
+    Call<ResponseBody> deleteNotification(@Header("Authorization") String user_token,
+                                          @Field("notification_id") int notification_id
+    );
+
+    @GET("api/count-unread")
+    Call<NotificationCount> getUnreadNotificationCount(@Header("Authorization") String user_token
+    );
 }

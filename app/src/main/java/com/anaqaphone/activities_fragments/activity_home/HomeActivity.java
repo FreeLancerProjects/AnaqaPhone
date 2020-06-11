@@ -32,6 +32,7 @@ import com.anaqaphone.activities_fragments.activity_search.SearchActivity;
 import com.anaqaphone.databinding.ActivityHomeBinding;
 import com.anaqaphone.language.Language;
 import com.anaqaphone.models.NotFireModel;
+import com.anaqaphone.models.NotificationCount;
 import com.anaqaphone.models.UserModel;
 import com.anaqaphone.preferences.Preferences;
 import com.anaqaphone.remote.Api;
@@ -106,17 +107,16 @@ public class HomeActivity extends AppCompatActivity {
 
 
         binding.flNotification.setOnClickListener(view -> {
-            Intent intent = new Intent(this, NotificationActivity.class);
-            startActivity(intent);
 
-           /* if (userModel != null) {
+
+            if (userModel != null) {
                 readNotificationCount();
-                Intent intent = new Intent(this, NotificationActivity.class);
+                Intent intent = new Intent(HomeActivity.this, NotificationActivity.class);
                 startActivity(intent);
 
             } else {
                 Common.CreateDialogAlert(this, getString(R.string.please_sign_in_or_sign_up));
-            }*/
+            }
 
         });
 
@@ -191,7 +191,7 @@ public class HomeActivity extends AppCompatActivity {
 
 
     private void getNotificationCount() {
-        /*Api.getService(Tags.base_url)
+        Api.getService(Tags.base_url)
                 .getUnreadNotificationCount(userModel.getUser().getToken())
                 .enqueue(new Callback<NotificationCount>() {
                     @Override
@@ -229,10 +229,12 @@ public class HomeActivity extends AppCompatActivity {
                             Log.e("Error", e.getMessage() + "__");
                         }
                     }
-                });*/
+                });
     }
 
     private void readNotificationCount() {
+        binding.setNotCount(0);
+
         /*Api.getService(Tags.base_url)
                 .readNotification(userModel.getUser().getToken())
                 .enqueue(new Callback<ResponseBody>() {

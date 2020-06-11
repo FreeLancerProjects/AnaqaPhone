@@ -1,5 +1,6 @@
 package com.anaqaphone.activities_fragments.activity_notification;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -16,11 +17,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.anaqaphone.R;
+import com.anaqaphone.adapters.NotificationAdapter;
 import com.anaqaphone.databinding.ActivityNotificationBinding;
 import com.anaqaphone.interfaces.Listeners;
 import com.anaqaphone.language.Language;
+import com.anaqaphone.models.NotificationDataModel;
 import com.anaqaphone.models.UserModel;
 import com.anaqaphone.preferences.Preferences;
+import com.anaqaphone.remote.Api;
+import com.anaqaphone.share.Common;
+import com.anaqaphone.tags.Tags;
 
 
 import java.io.IOException;
@@ -37,8 +43,8 @@ import retrofit2.Response;
 public class NotificationActivity extends AppCompatActivity implements Listeners.BackListener{
     private ActivityNotificationBinding binding;
     private String lang;
-    /*private List<NotificationDataModel.NotificationModel> notificationModelList;
-    private NotificationAdapter adapter;*/
+    private List<NotificationDataModel.NotificationModel> notificationModelList;
+    private NotificationAdapter adapter;
     private Preferences preferences;
     private UserModel userModel;
     private int current_page=1;
@@ -69,48 +75,48 @@ public class NotificationActivity extends AppCompatActivity implements Listeners
 
         preferences = Preferences.getInstance();
         userModel = preferences.getUserData(this);
-        //notificationModelList = new ArrayList<>();
+        notificationModelList = new ArrayList<>();
         Paper.init(this);
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
         binding.setBackListener(this);
         binding.setLang(lang);
         binding.progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(this,R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
         binding.recView.setLayoutManager(new LinearLayoutManager(this));
-        /*adapter = new NotificationAdapter(this,notificationModelList);
-        binding.recView.setAdapter(adapter);*/
+        adapter = new NotificationAdapter(notificationModelList,this);
+        binding.recView.setAdapter(adapter);
 
 
-       /* binding.recView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                if (dy>0)
-                {
-                    int total_item = binding.recView.getAdapter().getItemCount();
-                    int last_visible_item = ((LinearLayoutManager)binding.recView.getLayoutManager()).findLastCompletelyVisibleItemPosition();
-
-                    if (total_item>=20&&(total_item-last_visible_item)==5&&!isLoading)
-                    {
-
-                        isLoading = true;
-                        int page = current_page+1;
-                        notificationModelList.add(null);
-                        adapter.notifyItemInserted(notificationModelList.size()-1);
-
-                        loadMore(page);
-                    }
-                }
-            }
-        });*/
+//        binding.recView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            @Override
+//            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+//                super.onScrolled(recyclerView, dx, dy);
+//                if (dy>0)
+//                {
+//                    int total_item = binding.recView.getAdapter().getItemCount();
+//                    int last_visible_item = ((LinearLayoutManager)binding.recView.getLayoutManager()).findLastCompletelyVisibleItemPosition();
+//
+//                    if (total_item>=20&&(total_item-last_visible_item)==5&&!isLoading)
+//                    {
+//
+//                        isLoading = true;
+//                        int page = current_page+1;
+//                        notificationModelList.add(null);
+//                        adapter.notifyItemInserted(notificationModelList.size()-1);
+//
+//                        loadMore(page);
+//                    }
+//                }
+//            }
+//        });
         getNotification();
 
     }
 
     private void getNotification()
     {
-       /* try {
+        try {
             Api.getService(Tags.base_url)
-                    .getNotification(userModel.getUser().getToken(),current_page,"on",20)
+                    .getNotification("off",userModel.getUser().getToken())
                     .enqueue(new Callback<NotificationDataModel>() {
                         @Override
                         public void onResponse(Call<NotificationDataModel> call, Response<NotificationDataModel> response) {
@@ -165,7 +171,7 @@ public class NotificationActivity extends AppCompatActivity implements Listeners
                     });
         } catch (Exception e) {
 
-        }*/
+        }
     }
 
     private void loadMore(int page)
@@ -239,7 +245,71 @@ public class NotificationActivity extends AppCompatActivity implements Listeners
 
         }*/
     }
+    public void setItemData(NotificationDataModel.NotificationModel notificationModel, int adapterPosition) {
 
+
+        try {
+            ProgressDialog dialog = Common.createProgressDialog(this,getString(R.string.wait));
+            dialog.setCancelable(false);
+            dialog.setCanceledOnTouchOutside(false);
+            dialog.show();
+            Api.getService(Tags.base_url)
+                    .deleteNotification(userModel.getUser().getToken(),notificationModel.getId())
+                    .enqueue(new Callback<ResponseBody>() {
+                        @Override
+                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                            dialog.dismiss();
+                            if (response.isSuccessful()) {
+                                notificationModelList.remove(adapterPosition);
+                                adapter.notifyItemRemoved(adapterPosition);
+
+                                if (notificationModelList.size() > 0) {
+
+                                    binding.tvNoData.setVisibility(View.GONE);
+                                } else {
+                                    binding.tvNoData.setVisibility(View.VISIBLE);
+
+                                }
+                            } else {
+                                dialog.dismiss();
+                                if (response.code() == 500) {
+                                    Toast.makeText(NotificationActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
+
+
+                                } else {
+                                    Toast.makeText(NotificationActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+
+                                    try {
+
+                                        Log.e("error", response.code() + "_" + response.errorBody().string());
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+                            try {
+                                dialog.dismiss();
+                                if (t.getMessage() != null) {
+                                    Log.e("error", t.getMessage());
+                                    if (t.getMessage().toLowerCase().contains("failed to connect") || t.getMessage().toLowerCase().contains("unable to resolve host")) {
+                                        Toast.makeText(NotificationActivity.this, R.string.something, Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(NotificationActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                            } catch (Exception e) {
+                            }
+                        }
+                    });
+        } catch (Exception e) {
+
+        }
+    }
     @Override
     public void back() {
         finish();
