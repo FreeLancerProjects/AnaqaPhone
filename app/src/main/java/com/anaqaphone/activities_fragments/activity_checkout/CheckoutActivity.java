@@ -324,7 +324,7 @@ public class CheckoutActivity extends AppCompatActivity implements Listeners.Bac
                 setResult(RESULT_OK, intent);
                 finish();
             }else if (resultCode==RESULT_CANCELED){
-                Toast.makeText(this, R.string.error_in_payment, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "بلح", Toast.LENGTH_SHORT).show();
             }
         }
     }

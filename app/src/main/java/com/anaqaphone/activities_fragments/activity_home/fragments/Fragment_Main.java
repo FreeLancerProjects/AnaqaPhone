@@ -64,6 +64,7 @@ public class Fragment_Main extends Fragment {
     private OffersAdapter offersAdapter;
     private List<CategoryProductDataModel.Data> categoryProductDataModels;
     private MainCategoryProducts_Adapter categoryProducts_adapter;
+
     public static Fragment_Main newInstance() {
         return new Fragment_Main();
     }
@@ -86,11 +87,11 @@ public class Fragment_Main extends Fragment {
 
     private void initView() {
         offersDataList = new ArrayList<>();
-        categoryProductDataModels=new ArrayList<>();
+        categoryProductDataModels = new ArrayList<>();
         activity = (HomeActivity) getActivity();
         preferences = Preferences.getInstance();
         userModel = preferences.getUserData(activity);
-        offersDataList=new ArrayList<>();
+        offersDataList = new ArrayList<>();
         Paper.init(activity);
         lang = Paper.book().read("lang", "ar");
 
@@ -101,7 +102,7 @@ public class Fragment_Main extends Fragment {
 
 
         binding.recViewFavoriteOffers.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
-        offersAdapter = new OffersAdapter(offersDataList, activity, this,1);
+        offersAdapter = new OffersAdapter(offersDataList, activity, this, 1);
         binding.recViewFavoriteOffers.setAdapter(offersAdapter);
         binding.recViewAccessories.setLayoutManager(new LinearLayoutManager(activity));
         categoryProducts_adapter = new MainCategoryProducts_Adapter(categoryProductDataModels, activity, this);
@@ -184,20 +185,19 @@ public class Fragment_Main extends Fragment {
     public void like_dislike(SingleProductDataModel productModel, int pos, int i) {
 
         try {
-            Log.e("llll",userModel.getUser().getToken());
+            Log.e("llll", userModel.getUser().getToken());
 
             Api.getService(Tags.base_url)
-                    .addFavoriteProduct(userModel.getUser().getToken(),productModel.getId()+"")
+                    .addFavoriteProduct(userModel.getUser().getToken(), productModel.getId() + "")
                     .enqueue(new Callback<ResponseBody>() {
                         @Override
                         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                             if (response.isSuccessful()) {
-if(i==1){
-    getCategoryProducts();
-}
-else {
-    getOffersProducts();
-}
+                                if (i == 1) {
+                                    getCategoryProducts();
+                                } else {
+                                    getOffersProducts();
+                                }
 
                             } else {
 
@@ -248,6 +248,8 @@ else {
 
             if (userModel != null) {
                 uid = userModel.getUser().getId();
+                Log.e("token",userModel.getUser().getToken());
+
             } else {
                 uid = 0;
             }
@@ -321,6 +323,7 @@ else {
 
             if (userModel != null) {
                 uid = userModel.getUser().getId();
+
             } else {
                 uid = 0;
             }
@@ -394,6 +397,7 @@ else {
             getOffersProducts();
         }
     }
+
     public void updateCartCount(int itemCount) {
         activity.updateCartCount(itemCount);
 

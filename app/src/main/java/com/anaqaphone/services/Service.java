@@ -8,6 +8,7 @@ import com.anaqaphone.models.CategoryProductDataModel;
 import com.anaqaphone.models.FavouriteDataModel;
 import com.anaqaphone.models.NotificationCount;
 import com.anaqaphone.models.NotificationDataModel;
+import com.anaqaphone.models.OrderDataModel;
 import com.anaqaphone.models.ProductDataModel;
 import com.anaqaphone.models.MainCategoryDataModel;
 import com.anaqaphone.models.PlaceGeocodeData;
@@ -156,4 +157,14 @@ public interface Service {
     @GET("api/count-unread")
     Call<NotificationCount> getUnreadNotificationCount(@Header("Authorization") String user_token
     );
+
+    @GET("api/my-orders")
+    Call<OrderDataModel> getOrders(@Header("Authorization") String user_token,
+                                   @Query("order_status") String order_status,
+                                   @Query("pagination") String pagination,
+                                   @Query("page") int page,
+                                   @Query("limit_per_page") int limit_per_page
+
+    );
+
 }

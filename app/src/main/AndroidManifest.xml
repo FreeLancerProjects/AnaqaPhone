@@ -23,6 +23,10 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="m"
         >
+        <activity android:name=".activities_fragments.activity_order_details.OrderDetailsActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:windowSoftInputMode="stateAlwaysHidden"
+            />
         <activity android:name=".activities_fragments.activity_checkout.CheckoutActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:windowSoftInputMode="stateAlwaysHidden"

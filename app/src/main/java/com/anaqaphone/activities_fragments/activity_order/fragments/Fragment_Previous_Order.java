@@ -19,9 +19,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.anaqaphone.R;
 import com.anaqaphone.activities_fragments.activity_order.OrderActivity;
+import com.anaqaphone.activities_fragments.activity_order_details.OrderDetailsActivity;
+import com.anaqaphone.adapters.OrderAdapter;
 import com.anaqaphone.databinding.FragmentCurrentPreviousOrderBinding;
+import com.anaqaphone.models.OrderDataModel;
+import com.anaqaphone.models.OrderModel;
 import com.anaqaphone.models.UserModel;
 import com.anaqaphone.preferences.Preferences;
+import com.anaqaphone.remote.Api;
+import com.anaqaphone.tags.Tags;
 
 
 import java.io.IOException;
@@ -37,8 +43,8 @@ public class Fragment_Previous_Order extends Fragment {
     private OrderActivity activity;
     private FragmentCurrentPreviousOrderBinding binding;
     private LinearLayoutManager manager;
-   /* private OrderAdapter adapter;
-    private List<OrderModel> orderModelList;*/
+    private OrderAdapter adapter;
+    private List<OrderModel> orderModelList;
     private Preferences preferences;
     private UserModel userModel;
     private int current_page=1;
@@ -56,7 +62,7 @@ public class Fragment_Previous_Order extends Fragment {
     }
 
     private void initView() {
-        //orderModelList = new ArrayList<>();
+        orderModelList = new ArrayList<>();
         activity = (OrderActivity) getActivity();
         binding.progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity,R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
         manager = new LinearLayoutManager(activity);
@@ -64,10 +70,10 @@ public class Fragment_Previous_Order extends Fragment {
         preferences = Preferences.getInstance();
         userModel = preferences.getUserData(activity);
         binding.recView.setLayoutManager(new LinearLayoutManager(activity));
-        /*adapter = new OrderAdapter(activity,orderModelList,this);
-        binding.recView.setAdapter(adapter);*/
+        adapter = new OrderAdapter(activity,orderModelList,this);
+        binding.recView.setAdapter(adapter);
 
-       /* binding.recView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        binding.recView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
@@ -90,17 +96,16 @@ public class Fragment_Previous_Order extends Fragment {
             }
         });
         getOrders();
-*/
 
 
     }
 
     private void getOrders()
     {
-       /* try {
+        try {
             current_page = 1;
             Api.getService(Tags.base_url)
-                    .getOrders(userModel.getUser().getToken(),"previous",current_page,"on",20)
+                    .getOrders(userModel.getUser().getToken(),"previous","on",current_page,20)
                     .enqueue(new Callback<OrderDataModel>() {
                         @Override
                         public void onResponse(Call<OrderDataModel> call, Response<OrderDataModel> response) {
@@ -155,15 +160,15 @@ public class Fragment_Previous_Order extends Fragment {
                     });
         } catch (Exception e) {
 
-        }*/
+        }
     }
 
     private void loadMore(int page)
     {
-        /*try {
+        try {
 
             Api.getService(Tags.base_url)
-                    .getOrders(userModel.getUser().getToken(),"previous",page,"on",20)
+                    .getOrders(userModel.getUser().getToken(),"previous","on",page,20)
                     .enqueue(new Callback<OrderDataModel>() {
                         @Override
                         public void onResponse(Call<OrderDataModel> call, Response<OrderDataModel> response) {
@@ -227,12 +232,12 @@ public class Fragment_Previous_Order extends Fragment {
                     });
         } catch (Exception e) {
 
-        }*/
+        }
     }
 
-    /*public void setItemData(OrderModel model) {
+    public void setItemData(OrderModel model) {
         Intent intent = new Intent(activity, OrderDetailsActivity.class);
         intent.putExtra("data",model);
         startActivity(intent);
-    }*/
+    }
 }

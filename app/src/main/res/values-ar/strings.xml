@@ -159,13 +159,19 @@
     <string name="shamil_daribat_alqimih_almudafih">(شامل ضريبة القيمه المضافه)</string>
     <string name="main_advantages">المميزات الاساسيه</string>
     <string name="overview">نظره عامه</string>
-    <string name="discount">discount</string>
+    <string name="discount">خصم</string>
     <string name="account_number">رقم الحساب : </string>
     <string name="account_iban">رقم الايبان :</string>
-    <string name="banks">Banks</string>
-    <string name="visa">Visa</string>
-    <string name="paypal">Paypal</string>
-    <string name="cash_on_delivery">Cash On Delivery</string>
-    <string name="error_in_payment">Error in payment</string>
-
+    <string name="banks">بنوك</string>
+    <string name="visa">فيزا</string>
+    <string name="paypal">باى بال</string>
+    <string name="cash_on_delivery">الدفع عند الاستلام</string>
+    <string name="status">حالة الطلب</string>
+    <string name="total_cost">اجمالى السعر</string>
+    <string name="amount">الكمية</string>
+    <string name="new_order">قيد الانتظار</string>
+    <string name="in_way">جار التوصيل</string>
+    <string name="accepted">تم إستلام طلبك</string>
+    <string name="refused">تم الرفض</string>
+    <string name="completed">مكتمل</string>
 </resources>

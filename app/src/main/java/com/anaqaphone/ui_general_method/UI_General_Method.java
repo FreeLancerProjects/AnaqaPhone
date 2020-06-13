@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.databinding.BindingAdapter;
 
+import com.anaqaphone.R;
 import com.anaqaphone.share.Time_Ago;
 import com.anaqaphone.tags.Tags;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -125,6 +126,27 @@ public class UI_General_Method {
         textView.setText(String.format("%s %s %s",date,"-",time));
     }
 
+
+    @BindingAdapter("order_status")
+    public static void orderStatus(TextView textView,String status) {
+        if (status.equals("new_order")){
+            textView.setText(textView.getContext().getString(R.string.new_order));
+        }else if (status.equals("driver_accept")){
+            textView.setText(textView.getContext().getString(R.string.accepted));
+
+        }else if (status.equals("driver_delivery")){
+            textView.setText(textView.getContext().getString(R.string.in_way));
+
+        }else if (status.equals("driver_refuser")){
+            textView.setText(textView.getContext().getString(R.string.refused));
+
+        }
+        else if (status.equals("driver_end")){
+            textView.setText(textView.getContext().getString(R.string.completed));
+
+        }
+
+    }
 
     @BindingAdapter({"orderTime","orderDate"})
     public static void displayOrderDate(TextView textView,long time,long date)

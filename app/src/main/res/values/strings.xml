@@ -160,6 +160,12 @@
     <string name="visa">Visa</string>
     <string name="paypal">Paypal</string>
     <string name="cash_on_delivery">Cash On Delivery</string>
-    <string name="error_in_payment">Error in payment</string>
-
+    <string name="status">status</string>
+    <string name="total_cost">Total Cost</string>
+    <string name="amount">amount</string>
+    <string name="new_order">Pending</string>
+    <string name="in_way">In Way</string>
+    <string name="accepted">Accepted</string>
+    <string name="refused">Refused</string>
+    <string name="completed">Completed</string>
 </resources>

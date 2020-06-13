@@ -69,6 +69,7 @@ public class OrderModel implements Serializable {
         private String item_id;
         private String amount;
         private String cost;
+        private ProductInfo product_info;
 
         public Item getItem() {
             return item;
@@ -92,6 +93,33 @@ public class OrderModel implements Serializable {
 
         public String getCost() {
             return cost;
+        }
+
+        public ProductInfo getProduct_info() {
+            return product_info;
+        }
+
+        public  class ProductInfo implements Serializable{
+            private int id;
+            private String title;
+            private String image;
+            private String price;
+
+            public int getId() {
+                return id;
+            }
+
+            public String getTitle() {
+                return title;
+            }
+
+            public String getImage() {
+                return image;
+            }
+
+            public String getPrice() {
+                return price;
+            }
         }
 
         public class Item implements Serializable {
