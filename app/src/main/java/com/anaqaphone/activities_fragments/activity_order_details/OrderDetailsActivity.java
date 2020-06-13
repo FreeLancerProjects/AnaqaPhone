@@ -67,12 +67,11 @@ public class OrderDetailsActivity extends AppCompatActivity implements Listeners
     private void initView()
     {
         orderDetailsList = new ArrayList<>();
-        orderModel=new OrderModel();
         Paper.init(this);
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
         binding.setBackListener(this);
         binding.setLang(lang);
-        binding.setModel(orderModel);
+
         adapter = new ProductDetailsAdapter(orderDetailsList,this);
         binding.recView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
         binding.recView.setAdapter(adapter);

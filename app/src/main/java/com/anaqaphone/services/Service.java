@@ -121,7 +121,7 @@ public interface Service {
 
     @GET("api/product")
     Call<SingleProductDataModel> Product_detials(@Query("product_id") int product_id);
-    @GET("api/product")
+    @GET("api/one-order")
     Call<OrderModel> order_detials(@Query("order_id") int order_id);
     @GET("api/category")
     Call<MainCategoryDataModel> getMainCategory(

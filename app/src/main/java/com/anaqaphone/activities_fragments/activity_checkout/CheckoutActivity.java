@@ -93,7 +93,8 @@ public class CheckoutActivity extends AppCompatActivity implements Listeners.Bac
         singleton = CartSingleton.newInstance();
         addOrderModel = new AddOrderModel();
         addOrderModel.setTotal_price(total_cost);
-        addOrderModel.setCoupon_id(tax+"");
+        if(tax!=0){
+        addOrderModel.setCoupon_id(tax+"");}
         Paper.init(this);
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
         binding.setBackListener(this);

@@ -129,6 +129,7 @@ public class UI_General_Method {
 
     @BindingAdapter("order_status")
     public static void orderStatus(TextView textView,String status) {
+
         if (status.equals("new_order")){
             textView.setText(textView.getContext().getString(R.string.new_order));
         }else if (status.equals("driver_accept")){
