@@ -140,7 +140,7 @@ public class Fragment_Date extends Fragment implements DatePickerDialog.OnDateSe
         binding.tvDate.setText(d);
         date = calendar.getTimeInMillis();
 
-        addOrderModel.setDate(date);
+        addOrderModel.setOrder_date(date+"");
 
         SimpleDateFormat dateFormat2 = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
 
@@ -158,17 +158,17 @@ public class Fragment_Date extends Fragment implements DatePickerDialog.OnDateSe
         String t = dateFormat.format(new Date(calendar.getTimeInMillis()));
         binding.tvTime.setText(t);
         time = calendar.getTimeInMillis();
-        addOrderModel.setTime(time);
+        addOrderModel.setOrder_time(time+"");
     }
 
 
     @Override
     public void onNext() {
-        if (addOrderModel.isStep2Valid(activity))
-        {
-            activity.updateModel(addOrderModel);
-            activity.displayFragmentPaymentType();
-        }
+//        if (addOrderModel.isStep2Valid(activity))
+//        {
+//            activity.updateModel(addOrderModel);
+//            activity.displayFragmentPaymentType();
+//        }
     }
 
     @Override

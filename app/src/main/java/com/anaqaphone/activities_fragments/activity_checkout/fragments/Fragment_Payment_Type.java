@@ -15,6 +15,7 @@ import com.anaqaphone.activities_fragments.activity_checkout.CheckoutActivity;
 import com.anaqaphone.databinding.FragmentPaymentTypeBinding;
 import com.anaqaphone.interfaces.Listeners;
 import com.anaqaphone.models.AddOrderModel;
+import com.anaqaphone.singleton.CartSingleton;
 
 public class Fragment_Payment_Type extends Fragment implements Listeners.PaymentTypeAction {
     private static final String TAG = "data";
@@ -22,6 +23,7 @@ public class Fragment_Payment_Type extends Fragment implements Listeners.Payment
     private FragmentPaymentTypeBinding binding;
     private String payment_type;
     private AddOrderModel addOrderModel;
+    private CartSingleton singleton;
 
 
     public static Fragment_Payment_Type newInstance(AddOrderModel addOrderModel)
@@ -50,6 +52,7 @@ public class Fragment_Payment_Type extends Fragment implements Listeners.Payment
 
 
     private void initView() {
+        singleton=CartSingleton.newInstance();
         activity = (CheckoutActivity) getActivity();
         binding.setAction(this);
 
@@ -101,6 +104,7 @@ public class Fragment_Payment_Type extends Fragment implements Listeners.Payment
 
         if (addOrderModel.isStep3Valid(activity))
         {
+            addOrderModel.setProducts(singleton.getItemCartModelList());
             activity.updateModel(addOrderModel);
             activity.createOrder();
         }
@@ -112,6 +116,6 @@ public class Fragment_Payment_Type extends Fragment implements Listeners.Payment
 
     @Override
     public void onPrevious() {
-        activity.displayFragmentDate();
+        activity.displayFragmentAddress();
     }
 }

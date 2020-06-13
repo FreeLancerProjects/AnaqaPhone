@@ -3,12 +3,14 @@ package com.anaqaphone.services;
 
 import android.app.DownloadManager;
 
+import com.anaqaphone.models.AddOrderModel;
 import com.anaqaphone.models.BankDataModel;
 import com.anaqaphone.models.CategoryProductDataModel;
 import com.anaqaphone.models.FavouriteDataModel;
 import com.anaqaphone.models.NotificationCount;
 import com.anaqaphone.models.NotificationDataModel;
 import com.anaqaphone.models.OrderDataModel;
+import com.anaqaphone.models.OrderModel;
 import com.anaqaphone.models.ProductDataModel;
 import com.anaqaphone.models.MainCategoryDataModel;
 import com.anaqaphone.models.PlaceGeocodeData;
@@ -22,6 +24,7 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -118,7 +121,8 @@ public interface Service {
 
     @GET("api/product")
     Call<SingleProductDataModel> Product_detials(@Query("product_id") int product_id);
-
+    @GET("api/product")
+    Call<OrderModel> order_detials(@Query("order_id") int order_id);
     @GET("api/category")
     Call<MainCategoryDataModel> getMainCategory(
             @Query("pagination") String pagination
@@ -166,5 +170,13 @@ public interface Service {
                                    @Query("limit_per_page") int limit_per_page
 
     );
+    @POST("api/create-order")
+    Call<OrderModel> createOrder(
 
+            @Header("Authorization") String Authorization,
+            @Body AddOrderModel addOrderModel)
+            ;
+    @FormUrlEncoded
+    @POST("api/find-coupon")
+    Call<SettingModel> getCouponValue(@Field("coupon_num") String coupon_num);
 }

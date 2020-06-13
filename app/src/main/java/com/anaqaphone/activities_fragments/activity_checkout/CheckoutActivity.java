@@ -27,12 +27,22 @@ import com.anaqaphone.models.ItemCartUploadModel;
 import com.anaqaphone.models.OrderModel;
 import com.anaqaphone.models.UserModel;
 import com.anaqaphone.preferences.Preferences;
+import com.anaqaphone.remote.Api;
+import com.anaqaphone.share.Common;
 import com.anaqaphone.singleton.CartSingleton;
+import com.anaqaphone.tags.Tags;
 
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
 import io.paperdb.Paper;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class CheckoutActivity extends AppCompatActivity implements Listeners.BackListener{
     private ActivityCheckoutBinding binding;
     private String lang;
@@ -46,7 +56,7 @@ public class CheckoutActivity extends AppCompatActivity implements Listeners.Bac
     private UserModel userModel;
     private Preferences preferences;
     private double total_cost=0.0;
-    private double tax=0.0;
+    private int tax;
     private OrderModel orderModel;
 
 
@@ -71,7 +81,7 @@ public class CheckoutActivity extends AppCompatActivity implements Listeners.Bac
     private void getDataFromIntent() {
         Intent intent = getIntent();
         total_cost = intent.getDoubleExtra("total_cost",0.0);
-        tax = intent.getDoubleExtra("tax",0.0);
+        tax = intent.getIntExtra("coupun",0);
 
     }
 
@@ -82,6 +92,8 @@ public class CheckoutActivity extends AppCompatActivity implements Listeners.Bac
         userModel = preferences.getUserData(this);
         singleton = CartSingleton.newInstance();
         addOrderModel = new AddOrderModel();
+        addOrderModel.setTotal_price(total_cost);
+        addOrderModel.setCoupon_id(tax+"");
         Paper.init(this);
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
         binding.setBackListener(this);
@@ -131,47 +143,47 @@ public class CheckoutActivity extends AppCompatActivity implements Listeners.Bac
         }
 
     }
-    public void displayFragmentDate()
-    {
-        try {
-            if (fragment_date == null) {
-                fragment_date = Fragment_Date.newInstance(addOrderModel);
-            }else {
-                fragment_date.setModel(addOrderModel);
-            }
-
-            if (fragment_address != null && fragment_address.isAdded()) {
-                fragmentManager.beginTransaction().hide(fragment_address).commit();
-            }
-            if (fragment_payment_type != null && fragment_payment_type.isAdded()) {
-                fragmentManager.beginTransaction().hide(fragment_payment_type).commit();
-            }
-
-            if (fragment_date.isAdded()) {
-                fragmentManager.beginTransaction().show(fragment_date).commit();
-
-            } else {
-                fragmentManager.beginTransaction().add(R.id.fragment_container, fragment_date, "fragment_date").addToBackStack("fragment_date").commit();
-
-            }
-
-            binding.tvDate.setTextColor(ContextCompat.getColor(this,R.color.white));
-            binding.tvDate.setBackgroundColor(ContextCompat.getColor(this,R.color.colorPrimaryDark));
-
-
-            binding.tvAddress.setTextColor(ContextCompat.getColor(this,R.color.colorPrimaryDark));
-            binding.tvAddress.setBackgroundColor(ContextCompat.getColor(this,R.color.transparent));
-
-
-            binding.tvPayment.setTextColor(ContextCompat.getColor(this,R.color.colorPrimaryDark));
-            binding.tvPayment.setBackgroundColor(ContextCompat.getColor(this,R.color.transparent));
-
-
-
-        } catch (Exception e) {
-        }
-
-    }
+//    public void displayFragmentDate()
+//    {
+//        try {
+//            if (fragment_date == null) {
+//                fragment_date = Fragment_Date.newInstance(addOrderModel);
+//            }else {
+//                fragment_date.setModel(addOrderModel);
+//            }
+//
+//            if (fragment_address != null && fragment_address.isAdded()) {
+//                fragmentManager.beginTransaction().hide(fragment_address).commit();
+//            }
+//            if (fragment_payment_type != null && fragment_payment_type.isAdded()) {
+//                fragmentManager.beginTransaction().hide(fragment_payment_type).commit();
+//            }
+//
+//            if (fragment_date.isAdded()) {
+//                fragmentManager.beginTransaction().show(fragment_date).commit();
+//
+//            } else {
+//                fragmentManager.beginTransaction().add(R.id.fragment_container, fragment_date, "fragment_date").addToBackStack("fragment_date").commit();
+//
+//            }
+//
+//            binding.tvDate.setTextColor(ContextCompat.getColor(this,R.color.white));
+//            binding.tvDate.setBackgroundColor(ContextCompat.getColor(this,R.color.colorPrimaryDark));
+//
+//
+//            binding.tvAddress.setTextColor(ContextCompat.getColor(this,R.color.colorPrimaryDark));
+//            binding.tvAddress.setBackgroundColor(ContextCompat.getColor(this,R.color.transparent));
+//
+//
+//            binding.tvPayment.setTextColor(ContextCompat.getColor(this,R.color.colorPrimaryDark));
+//            binding.tvPayment.setBackgroundColor(ContextCompat.getColor(this,R.color.transparent));
+//
+//
+//
+//        } catch (Exception e) {
+//        }
+//
+//    }
     public void displayFragmentPaymentType()
     {
         try {
@@ -221,36 +233,36 @@ public class CheckoutActivity extends AppCompatActivity implements Listeners.Bac
 
 
     public void createOrder() {
-       /* try {
+        try {
             ProgressDialog dialog = Common.createProgressDialog(this,getString(R.string.wait));
             dialog.setCancelable(false);
             dialog.setCanceledOnTouchOutside(false);
             dialog.show();
-            String date = new SimpleDateFormat("dd-MM-yyyy",Locale.ENGLISH).format(new Date(addOrderModel.getDate()));
-            itemCartUploadModel = new ItemCartUploadModel(userModel.getUser().getUser_id(),addOrderModel.getAddress(),String.valueOf(addOrderModel.getLat()),String.valueOf(addOrderModel.getLng()),date,String.valueOf(addOrderModel.getTime()/1000),addOrderModel.getPayment_type(),singleton.getItemCartModelList(),String.valueOf(tax),String.valueOf(total_cost));
+          //  String date = new SimpleDateFormat("dd-MM-yyyy",Locale.ENGLISH).format(new Date(addOrderModel.getDate()));
+          //  itemCartUploadModel = new ItemCartUploadModel(userModel.getUser().getUser_id(),addOrderModel.getAddress(),String.valueOf(addOrderModel.getLat()),String.valueOf(addOrderModel.getLng()),date,String.valueOf(addOrderModel.getTime()/1000),addOrderModel.getPayment_type(),singleton.getItemCartModelList(),String.valueOf(tax),String.valueOf(total_cost));
             Api.getService(Tags.base_url)
-                    .createOrder(userModel.getUser().getToken(),itemCartUploadModel)
-                    .enqueue(new Callback<OrderResponseModel>() {
+                    .createOrder(userModel.getUser().getToken(),addOrderModel)
+                    .enqueue(new Callback<OrderModel>() {
                         @Override
-                        public void onResponse(Call<OrderResponseModel> call, Response<OrderResponseModel> response) {
+                        public void onResponse(Call<OrderModel> call, Response<OrderModel> response) {
                             dialog.dismiss();
                             if (response.isSuccessful() ) {
 
 
-                                if (response.body() != null && response.body().getData() != null) {
+                                if (response.body() != null ) {
 
-                                    orderModel = response.body().getData();
-                                    if (itemCartUploadModel.getPayment_type().equals("cash")){
+                                    orderModel = response.body();
+                                    if (addOrderModel.getPayment_type().equals("cash")){
                                         Toast.makeText(CheckoutActivity.this, getString(R.string.suc), Toast.LENGTH_SHORT).show();
                                         Intent intent = getIntent();
                                         intent.putExtra("data", orderModel);
                                         setResult(RESULT_OK, intent);
-                                        finish();
-                                    }else {
-                                        Intent intent = new Intent(CheckoutActivity.this, OnlinePaymentActivity.class);
-                                        intent.putExtra("data", response.body());
-                                        startActivityForResult(intent, 100);
-                                    }
+                                        finish();}
+//                                    }else {
+//                                        Intent intent = new Intent(CheckoutActivity.this, OnlinePaymentActivity.class);
+//                                        intent.putExtra("data", response.body());
+//                                        startActivityForResult(intent, 100);
+//                                    }
 
 
                                 }
@@ -266,7 +278,7 @@ public class CheckoutActivity extends AppCompatActivity implements Listeners.Bac
 
                                     try {
 
-                                        Log.e("error", response.code() + "_" + response.errorBody().string());
+                                        Log.e("errorsss", response.code() + "_" + response.errorBody().string());
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
@@ -275,7 +287,7 @@ public class CheckoutActivity extends AppCompatActivity implements Listeners.Bac
                         }
 
                         @Override
-                        public void onFailure(Call<OrderResponseModel> call, Throwable t) {
+                        public void onFailure(Call<OrderModel> call, Throwable t) {
                             try {
                                 dialog.dismiss();
                                 if (t.getMessage() != null) {
@@ -293,7 +305,7 @@ public class CheckoutActivity extends AppCompatActivity implements Listeners.Bac
                     });
         } catch (Exception e) {
 
-        }*/
+        }
     }
 
 

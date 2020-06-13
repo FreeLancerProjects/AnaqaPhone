@@ -5,9 +5,19 @@ import java.io.Serializable;
 public class SettingModel implements Serializable {
 
     private Data settings;
+private double coupon_value;
+        private int coupon_id;
 
     public Data getSettings() {
         return settings;
+    }
+
+    public double getCoupon_value() {
+        return coupon_value;
+    }
+
+    public int getCoupon_id() {
+        return coupon_id;
     }
 
     public static class Data implements Serializable{

@@ -111,7 +111,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.Cart_Holder> {
         public void BindData(ItemCartModel itemCartModel) {
 
             tvTitle.setText(itemCartModel.getTitle());
-            tvCost.setText(String.format(Locale.ENGLISH, "%s %s", String.valueOf(itemCartModel.getCost()), context.getString(R.string.sar)));
+            tvCost.setText(String.format(Locale.ENGLISH, "%s %s", String.valueOf(itemCartModel.getPrice()), context.getString(R.string.sar)));
             tvAmount.setText(String.valueOf(itemCartModel.getAmount()));
             Picasso.get().load(Uri.parse(Tags.IMAGE_URL + itemCartModel.getSub_image())).fit().into(image);
         }

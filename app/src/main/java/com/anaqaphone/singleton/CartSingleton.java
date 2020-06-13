@@ -41,7 +41,7 @@ public class CartSingleton {
         int pos = -1;
         for (int i = 0;i<itemCartModelList.size();i++)
         {
-            if (itemCartModel.getItem_id()==itemCartModelList.get(i).getItem_id())
+            if (itemCartModel.getProduct_id()==itemCartModelList.get(i).getProduct_id())
             {
 
                 pos = i;

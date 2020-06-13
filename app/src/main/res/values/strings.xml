@@ -75,6 +75,7 @@
     <string name="no_notifications_to_show">No notifications to show</string>
     <string name="favourite">Favorite</string>
     <string name="confirm2">Confirm</string>
+    <string name="confirm3">Confirm</string>
     <string name="done">Done</string>
     <string name="gallery">Gallery</string>
     <string name="camera">Camera</string>
@@ -168,4 +169,6 @@
     <string name="accepted">Accepted</string>
     <string name="refused">Refused</string>
     <string name="completed">Completed</string>
+    <string name="not_found">Not Found</string>
+    <string name="add_coupon">Add Coupon</string>
 </resources>

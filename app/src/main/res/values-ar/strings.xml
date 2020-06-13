@@ -73,6 +73,7 @@
     <string name="no_notifications_to_show">لا توجد إشعارات لعرضها</string>
     <string name="favourite">المفضلة</string>
     <string name="confirm2">تأكيد</string>
+    <string name="confirm3">تفعيل</string>
 
     <string name="done">تم</string>
     <string name="gallery">البوم صور</string>
@@ -174,4 +175,6 @@
     <string name="accepted">تم إستلام طلبك</string>
     <string name="refused">تم الرفض</string>
     <string name="completed">مكتمل</string>
+    <string name="not_found">لا يوجد </string>
+    <string name="add_coupon">اضافة كوبون</string>
 </resources>

@@ -5,7 +5,7 @@ import java.util.List;
 
 public class OrderModel implements Serializable {
 
-    private String id;
+    private int id;
     private String user_id;
     private String address;
     private String address_lat;
@@ -18,7 +18,7 @@ public class OrderModel implements Serializable {
 
     private List<OrdersDetails> orders_details;
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 

@@ -244,8 +244,8 @@ public class Fragment_Address extends Fragment  implements OnMapReadyCallback, G
                             if (response.body().getResults().size() > 0) {
                                 address = response.body().getResults().get(0).getFormatted_address().replace("Unnamed Road,", "");
                                 addOrderModel.setAddress(address);
-                                addOrderModel.setLat(lat);
-                                addOrderModel.setLat(lng);
+                                addOrderModel.setLatitude(lat);
+                                addOrderModel.setLongitude(lng);
                                 binding.edtSearch.setText(address + "");
                             }
                         } else {
@@ -279,8 +279,8 @@ public class Fragment_Address extends Fragment  implements OnMapReadyCallback, G
         this.lat = lat;
         this.lng = lng;
 
-        addOrderModel.setLat(lat);
-        addOrderModel.setLng(lng);
+        addOrderModel.setLatitude(lat);
+        addOrderModel.setLongitude(lng);
         if (marker == null) {
             marker = mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lng), zoom));
@@ -419,7 +419,7 @@ public class Fragment_Address extends Fragment  implements OnMapReadyCallback, G
 
         if (addOrderModel.isStep1Valid(activity)){
             activity.updateModel(addOrderModel);
-            activity.displayFragmentDate();
+            activity.displayFragmentPaymentType();
         }
     }
 
