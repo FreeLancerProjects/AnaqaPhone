@@ -16,7 +16,7 @@ public class OrderModel implements Serializable {
     private String total_cost;
     private String order_status;
 
-    private List<OrdersDetails> orders_details;
+    private List<OrdersDetails> order_product;
 
     public int getId() {
         return id;
@@ -58,8 +58,8 @@ public class OrderModel implements Serializable {
         return order_status;
     }
 
-    public List<OrdersDetails> getOrders_details() {
-        return orders_details;
+    public List<OrdersDetails> getOrder_product() {
+        return order_product;
     }
 
     public class OrdersDetails implements Serializable {

@@ -51,7 +51,7 @@ public class OrderDetailsActivity extends AppCompatActivity implements Listeners
         binding = DataBindingUtil.setContentView(this, R.layout.activity_order_details);
         getDataFromIntent();
         initView();
-        getOrder();
+       getOrder();
     }
 
     private void getDataFromIntent() {
@@ -71,7 +71,7 @@ public class OrderDetailsActivity extends AppCompatActivity implements Listeners
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
         binding.setBackListener(this);
         binding.setLang(lang);
-
+binding.setModel(orderModel);
         adapter = new ProductDetailsAdapter(orderDetailsList,this);
         binding.recView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
         binding.recView.setAdapter(adapter);
@@ -91,7 +91,8 @@ public class OrderDetailsActivity extends AppCompatActivity implements Listeners
                         public void onResponse(Call<OrderModel> call, Response<OrderModel> response) {
                             dialog.dismiss();
                             if (response.isSuccessful() && response.body() != null) {
-                                UPDATEUI(response.body());
+                                Log.e("ldlldl",response.body().getOrder_status())
+;                                UPDATEUI(response.body());
                             } else {
                                 if (response.code() == 500) {
                                     Toast.makeText(OrderDetailsActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
@@ -133,9 +134,9 @@ public class OrderDetailsActivity extends AppCompatActivity implements Listeners
     }
 
     private void UPDATEUI(OrderModel body) {
-        orderModel=body;
+        this.orderModel=body;
         binding.setModel(orderModel);
-        orderDetailsList.addAll(orderModel.getOrders_details());
+        orderDetailsList.addAll(orderModel.getOrder_product());
     }
 
 
