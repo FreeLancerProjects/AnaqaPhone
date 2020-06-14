@@ -179,4 +179,19 @@ public interface Service {
     @FormUrlEncoded
     @POST("api/find-coupon")
     Call<SettingModel> getCouponValue(@Field("coupon_num") String coupon_num);
+    @Multipart
+    @POST("api/profile/edit")
+    Call<UserModel> editClientProfileWithImage(@Header("Authorization") String Authorization,
+                                               @Part("name") RequestBody name,
+                                               @Part("email") RequestBody email,
+                                               @Part MultipartBody.Part logo
+
+    );
+
+    @Multipart
+    @POST("api/profile/edit")
+    Call<UserModel> editClientProfileWithoutImage(@Header("Authorization") String Authorization,
+                                                  @Part("name") RequestBody name,
+                                                  @Part("email") RequestBody email
+    );
 }

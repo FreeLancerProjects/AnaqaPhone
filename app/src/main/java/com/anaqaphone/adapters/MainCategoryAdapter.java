@@ -31,6 +31,7 @@ public class MainCategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private String lang;
     private Fragment fragment;
     private Fragment_Offer fragment_offer;
+    private int i = -1;
 
     public MainCategoryAdapter(List<MainCategoryDataModel.Data> list, Context context, Fragment fragment) {
         this.list = list;
@@ -67,12 +68,20 @@ public class MainCategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         myHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (fragment instanceof Fragment_Offer) {
-                    fragment_offer = (Fragment_Offer) fragment;
-                    fragment_offer.setDepartment(list.get(holder.getLayoutPosition()).getId() + "");
-                }
+                i = position;
+                notifyDataSetChanged();
             }
         });
+        if(i==position){
+            if (fragment instanceof Fragment_Offer) {
+                fragment_offer = (Fragment_Offer) fragment;
+                fragment_offer.setDepartment(list.get(holder.getLayoutPosition()).getId() + "");
+            }
+            myHolder.binding.cardView.setCardBackgroundColor(context.getResources().getColor(R.color.second));
+        }
+        else{
+            myHolder.binding.cardView.setCardBackgroundColor(Color.parseColor(mainDepartments.getBackground()));
+        }
 
     }
 

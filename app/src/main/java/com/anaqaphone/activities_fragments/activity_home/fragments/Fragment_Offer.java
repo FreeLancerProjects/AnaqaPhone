@@ -139,14 +139,13 @@ public class Fragment_Offer extends Fragment {
         });
         binding.edtSearch.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-             query = binding.edtSearch.getText().toString();
+                query = binding.edtSearch.getText().toString();
                 if (!TextUtils.isEmpty(query)) {
-                    Common.CloseKeyBoard(activity,binding.edtSearch);
+                    Common.CloseKeyBoard(activity, binding.edtSearch);
                     getOffersProducts();
                     return false;
-                }
-                else {
-                    query="all";
+                } else {
+                    query = "all";
                 }
             }
             return false;
@@ -214,6 +213,9 @@ public class Fragment_Offer extends Fragment {
 
     public void getOffersProducts() {
         offersDataList.clear();
+        offersAdapter.notifyDataSetChanged();
+        binding.progBar.setVisibility(View.VISIBLE);
+
         try {
             int uid;
 
@@ -235,8 +237,6 @@ public class Fragment_Offer extends Fragment {
                                 offersDataList.addAll(response.body().getData());
                                 if (offersDataList.size() > 0) {
                                     offersAdapter.notifyDataSetChanged();
-                                } else {
-
                                 }
 
                             } else {
@@ -289,20 +289,23 @@ public class Fragment_Offer extends Fragment {
         department_id = s;
         getOffersProducts();
     }
+
     public void updateCartCount(int itemCount) {
         activity.updateCartCount(itemCount);
     }
+
     public void setItemDataOffers(SingleProductDataModel model) {
 
         Intent intent = new Intent(activity, ProductDetailsActivity.class);
         intent.putExtra("product_id", model.getId());
         startActivityForResult(intent, 100);
     }
-    public void like_dislike( SingleProductDataModel productModel, int pos) {
 
-       try {
+    public void like_dislike(SingleProductDataModel productModel, int pos) {
+
+        try {
             Api.getService(Tags.base_url)
-                    .addFavoriteProduct(userModel.getUser().getToken(),productModel.getId()+"")
+                    .addFavoriteProduct(userModel.getUser().getToken(), productModel.getId() + "")
                     .enqueue(new Callback<ResponseBody>() {
                         @Override
                         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

@@ -129,7 +129,7 @@ public class OffersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             Log.e("llldll", list.get(position).getHave_offer());
             myHolder.binding.setModel(list.get(position));
             if(list.get(position).getUser_like()!=null){
-                ((MyHolder) holder).binding.checkbox.setChecked(true);
+                ((MyHolderList) holder).binding.checkbox.setChecked(true);
             }
             myHolder.binding.llAddToCart.setOnClickListener(v -> {
                 int count = Integer.parseInt(myHolder.binding.tvCounter.getText().toString());

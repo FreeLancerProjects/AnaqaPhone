@@ -6,9 +6,11 @@
     >
 
     <data>
+
         <variable
             name="notCount"
             type="Integer" />
+
         <variable
             name="title"
             type="String" />
@@ -22,8 +24,7 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        >
+        android:fitsSystemWindows="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -46,10 +47,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:textColor="@color/white"
-                    android:textSize="18sp"
                     android:text="@{title}"
-                    />
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+
                 <FrameLayout
                     android:id="@+id/flNotification"
                     android:layout_width="40dp"
@@ -61,10 +62,10 @@
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        app:civ_border_width="0dp"
-                        app:civ_circle_background_color="@color/second_trans"
                         android:src="@color/second_trans"
-                        />
+                        app:civ_border_width="0dp"
+                        app:civ_circle_background_color="@color/second_trans" />
+
                     <ImageView
                         android:id="@+id/imageNotification"
                         android:layout_width="35dp"
@@ -79,6 +80,7 @@
                     <TextView
                         android:layout_width="17dp"
                         android:layout_height="17dp"
+                        android:layout_margin="2dp"
                         android:background="@drawable/circle_not_bg"
                         android:clickable="false"
                         android:gravity="center"
@@ -86,11 +88,10 @@
                         android:singleLine="true"
                         android:text='@{String.valueOf(notCount),default="0"}'
                         android:textColor="@color/second"
-                        android:textSize="12sp"
-                        android:layout_margin="2dp"
-                        />
+                        android:textSize="12sp" />
 
                 </FrameLayout>
+
                 <FrameLayout
                     android:id="@+id/flSearch"
                     android:layout_width="40dp"
@@ -98,16 +99,15 @@
                     android:layout_gravity="center_vertical|end"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
-
-                    >
+                    android:visibility="gone">
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        app:civ_border_width="0dp"
-                        app:civ_circle_background_color="@color/second_trans"
                         android:src="@color/second_trans"
-                        />
+                        app:civ_border_width="0dp"
+                        app:civ_circle_background_color="@color/second_trans" />
+
                     <ImageView
                         android:layout_width="35dp"
                         android:layout_height="35dp"
@@ -119,21 +119,17 @@
                         android:tint="@color/white" />
 
 
-
                 </FrameLayout>
 
 
-
-
-
             </androidx.appcompat.widget.Toolbar>
+
             <View
                 android:id="@+id/view"
                 android:layout_width="match_parent"
                 android:layout_height="1px"
                 android:background="@color/gray4"
-                app:layout_constraintTop_toBottomOf="@id/toolbar"
-                />
+                app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
 
             <FrameLayout
@@ -166,10 +162,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-
 
 
 </layout>
