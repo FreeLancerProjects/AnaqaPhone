@@ -21,6 +21,8 @@ import com.anaqaphone.activities_fragments.activity_home.fragments.Fragment_Offe
 import com.anaqaphone.databinding.OfferRowBinding;
 import com.anaqaphone.models.ItemCartModel;
 import com.anaqaphone.models.SingleProductDataModel;
+import com.anaqaphone.preferences.Preferences;
+import com.anaqaphone.share.Common;
 import com.anaqaphone.singleton.CartSingleton;
 
 
@@ -93,13 +95,22 @@ public class CategoryProduct_Adapter extends RecyclerView.Adapter<RecyclerView.V
             if (fragment instanceof Fragment_Main) {
 
                 Fragment_Main fragment_main = (Fragment_Main) fragment;
-
+if(Preferences.getInstance().getUserData(context)!=null){
                 if (myHolder.binding.checkbox.isChecked()) {
-                    fragment_main.like_dislike( list.get(myHolder.getAdapterPosition()), myHolder.getAdapterPosition(),1);
+                   int data= fragment_main.like_dislike( list.get(myHolder.getAdapterPosition()), myHolder.getAdapterPosition(),1);
+
+
                 } else {
-                    fragment_main.like_dislike( list.get(myHolder.getAdapterPosition()), myHolder.getAdapterPosition(),1);
+                  int data=  fragment_main.like_dislike( list.get(myHolder.getAdapterPosition()), myHolder.getAdapterPosition(),1);
 
                 }
+            }
+else {
+    Common.CreateDialogAlert(context, context.getResources().
+            getString(R.string.please_sign_in_or_sign_up));
+
+
+}
             }
 
 

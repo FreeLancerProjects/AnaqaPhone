@@ -183,7 +183,7 @@ public class Fragment_Main extends Fragment {
         startActivityForResult(intent, 100);
     }
 
-    public void like_dislike(SingleProductDataModel productModel, int pos, int i) {
+    public int like_dislike(SingleProductDataModel productModel, int pos, int i) {
 if(userModel!=null){
         try {
             Log.e("llll", userModel.getUser().getToken());
@@ -239,10 +239,13 @@ if(userModel!=null){
                     });
         } catch (Exception e) {
         }
+        return 1;
         }
          else {
             Common.CreateDialogAlert(activity, getString(R.string.please_sign_in_or_sign_up));
-        }
+    return 0;
+
+}
     }
 
     public void getOffersProducts() {

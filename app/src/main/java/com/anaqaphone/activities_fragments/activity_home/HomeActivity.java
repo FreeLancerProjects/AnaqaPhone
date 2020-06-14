@@ -624,7 +624,7 @@ Log.e("llll",userModel.getUser().getToken());
                     .setTextColor(ContextCompat.getColor(this,R.color.white))
                     .setText(null)
                     .build();
-            binding.ahBottomNav.setNotification(notification,1);
+            binding.ahBottomNav.setNotification(notification,2);
 
         }else {
             AHNotification notification = new AHNotification.Builder()

@@ -20,6 +20,8 @@ import com.anaqaphone.databinding.OfferRowBinding;
 import com.anaqaphone.models.ItemCartModel;
 import com.anaqaphone.models.ProductDataModel;
 import com.anaqaphone.models.SingleProductDataModel;
+import com.anaqaphone.preferences.Preferences;
+import com.anaqaphone.share.Common;
 import com.anaqaphone.singleton.CartSingleton;
 
 import java.util.List;
@@ -157,7 +159,9 @@ public class OffersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             });
 
             myHolder.binding.checkbox.setOnClickListener(v -> {
-                if (fragment instanceof Fragment_Main) {
+                if(Preferences.getInstance().getUserData(context)!=null){
+
+                    if (fragment instanceof Fragment_Main) {
 
                     Fragment_Main fragment_main = (Fragment_Main) fragment;
 
@@ -175,6 +179,12 @@ public class OffersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         fragment_offer.like_dislike( list.get(myHolder.getAdapterPosition()), myHolder.getAdapterPosition());
 
                     }
+                }}
+                else {
+                    Common.CreateDialogAlert(context, context.getResources().
+                            getString(R.string.please_sign_in_or_sign_up));
+
+
                 }
 
             });

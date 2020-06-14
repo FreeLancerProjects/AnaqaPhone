@@ -309,7 +309,7 @@ public class Fragment_Offer extends Fragment {
         startActivityForResult(intent, 100);
     }
 
-    public void like_dislike(SingleProductDataModel productModel, int pos) {
+    public int like_dislike(SingleProductDataModel productModel, int pos) {
         if (userModel != null) {
             try {
                 Api.getService(Tags.base_url)
@@ -360,9 +360,13 @@ public class Fragment_Offer extends Fragment {
             } catch (Exception e) {
 
             }
+            return 1;
+
         }
         else {
             Common.CreateDialogAlert(activity, getString(R.string.please_sign_in_or_sign_up));
+            return 0;
+
         }
     }
 
