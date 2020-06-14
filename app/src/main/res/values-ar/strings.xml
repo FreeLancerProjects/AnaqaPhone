@@ -177,4 +177,6 @@
     <string name="completed">مكتمل</string>
     <string name="not_found">لا يوجد </string>
     <string name="add_coupon">اضافة كوبون</string>
+    <string name="edit_profile">تعديل الملف الشخصي</string>
+
 </resources>

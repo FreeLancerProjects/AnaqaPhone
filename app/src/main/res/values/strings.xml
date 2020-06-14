@@ -171,4 +171,6 @@
     <string name="completed">Completed</string>
     <string name="not_found">Not Found</string>
     <string name="add_coupon">Add Coupon</string>
+    <string name="edit_profile">Edit profile</string>
+
 </resources>

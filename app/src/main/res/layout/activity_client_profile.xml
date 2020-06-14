@@ -102,7 +102,17 @@
                         app:layout_constraintTop_toTopOf="parent">
 
                     </FrameLayout>
-
+                    <ImageView
+                        android:id="@+id/imageEdit"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:src="@drawable/ic_edit"
+                        android:layout_margin="8dp"
+                        android:padding="5dp"
+                        android:tint="@color/white"
+                        />
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/image"
                         image="@{model.user.logo}"

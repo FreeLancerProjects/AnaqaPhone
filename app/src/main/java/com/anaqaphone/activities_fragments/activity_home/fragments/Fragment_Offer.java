@@ -215,6 +215,7 @@ public class Fragment_Offer extends Fragment {
         offersDataList.clear();
         offersAdapter.notifyDataSetChanged();
         binding.progBar.setVisibility(View.VISIBLE);
+        binding.tvNoData.setVisibility(View.GONE);
 
         try {
             int uid;
@@ -238,8 +239,14 @@ public class Fragment_Offer extends Fragment {
                                 if (offersDataList.size() > 0) {
                                     offersAdapter.notifyDataSetChanged();
                                 }
+                                else {
+                                    binding.tvNoData.setVisibility(View.VISIBLE);
+
+                                }
 
                             } else {
+                                binding.tvNoData.setVisibility(View.VISIBLE);
+
                                 try {
 
                                     Log.e("error", response.code() + "_" + response.errorBody().string());
@@ -262,6 +269,7 @@ public class Fragment_Offer extends Fragment {
                         @Override
                         public void onFailure(Call<ProductDataModel> call, Throwable t) {
                             binding.progBar.setVisibility(View.GONE);
+                            binding.tvNoData.setVisibility(View.VISIBLE);
                             try {
                                 if (t.getMessage() != null) {
                                     Log.e("error", t.getMessage());

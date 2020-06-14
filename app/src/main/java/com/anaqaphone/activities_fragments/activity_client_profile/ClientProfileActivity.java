@@ -3,6 +3,7 @@ package com.anaqaphone.activities_fragments.activity_client_profile;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -11,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.anaqaphone.R;
+import com.anaqaphone.activities_fragments.activity_edit_profile.EditProfileActivity;
 import com.anaqaphone.databinding.ActivityClientProfileBinding;
 import com.anaqaphone.interfaces.Listeners;
 import com.anaqaphone.language.Language;
@@ -54,7 +56,13 @@ public class ClientProfileActivity extends AppCompatActivity implements Listener
         binding.setBackListener(this);
 
         binding.setModel(userModel);
-
+binding.imageEdit.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        Intent intent = new Intent(ClientProfileActivity.this, EditProfileActivity.class);
+        startActivity(intent);
+    }
+});
 
     }
 
@@ -65,5 +73,12 @@ public class ClientProfileActivity extends AppCompatActivity implements Listener
     }
 
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(preferences!=null){
+            userModel=preferences.getUserData(this);
+            binding.setModel(userModel);
+        }
+    }
 }

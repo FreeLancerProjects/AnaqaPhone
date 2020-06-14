@@ -180,7 +180,7 @@ public interface Service {
     @POST("api/find-coupon")
     Call<SettingModel> getCouponValue(@Field("coupon_num") String coupon_num);
     @Multipart
-    @POST("api/profile/edit")
+    @POST("api/update-profile")
     Call<UserModel> editClientProfileWithImage(@Header("Authorization") String Authorization,
                                                @Part("name") RequestBody name,
                                                @Part("email") RequestBody email,
@@ -189,7 +189,7 @@ public interface Service {
     );
 
     @Multipart
-    @POST("api/profile/edit")
+    @POST("api/update-profile")
     Call<UserModel> editClientProfileWithoutImage(@Header("Authorization") String Authorization,
                                                   @Part("name") RequestBody name,
                                                   @Part("email") RequestBody email

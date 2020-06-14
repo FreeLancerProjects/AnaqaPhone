@@ -65,7 +65,7 @@ public class Fragment_Cart extends Fragment implements Swipe.SwipeListener {
     private double tax = 0.0;
 
     private SettingModel appDataModel;
-    private int taxx ;
+    private int taxx;
 
     public static Fragment_Cart newInstance() {
         return new Fragment_Cart();
@@ -109,7 +109,7 @@ public class Fragment_Cart extends Fragment implements Swipe.SwipeListener {
         updateUI();
         binding.flSearch.setOnClickListener(view -> {
             String coupon = binding.edtCopoun.getText().toString();
-            Log.e("bbb",coupon);
+            Log.e("bbb", coupon);
             if (!coupon.isEmpty()) {
                 confirmCoupon(coupon);
             } else {
@@ -171,8 +171,8 @@ public class Fragment_Cart extends Fragment implements Swipe.SwipeListener {
     }
 
     private void updateUI(SettingModel body) {
-        taxx = body.getCoupon_id() ;
-        total = total-(total * body.getCoupon_value()) / 100;
+        taxx = body.getCoupon_id();
+        total = total - (total * body.getCoupon_value()) / 100;
         binding.tvTotal.setText(String.format(Locale.ENGLISH, "%s %s", String.valueOf(total), getString(R.string.sar)));
 
     }
@@ -195,18 +195,25 @@ public class Fragment_Cart extends Fragment implements Swipe.SwipeListener {
 
         itemCartModelList.clear();
         itemCartModelList.addAll(singleton.getItemCartModelList());
+        Log.e("lllll", itemCartModelList.size() + "");
         adapter.notifyDataSetChanged();
         if (itemCartModelList.size() == 0) {
+           // Log.e("lllllss", itemCartModelList.size() + "");
+
             binding.btnCheckout.setVisibility(View.GONE);
             binding.llSearch.setVisibility(View.GONE);
             binding.llEmptyCart.setVisibility(View.VISIBLE);
             binding.llTotal.setVisibility(View.GONE);
+            binding.llCheckout.setVisibility(View.GONE);
+
 
         } else {
             binding.btnCheckout.setVisibility(View.VISIBLE);
             binding.llEmptyCart.setVisibility(View.GONE);
             binding.llSearch.setVisibility(View.VISIBLE);
             binding.llTotal.setVisibility(View.VISIBLE);
+            binding.llCheckout.setVisibility(View.VISIBLE);
+
 
         }
         calculateTotal();
@@ -299,7 +306,7 @@ public class Fragment_Cart extends Fragment implements Swipe.SwipeListener {
 
     private void navigateToOrderDetailsActivity(OrderModel orderModel) {
         Intent intent = new Intent(activity, OrderDetailsActivity.class);
-        intent.putExtra("data",orderModel);
+        intent.putExtra("data", orderModel);
         startActivity(intent);
     }
 }
