@@ -106,15 +106,23 @@ if(Preferences.getInstance().getUserData(context)!=null){
                 }
             }
 else {
+    myHolder.binding.checkbox.setChecked(false);
     Common.CreateDialogAlert(context, context.getResources().
             getString(R.string.please_sign_in_or_sign_up));
+    notifyDataSetChanged();
+
+
 
 
 }
+
             }
 
 
         });
+        if(Preferences.getInstance().getUserData(context)==null){
+            myHolder.binding.checkbox.setChecked(false);}
+
 
     }
 

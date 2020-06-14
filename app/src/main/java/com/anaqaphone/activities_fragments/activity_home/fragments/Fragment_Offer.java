@@ -364,6 +364,7 @@ public class Fragment_Offer extends Fragment {
 
         }
         else {
+
             Common.CreateDialogAlert(activity, getString(R.string.please_sign_in_or_sign_up));
             return 0;
 

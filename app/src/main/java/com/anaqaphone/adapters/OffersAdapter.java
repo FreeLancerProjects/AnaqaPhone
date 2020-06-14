@@ -181,14 +181,21 @@ public class OffersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     }
                 }}
                 else {
+
                     Common.CreateDialogAlert(context, context.getResources().
                             getString(R.string.please_sign_in_or_sign_up));
 
 
                 }
+                notifyDataSetChanged();
+
 
             });
+            if(Preferences.getInstance().getUserData(context)==null){
+                myHolder.binding.checkbox.setChecked(false);}
+
         }
+
     }
 
     @Override
