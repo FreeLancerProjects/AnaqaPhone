@@ -47,7 +47,7 @@
                     android:layout_marginEnd="10dp"
                     android:textColor="@color/gray8"
                     android:textSize="15sp"
-                    android:text='@{@string/order_num(model.id+"")}'
+                    android:text='@{@string/order_num+"\n"+(model.id+"")}'
                     app:layout_constraintHorizontal_bias="0"
                     app:layout_constraintWidth_default="wrap"
 
