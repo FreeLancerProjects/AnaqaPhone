@@ -47,7 +47,7 @@
                     android:layout_marginEnd="10dp"
                     android:textColor="@color/gray8"
                     android:textSize="15sp"
-                    android:text="@{model.payment_type}"
+                    android:text='@{@string/order_num(model.id+"")}'
                     app:layout_constraintHorizontal_bias="0"
                     app:layout_constraintWidth_default="wrap"
 
@@ -95,7 +95,7 @@
                     android:textColor="@color/colorPrimary"
                     android:textSize="15sp"
                     android:layout_marginTop="5dp"
-                    android:text='@{model.total_cost+" "+@string/sar}'
+                    android:text='@{model.total_price+" "+@string/sar}'
 
                     />
 
@@ -167,7 +167,7 @@
             android:gravity="center"
             android:textColor="@color/gray4"
             android:textSize="14sp"
-            android:text='@{model.delivery_date+" "+model.delivery_time}'
+            android:text='@{model.created_at}'
             />
 
     </LinearLayout>

@@ -6,15 +6,18 @@ import java.util.List;
 public class OrderModel implements Serializable {
 
     private int id;
-    private String user_id;
-    private String address;
-    private String address_lat;
-    private String address_long;
-    private String delivery_date;
-    private String delivery_time;
-    private String payment_type;
-    private String total_cost;
+    private String order_code;
+    private int user_id;
     private String order_status;
+    private double total_price;
+    private long order_date;
+    private String order_time;
+    private int coupon_id;
+    private String address;
+    private double latitude;
+    private double longitude;
+    private String details;
+    private String created_at;
 
     private List<OrdersDetails> order_product;
 
@@ -22,40 +25,52 @@ public class OrderModel implements Serializable {
         return id;
     }
 
-    public String getUser_id() {
+    public String getOrder_code() {
+        return order_code;
+    }
+
+    public int getUser_id() {
         return user_id;
+    }
+
+    public String getOrder_status() {
+        return order_status;
+    }
+
+    public double getTotal_price() {
+        return total_price;
+    }
+
+    public long getOrder_date() {
+        return order_date;
+    }
+
+    public String getOrder_time() {
+        return order_time;
+    }
+
+    public int getCoupon_id() {
+        return coupon_id;
     }
 
     public String getAddress() {
         return address;
     }
 
-    public String getAddress_lat() {
-        return address_lat;
+    public double getLatitude() {
+        return latitude;
     }
 
-    public String getAddress_long() {
-        return address_long;
+    public double getLongitude() {
+        return longitude;
     }
 
-    public String getDelivery_date() {
-        return delivery_date;
+    public String getDetails() {
+        return details;
     }
 
-    public String getDelivery_time() {
-        return delivery_time;
-    }
-
-    public String getPayment_type() {
-        return payment_type;
-    }
-
-    public String getTotal_cost() {
-        return total_cost;
-    }
-
-    public String getOrder_status() {
-        return order_status;
+    public String getCreated_at() {
+        return created_at;
     }
 
     public List<OrdersDetails> getOrder_product() {
@@ -63,43 +78,38 @@ public class OrderModel implements Serializable {
     }
 
     public class OrdersDetails implements Serializable {
-        private Item item;
-        private String id;
-        private String order_id;
-        private String item_id;
-        private String amount;
-        private String cost;
+        private int id;
+        private int product_id;
+        private int order_id;
+        private double price;
+        private int amount;
         private ProductInfo product_info;
 
-        public Item getItem() {
-            return item;
-        }
-
-        public String getId() {
+        public int getId() {
             return id;
         }
 
-        public String getOrder_id() {
+        public int getProduct_id() {
+            return product_id;
+        }
+
+        public int getOrder_id() {
             return order_id;
         }
 
-        public String getItem_id() {
-            return item_id;
+        public double getPrice() {
+            return price;
         }
 
-        public String getAmount() {
+        public int getAmount() {
             return amount;
-        }
-
-        public String getCost() {
-            return cost;
         }
 
         public ProductInfo getProduct_info() {
             return product_info;
         }
 
-        public  class ProductInfo implements Serializable{
+        public class ProductInfo implements Serializable {
             private int id;
             private String title;
             private String image;
@@ -165,8 +175,6 @@ public class OrderModel implements Serializable {
             }
         }
     }
-
-
 
 
 }
