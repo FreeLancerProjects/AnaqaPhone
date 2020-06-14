@@ -32,6 +32,7 @@ import com.anaqaphone.models.Slider_Model;
 import com.anaqaphone.models.UserModel;
 import com.anaqaphone.preferences.Preferences;
 import com.anaqaphone.remote.Api;
+import com.anaqaphone.share.Common;
 import com.anaqaphone.tags.Tags;
 
 import java.io.IOException;
@@ -183,7 +184,7 @@ public class Fragment_Main extends Fragment {
     }
 
     public void like_dislike(SingleProductDataModel productModel, int pos, int i) {
-
+if(userModel!=null){
         try {
             Log.e("llll", userModel.getUser().getToken());
 
@@ -237,7 +238,10 @@ public class Fragment_Main extends Fragment {
                         }
                     });
         } catch (Exception e) {
-
+        }
+        }
+         else {
+            Common.CreateDialogAlert(activity, getString(R.string.please_sign_in_or_sign_up));
         }
     }
 

@@ -179,10 +179,14 @@ public class Fragment_Cart extends Fragment implements Swipe.SwipeListener {
 
 
     private void navigateToCheckoutActivity() {
-        Intent intent = new Intent(activity, CheckoutActivity.class);
-        intent.putExtra("total_cost", total);
-        intent.putExtra("coupun", taxx);
-        startActivityForResult(intent, 100);
+        if (userModel != null) {
+            Intent intent = new Intent(activity, CheckoutActivity.class);
+            intent.putExtra("total_cost", total);
+            intent.putExtra("coupun", taxx);
+            startActivityForResult(intent, 100);
+        } else {
+            Common.CreateDialogAlert(activity, getString(R.string.please_sign_in_or_sign_up));
+        }
     }
 
 
@@ -198,7 +202,7 @@ public class Fragment_Cart extends Fragment implements Swipe.SwipeListener {
         Log.e("lllll", itemCartModelList.size() + "");
         adapter.notifyDataSetChanged();
         if (itemCartModelList.size() == 0) {
-           // Log.e("lllllss", itemCartModelList.size() + "");
+            // Log.e("lllllss", itemCartModelList.size() + "");
 
             binding.btnCheckout.setVisibility(View.GONE);
             binding.llSearch.setVisibility(View.GONE);

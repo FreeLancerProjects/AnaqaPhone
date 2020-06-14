@@ -28,6 +28,7 @@ import com.anaqaphone.databinding.FragmentMoreBinding;
 import com.anaqaphone.interfaces.Listeners;
 import com.anaqaphone.models.UserModel;
 import com.anaqaphone.preferences.Preferences;
+import com.anaqaphone.share.Common;
 
 
 import java.io.IOException;
@@ -37,7 +38,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Fragment_More extends Fragment implements Listeners.SettingActions{
+public class Fragment_More extends Fragment implements Listeners.SettingActions {
 
     private HomeActivity activity;
     private FragmentMoreBinding binding;
@@ -71,13 +72,12 @@ public class Fragment_More extends Fragment implements Listeners.SettingActions{
         lang = Paper.book().read("lang", "ar");
         binding.setLang(lang);
         binding.setAction(this);
-        binding.tvVersion.setText(String.format("%s%s","Version : ", BuildConfig.VERSION_NAME) );
+        binding.tvVersion.setText(String.format("%s%s", "Version : ", BuildConfig.VERSION_NAME));
 
-        if (lang.equals("ar"))
-        {
+        if (lang.equals("ar")) {
             binding.btnAr.setBackgroundResource(R.drawable.small_rounded_btn_primary);
             binding.btnEn.setBackgroundResource(R.drawable.small_rounded_btn_second);
-        }else {
+        } else {
             binding.btnAr.setBackgroundResource(R.drawable.small_rounded_btn_second);
             binding.btnEn.setBackgroundResource(R.drawable.small_rounded_btn_primary);
         }
@@ -86,8 +86,12 @@ public class Fragment_More extends Fragment implements Listeners.SettingActions{
 
     @Override
     public void order() {
-        Intent intent = new Intent(activity, OrderActivity.class);
-        startActivity(intent);
+        if (userModel != null) {
+            Intent intent = new Intent(activity, OrderActivity.class);
+            startActivity(intent);
+        } else {
+            Common.CreateDialogAlert(activity, getString(R.string.please_sign_in_or_sign_up));
+        }
     }
 
     @Override
@@ -103,29 +107,36 @@ public class Fragment_More extends Fragment implements Listeners.SettingActions{
     @Override
     public void terms() {
         Intent intent = new Intent(activity, AboutAppActivity.class);
-        intent.putExtra("type",1);
+        intent.putExtra("type", 1);
         startActivity(intent);
     }
 
     @Override
     public void aboutApp() {
         Intent intent = new Intent(activity, AboutAppActivity.class);
-        intent.putExtra("type",2);
+        intent.putExtra("type", 2);
         startActivity(intent);
     }
 
 
     @Override
     public void logout() {
-        activity.logout();
+        if (userModel != null) {
+            activity.logout();
+        } else {
+            Common.CreateDialogAlert(activity, getString(R.string.please_sign_in_or_sign_up));
+        }
     }
-
 
 
     @Override
     public void favorite() {
-        Intent intent = new Intent(activity, MyFavoriteActivity.class);
-        startActivityForResult(intent,100);
+        if (userModel != null) {
+            Intent intent = new Intent(activity, MyFavoriteActivity.class);
+            startActivityForResult(intent, 100);
+        } else {
+            Common.CreateDialogAlert(activity, getString(R.string.please_sign_in_or_sign_up));
+        }
     }
 
     @Override
@@ -138,17 +149,17 @@ public class Fragment_More extends Fragment implements Listeners.SettingActions{
     public void share() {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_TEXT,"https://play.google.com/store/apps/details?id="+activity.getPackageName());
+        intent.putExtra(Intent.EXTRA_TEXT, "https://play.google.com/store/apps/details?id=" + activity.getPackageName());
         startActivity(intent);
     }
 
     @Override
     public void rateApp() {
         try {
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id="+activity.getPackageName())));
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + activity.getPackageName())));
         } catch (ActivityNotFoundException e1) {
             try {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id="+activity.getPackageName())));
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + activity.getPackageName())));
             } catch (ActivityNotFoundException e2) {
                 Toast.makeText(activity, "You don't have any app that can open this link", Toast.LENGTH_SHORT).show();
             }
@@ -158,8 +169,7 @@ public class Fragment_More extends Fragment implements Listeners.SettingActions{
     @Override
     public void arLang() {
 
-        if (!lang.equals("ar"))
-        {
+        if (!lang.equals("ar")) {
             activity.refreshActivity("ar");
             binding.btnAr.setBackgroundResource(R.drawable.small_rounded_btn_primary);
             binding.btnEn.setBackgroundResource(R.drawable.small_rounded_btn_second);
@@ -170,8 +180,7 @@ public class Fragment_More extends Fragment implements Listeners.SettingActions{
     @Override
     public void enLang() {
 
-        if (!lang.equals("en"))
-        {
+        if (!lang.equals("en")) {
             activity.refreshActivity("en");
             binding.btnAr.setBackgroundResource(R.drawable.small_rounded_btn_second);
             binding.btnEn.setBackgroundResource(R.drawable.small_rounded_btn_primary);
@@ -181,8 +190,12 @@ public class Fragment_More extends Fragment implements Listeners.SettingActions{
 
     @Override
     public void profile() {
-        Intent intent = new Intent(activity, ClientProfileActivity.class);
-        startActivity(intent);
+        if (userModel != null) {
+            Intent intent = new Intent(activity, ClientProfileActivity.class);
+            startActivity(intent);
+        } else {
+            Common.CreateDialogAlert(activity, getString(R.string.please_sign_in_or_sign_up));
+        }
     }
 
 
