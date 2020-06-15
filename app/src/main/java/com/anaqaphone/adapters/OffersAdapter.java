@@ -38,6 +38,7 @@ public class OffersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private Fragment fragment;
     private CartSingleton cartSingleton;
     private int type;
+    private int i = -1;
 
     public OffersAdapter(List<SingleProductDataModel> list, Context context, Fragment fragment, int type) {
         this.list = list;
@@ -72,8 +73,8 @@ public class OffersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             myHolder.binding.tvOldprice.setPaintFlags(myHolder.binding.tvOldprice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             myHolder.binding.setModel(list.get(position));
             myHolder.binding.setLang(lang);
-            if(list.get(position).getUser_like()!=null){
-              ((MyHolder) holder).binding.checkbox.setChecked(true);
+            if (list.get(position).getUser_like() != null) {
+                ((MyHolder) holder).binding.checkbox.setChecked(true);
             }
 
             myHolder.binding.llAddToCart.setOnClickListener(v -> {
@@ -102,27 +103,42 @@ public class OffersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             });
 
             myHolder.binding.checkbox.setOnClickListener(v -> {
-                if (fragment instanceof Fragment_Main) {
+                if (Preferences.getInstance().getUserData(context) != null) {
 
-                    Fragment_Main fragment_main = (Fragment_Main) fragment;
+                    if (fragment instanceof Fragment_Main) {
 
-                    if (myHolder.binding.checkbox.isChecked()) {
-                        fragment_main.like_dislike( list.get(myHolder.getAdapterPosition()), myHolder.getAdapterPosition(),0);
-                    } else {
-                        fragment_main.like_dislike( list.get(myHolder.getAdapterPosition()), myHolder.getAdapterPosition(),0);
+                        Fragment_Main fragment_main = (Fragment_Main) fragment;
 
+                        if (myHolder.binding.checkbox.isChecked()) {
+                            fragment_main.like_dislike(list.get(myHolder.getAdapterPosition()), myHolder.getAdapterPosition(), 0);
+                        } else {
+                            fragment_main.like_dislike(list.get(myHolder.getAdapterPosition()), myHolder.getAdapterPosition(), 0);
+
+                        }
+                    } else if (fragment instanceof Fragment_Offer) {
+                        Fragment_Offer fragment_offer = (Fragment_Offer) fragment;
+                        if (myHolder.binding.checkbox.isChecked()) {
+                            fragment_offer.like_dislike(list.get(myHolder.getAdapterPosition()), myHolder.getAdapterPosition());
+                        } else {
+                            fragment_offer.like_dislike(list.get(myHolder.getAdapterPosition()), myHolder.getAdapterPosition());
+
+                        }
                     }
-                } else if (fragment instanceof Fragment_Offer) {
-                    Fragment_Offer fragment_offer = (Fragment_Offer) fragment;
-                    if (myHolder.binding.checkbox.isChecked()) {
-                        fragment_offer.like_dislike(list.get(myHolder.getAdapterPosition()), myHolder.getAdapterPosition());
-                    } else {
-                        fragment_offer.like_dislike( list.get(myHolder.getAdapterPosition()),  myHolder.getAdapterPosition());
+                } else {
+                    i = position;
+                    notifyDataSetChanged();
 
-                    }
+
                 }
 
+
             });
+            if (i == position && Preferences.getInstance().getUserData(context) == null) {
+                myHolder.binding.checkbox.setChecked(false);
+                Common.CreateDialogAlert(context, context.getResources().
+                        getString(R.string.please_sign_in_or_sign_up));
+
+            }
         } else {
 
             MyHolderList myHolder = (MyHolderList) holder;
@@ -130,7 +146,7 @@ public class OffersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             Log.e("llldll", list.get(position).getHave_offer());
             myHolder.binding.setModel(list.get(position));
-            if(list.get(position).getUser_like()!=null){
+            if (list.get(position).getUser_like() != null) {
                 ((MyHolderList) holder).binding.checkbox.setChecked(true);
             }
             myHolder.binding.llAddToCart.setOnClickListener(v -> {
@@ -159,40 +175,42 @@ public class OffersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             });
 
             myHolder.binding.checkbox.setOnClickListener(v -> {
-                if(Preferences.getInstance().getUserData(context)!=null){
+                if (Preferences.getInstance().getUserData(context) != null) {
 
                     if (fragment instanceof Fragment_Main) {
 
-                    Fragment_Main fragment_main = (Fragment_Main) fragment;
+                        Fragment_Main fragment_main = (Fragment_Main) fragment;
 
-                    if (myHolder.binding.checkbox.isChecked()) {
-                        fragment_main.like_dislike( list.get(myHolder.getAdapterPosition()),  myHolder.getAdapterPosition(),0);
-                    } else {
-                        fragment_main.like_dislike( list.get(myHolder.getAdapterPosition()), myHolder.getAdapterPosition(),0);
+                        if (myHolder.binding.checkbox.isChecked()) {
+                            fragment_main.like_dislike(list.get(myHolder.getAdapterPosition()), myHolder.getAdapterPosition(), 0);
+                        } else {
+                            fragment_main.like_dislike(list.get(myHolder.getAdapterPosition()), myHolder.getAdapterPosition(), 0);
 
+                        }
+                    } else if (fragment instanceof Fragment_Offer) {
+                        Fragment_Offer fragment_offer = (Fragment_Offer) fragment;
+                        if (myHolder.binding.checkbox.isChecked()) {
+                            fragment_offer.like_dislike(list.get(myHolder.getAdapterPosition()), myHolder.getAdapterPosition());
+                        } else {
+                            fragment_offer.like_dislike(list.get(myHolder.getAdapterPosition()), myHolder.getAdapterPosition());
+
+                        }
                     }
-                } else if (fragment instanceof Fragment_Offer) {
-                    Fragment_Offer fragment_offer = (Fragment_Offer) fragment;
-                    if (myHolder.binding.checkbox.isChecked()) {
-                        fragment_offer.like_dislike(list.get(myHolder.getAdapterPosition()), myHolder.getAdapterPosition());
-                    } else {
-                        fragment_offer.like_dislike( list.get(myHolder.getAdapterPosition()), myHolder.getAdapterPosition());
-
-                    }
-                }}
-                else {
-
-                    Common.CreateDialogAlert(context, context.getResources().
-                            getString(R.string.please_sign_in_or_sign_up));
+                } else {
+                    i = position;
+                    notifyDataSetChanged();
 
 
                 }
-                notifyDataSetChanged();
 
 
             });
-            if(Preferences.getInstance().getUserData(context)==null){
-                myHolder.binding.checkbox.setChecked(false);}
+            if (i == position && Preferences.getInstance().getUserData(context) == null) {
+                myHolder.binding.checkbox.setChecked(false);
+                Common.CreateDialogAlert(context, context.getResources().
+                        getString(R.string.please_sign_in_or_sign_up));
+
+            }
 
         }
 
@@ -261,7 +279,6 @@ public class OffersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public int getItemViewType(int position) {
-
         if (type == 1) {
 
             return type;
@@ -271,6 +288,8 @@ public class OffersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
     public void setType(int type) {
+        i=-1;
+
         this.type = type;
     }
 }
