@@ -22,11 +22,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.anaqaphone.R;
+import com.anaqaphone.activities_fragments.activity_product_details.ProductDetailsActivity;
+import com.anaqaphone.adapters.OffersAdapter;
 import com.anaqaphone.databinding.ActivitySearchBinding;
 import com.anaqaphone.interfaces.Listeners;
 import com.anaqaphone.language.Language;
+import com.anaqaphone.models.ProductDataModel;
+import com.anaqaphone.models.SingleProductDataModel;
 import com.anaqaphone.models.UserModel;
 import com.anaqaphone.preferences.Preferences;
+import com.anaqaphone.remote.Api;
+import com.anaqaphone.share.Common;
+import com.anaqaphone.tags.Tags;
 
 
 import java.io.IOException;
@@ -35,6 +42,7 @@ import java.util.List;
 import java.util.Locale;
 
 import io.paperdb.Paper;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -42,9 +50,9 @@ import retrofit2.Response;
 public class SearchActivity extends AppCompatActivity implements Listeners.BackListener{
     private ActivitySearchBinding binding;
     private String lang;
-    /*private List<ProductDataModel.Data> productModelList;
-    private SearchAdapter searchAdapter;*/
-    private String query="";
+    private List<SingleProductDataModel> offersDataList;
+    private OffersAdapter offersAdapter;
+    private String query = "all", department_id = "all";
     private UserModel userModel;
     private Preferences preferences;
     private boolean isLoading = false;
@@ -64,12 +72,15 @@ public class SearchActivity extends AppCompatActivity implements Listeners.BackL
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_search);
         initView();
+        search();
+
     }
 
 
 
     private void initView()
     {
+        offersDataList = new ArrayList<>();
         Paper.init(this);
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
         binding.setBackListener(this);
@@ -79,6 +90,8 @@ public class SearchActivity extends AppCompatActivity implements Listeners.BackL
         //productModelList = new ArrayList<>();
         manager = new GridLayoutManager(this,2);
         binding.recView.setLayoutManager(manager);
+        offersAdapter = new OffersAdapter(offersDataList, this, null, displayType);
+        binding.recView.setAdapter(offersAdapter);
        /* searchAdapter = new SearchAdapter(this,productModelList,this);
         binding.recView.setAdapter(searchAdapter);
         binding.recView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -140,27 +153,24 @@ public class SearchActivity extends AppCompatActivity implements Listeners.BackL
             }
         });
 
-        binding.llType.setOnClickListener(v -> {
-
-            if (displayType==square)
-            {
-                displayType = list;
-                binding.imageType.setImageResource(R.drawable.ic_list2);
-                binding.tvType.setText(getString(R.string.list));
-            }else {
-                displayType = square;
-                binding.imageType.setImageResource(R.drawable.ic_squares);
-                binding.tvType.setText(getString(R.string.normal));
-            }
-        });
-
-    }
-
-
-    private void search()
-    {
+//        binding.llType.setOnClickListener(v -> {
+//
+//            if (displayType==square)
+//            {
+//                displayType = list;
+//                binding.imageType.setImageResource(R.drawable.ic_list2);
+//                binding.tvType.setText(getString(R.string.list));
+//            }else {
+//                displayType = square;
+//                binding.imageType.setImageResource(R.drawable.ic_squares);
+//                binding.tvType.setText(getString(R.string.normal));
+//            }
+//        });
 
     }
+
+
+
     private void loadMore(int page) {
        /* try {
             String token;
@@ -234,6 +244,87 @@ public class SearchActivity extends AppCompatActivity implements Listeners.BackL
 
         }*/
     }
+    public void search() {
+        offersDataList.clear();
+        offersAdapter.notifyDataSetChanged();
+        binding.progBar.setVisibility(View.VISIBLE);
+        binding.tvNoData.setVisibility(View.GONE);
+
+        try {
+            int uid;
+
+            if (userModel != null) {
+                uid = userModel.getUser().getId();
+            } else {
+                uid = 0;
+            }
+            Api.getService(Tags.base_url).
+                    getOffersProducts("off", uid, query, department_id).
+                    enqueue(new Callback<ProductDataModel>() {
+                        @Override
+                        public void onResponse(Call<ProductDataModel> call, Response<ProductDataModel> response) {
+                            binding.progBar.setVisibility(View.GONE);
+
+                            if (response.isSuccessful() && response.body() != null && response.body().getData() != null) {
+
+                                offersDataList.clear();
+                                offersDataList.addAll(response.body().getData());
+                                if (offersDataList.size() > 0) {
+                                    offersAdapter.notifyDataSetChanged();
+                                }
+                                else {
+                                    binding.tvNoData.setVisibility(View.VISIBLE);
+
+                                }
+
+                            } else {
+                                binding.tvNoData.setVisibility(View.VISIBLE);
+
+                                try {
+
+                                    Log.e("error", response.code() + "_" + response.errorBody().string());
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+
+                                if (response.code() == 500) {
+                                    Toast.makeText(SearchActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
+
+
+                                } else {
+                                    Toast.makeText(SearchActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+
+
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ProductDataModel> call, Throwable t) {
+                            binding.progBar.setVisibility(View.GONE);
+                            binding.tvNoData.setVisibility(View.VISIBLE);
+                            try {
+                                if (t.getMessage() != null) {
+                                    Log.e("error", t.getMessage());
+                                    if (t.getMessage().toLowerCase().contains("failed to connect") || t.getMessage().toLowerCase().contains("unable to resolve host")) {
+                                        Toast.makeText(SearchActivity.this, R.string.something, Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(SearchActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                            } catch (Exception e) {
+                            }
+
+
+                        }
+                    });
+        } catch (Exception e) {
+
+        }
+
+
+    }
 
 
 
@@ -262,6 +353,75 @@ public class SearchActivity extends AppCompatActivity implements Listeners.BackL
             isFavoriteChange = true;
         }
     }
+
+    public void setItemDataOffers(SingleProductDataModel model) {
+
+        Intent intent = new Intent(this, ProductDetailsActivity.class);
+        intent.putExtra("product_id", model.getId());
+        startActivityForResult(intent, 100);
+    }
+    public int like_dislike(SingleProductDataModel productModel, int pos) {
+        if (userModel != null) {
+            try {
+                Api.getService(Tags.base_url)
+                        .addFavoriteProduct(userModel.getUser().getToken(), productModel.getId() + "")
+                        .enqueue(new Callback<ResponseBody>() {
+                            @Override
+                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                if (response.isSuccessful()) {
+
+                                    search();
+                                } else {
+
+
+                                    if (response.code() == 500) {
+                                        Toast.makeText(SearchActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
+
+
+                                    } else {
+                                        Toast.makeText(SearchActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+
+                                        try {
+
+                                            Log.e("error", response.code() + "_" + response.errorBody().string());
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                try {
+
+                                    if (t.getMessage() != null) {
+                                        Log.e("error", t.getMessage());
+                                        if (t.getMessage().toLowerCase().contains("failed to connect") || t.getMessage().toLowerCase().contains("unable to resolve host")) {
+                                            Toast.makeText(SearchActivity.this, R.string.something, Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Toast.makeText(SearchActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+
+                                } catch (Exception e) {
+                                }
+                            }
+                        });
+            } catch (Exception e) {
+
+            }
+            return 1;
+
+        }
+        else {
+
+            Common.CreateDialogAlert(SearchActivity.this, getString(R.string.please_sign_in_or_sign_up));
+            return 0;
+
+        }
+    }
+
 
     @Override
     public void onBackPressed() {

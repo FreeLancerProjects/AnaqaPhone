@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.anaqaphone.R;
 import com.anaqaphone.activities_fragments.activity_home.fragments.Fragment_Main;
 import com.anaqaphone.activities_fragments.activity_home.fragments.Fragment_Offer;
+import com.anaqaphone.activities_fragments.activity_search.SearchActivity;
 import com.anaqaphone.databinding.OfferListRowBinding;
 import com.anaqaphone.databinding.OfferRowBinding;
 import com.anaqaphone.models.ItemCartModel;
@@ -88,6 +89,7 @@ public class OffersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     Fragment_Offer fragment_offer = (Fragment_Offer) fragment;
                     fragment_offer.updateCartCount(cartSingleton.getItemCount());
                 }
+
                 Toast.makeText(context, R.string.added_suc, Toast.LENGTH_SHORT).show();
             });
             myHolder.itemView.setOnClickListener(view -> {
@@ -98,8 +100,11 @@ public class OffersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 } else if (fragment instanceof Fragment_Offer) {
                     Fragment_Offer fragment_offer = (Fragment_Offer) fragment;
                     fragment_offer.setItemDataOffers(list.get(myHolder.getAdapterPosition()));
-                }
+                } else if (context instanceof SearchActivity) {
+                    SearchActivity searchActivity = (SearchActivity) context;
+                    searchActivity.setItemDataOffers(list.get(myHolder.getAdapterPosition()));
 
+                }
             });
 
             myHolder.binding.checkbox.setOnClickListener(v -> {
@@ -123,7 +128,18 @@ public class OffersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                             fragment_offer.like_dislike(list.get(myHolder.getAdapterPosition()), myHolder.getAdapterPosition());
 
                         }
+
+                    } else if (context instanceof SearchActivity) {
+                        SearchActivity searchActivity = (SearchActivity) context;
+                        if (myHolder.binding.checkbox.isChecked()) {
+                            searchActivity.like_dislike(list.get(myHolder.getAdapterPosition()), myHolder.getAdapterPosition());
+                        } else {
+                            searchActivity.like_dislike(list.get(myHolder.getAdapterPosition()), myHolder.getAdapterPosition());
+
+                        }
+
                     }
+
                 } else {
                     i = position;
                     notifyDataSetChanged();
@@ -288,7 +304,7 @@ public class OffersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
     public void setType(int type) {
-        i=-1;
+        i = -1;
 
         this.type = type;
     }

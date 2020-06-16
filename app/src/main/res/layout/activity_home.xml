@@ -99,7 +99,7 @@
                     android:layout_gravity="center_vertical|end"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
-                    android:visibility="gone">
+                   >
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:layout_width="40dp"
