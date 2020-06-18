@@ -123,7 +123,16 @@ public class ProductDetailsActivity extends AppCompatActivity implements Listene
 
 
         binding.flAddToCart.setOnClickListener(v -> addToCart(singleProductDataModel));
-
+binding.tvClose.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        if(binding.expandLayout.isExpanded()){
+            binding.expandLayout.collapse(true);}
+        else {
+            binding.expandLayout.expand(true);
+        }
+    }
+});
     }
 
     private void getOrder() {

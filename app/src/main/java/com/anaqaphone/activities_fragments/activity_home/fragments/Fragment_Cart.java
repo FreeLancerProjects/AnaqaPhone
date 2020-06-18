@@ -39,6 +39,7 @@ import com.anaqaphone.remote.Api;
 import com.anaqaphone.share.Common;
 import com.anaqaphone.singleton.CartSingleton;
 import com.anaqaphone.tags.Tags;
+import com.google.android.gms.common.internal.Objects;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -132,7 +133,9 @@ public class Fragment_Cart extends Fragment implements Swipe.SwipeListener {
                     public void onResponse(Call<SettingModel> call, Response<SettingModel> response) {
                         dialog.dismiss();
                         if (response.isSuccessful()) {
-
+                            binding.lldiscount.setVisibility(View.VISIBLE);
+                            binding.tvdiscount.setText(response.body().getCoupon_value()+"%");
+                            Toast.makeText(activity, activity.getResources().getString(R.string.suc), Toast.LENGTH_LONG).show();
                             updateUI(response.body());
 
                         } else {
@@ -141,7 +144,7 @@ public class Fragment_Cart extends Fragment implements Swipe.SwipeListener {
                             } catch (Exception e) {
                             }
 
-                            if (response.code() == 404) {
+                            if (response.code() == 404||response.code()==422) {
                                 Toast.makeText(activity, getString(R.string.not_found), Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(activity, getString(R.string.something), Toast.LENGTH_SHORT).show();
@@ -200,6 +203,7 @@ public class Fragment_Cart extends Fragment implements Swipe.SwipeListener {
         itemCartModelList.clear();
         itemCartModelList.addAll(singleton.getItemCartModelList());
         Log.e("lllll", itemCartModelList.size() + "");
+        binding.lldiscount.setVisibility(View.GONE);
         adapter.notifyDataSetChanged();
         if (itemCartModelList.size() == 0) {
             // Log.e("lllllss", itemCartModelList.size() + "");
@@ -209,7 +213,9 @@ public class Fragment_Cart extends Fragment implements Swipe.SwipeListener {
             binding.llEmptyCart.setVisibility(View.VISIBLE);
             binding.llTotal.setVisibility(View.GONE);
             binding.llCheckout.setVisibility(View.GONE);
-
+            binding.tvdiscount.setText("");
+            binding.tvTotal.setText("");
+            binding.edtCopoun.setText("");
 
         } else {
             binding.btnCheckout.setVisibility(View.VISIBLE);
@@ -221,6 +227,8 @@ public class Fragment_Cart extends Fragment implements Swipe.SwipeListener {
 
         }
         calculateTotal();
+        activity.updateCartCount(itemCartModelList.size());
+
     }
 
 
@@ -261,8 +269,8 @@ public class Fragment_Cart extends Fragment implements Swipe.SwipeListener {
                 itemCartModelList.remove(pos);
                 singleton.deleteItem(pos);
                 adapter.notifyItemRemoved(pos);
-                calculateTotal();
-                activity.updateCartCount(itemCartModelList.size());
+                updateUI();
+                //  calculateTotal();
                 if (itemCartModelList.size() == 0) {
                     binding.llCheckout.setVisibility(View.GONE);
                     binding.llEmptyCart.setVisibility(View.VISIBLE);
