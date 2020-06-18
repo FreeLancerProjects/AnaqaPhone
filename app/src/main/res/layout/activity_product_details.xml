@@ -139,263 +139,330 @@
 
             >
 
-            <androidx.core.widget.NestedScrollView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/white"
-                android:fillViewport="true"
-                android:fitsSystemWindows="true">
+                android:orientation="vertical">
 
-                <LinearLayout
+                <androidx.core.widget.NestedScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@color/white"
+                    android:fillViewport="true"
+                    android:fitsSystemWindows="true">
 
-                    <androidx.cardview.widget.CardView
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        android:layout_margin="3dp"
-                        app:cardBackgroundColor="@color/white"
-                        app:cardCornerRadius="5dp"
-                        app:cardElevation="3dp"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
 
-
-                        >
-
-                        <FrameLayout
+                        <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="200dp"
+                            android:layout_margin="3dp"
+                            app:cardBackgroundColor="@color/white"
+                            app:cardCornerRadius="5dp"
+                            app:cardElevation="3dp"
+
+
+                            >
 
                             <FrameLayout
-                                android:id="@+id/flSlider"
                                 android:layout_width="match_parent"
-                                android:layout_height="200dp">
+                                android:layout_height="match_parent">
 
-                                <androidx.viewpager.widget.ViewPager
-                                    android:id="@+id/pager"
+                                <FrameLayout
+                                    android:id="@+id/flSlider"
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent" />
+                                    android:layout_height="200dp">
 
-                                <com.google.android.material.tabs.TabLayout
-                                    android:id="@+id/tab"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="7dp"
-                                    android:layout_gravity="bottom|center_horizontal"
-                                    android:layout_margin="8dp"
-                                    android:layout_marginBottom="8dp"
-                                    app:tabBackground="@drawable/tab_indicator"
-                                    app:tabGravity="fill"
-                                    app:tabIndicatorHeight="0dp"
-                                    app:tabMaxWidth="7dp"
-                                    app:tabMode="scrollable" />
+                                    <androidx.viewpager.widget.ViewPager
+                                        android:id="@+id/pager"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent" />
 
-                                <ProgressBar
-                                    android:id="@+id/progBarSlider"
-                                    android:layout_width="35dp"
-                                    android:layout_height="35dp"
-                                    android:layout_gravity="center" />
+                                    <com.google.android.material.tabs.TabLayout
+                                        android:id="@+id/tab"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="7dp"
+                                        android:layout_gravity="bottom|center_horizontal"
+                                        android:layout_margin="8dp"
+                                        android:layout_marginBottom="8dp"
+                                        app:tabBackground="@drawable/tab_indicator"
+                                        app:tabGravity="fill"
+                                        app:tabIndicatorHeight="0dp"
+                                        app:tabMaxWidth="7dp"
+                                        app:tabMode="scrollable" />
+
+                                    <ProgressBar
+                                        android:id="@+id/progBarSlider"
+                                        android:layout_width="35dp"
+                                        android:layout_height="35dp"
+                                        android:layout_gravity="center" />
+                                </FrameLayout>
+
+
                             </FrameLayout>
 
-
-                        </FrameLayout>
-
-                    </androidx.cardview.widget.CardView>
+                        </androidx.cardview.widget.CardView>
 
 
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_margin="3dp"
-                        android:layout_weight="1"
-                        app:cardBackgroundColor="@color/white"
-                        app:cardCornerRadius="5dp"
-                        app:cardElevation="3dp"
-                        app:contentPadding="10dp">
-
-                        <LinearLayout
+                        <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@{model.title}"
-                                android:textColor="@color/black"
-                                android:textSize="16sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="10dp"
-                                android:text='@{model.contents}'
-                                android:textColor="@color/gray6"
-                                android:textSize="14sp"
-                                android:textStyle="bold" />
+                            android:layout_height="0dp"
+                            android:layout_margin="3dp"
+                            android:layout_weight="1"
+                            app:cardBackgroundColor="@color/white"
+                            app:cardCornerRadius="5dp"
+                            app:cardElevation="3dp"
+                            app:contentPadding="10dp">
 
                             <LinearLayout
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="8sp"
-                                android:gravity="center"
-                                android:orientation="horizontal">
+                                android:orientation="vertical">
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="2dp"
-                                    android:layout_marginTop="5dp"
-                                    android:layout_marginEnd="2dp"
-                                    android:clickable="false"
-                                    android:longClickable="false"
-                                    android:singleLine="true"
-                                    android:text="@string/model_num"
-                                    android:textColor="@color/gray6"
-                                    android:textSize="12sp"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
+                                    android:text="@{model.title}"
+                                    android:textColor="@color/black"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold" />
 
                                 <TextView
-
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="2dp"
-                                    android:layout_marginTop="5dp"
-                                    android:layout_marginEnd="2dp"
-                                    android:text="@{model.model}"
+                                    android:layout_marginBottom="10dp"
+                                    android:text='@{model.contents}'
                                     android:textColor="@color/gray6"
                                     android:textSize="14sp"
                                     android:textStyle="bold" />
 
-                            </LinearLayout>
-
-
-                            <TextView
-                                android:id="@+id/tv_oldprice"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="10dp"
-                                android:layout_marginTop="5dp"
-                                android:layout_marginEnd="10dp"
-                                android:clickable="false"
-                                android:longClickable="false"
-                                android:singleLine="true"
-                                android:text='@{model.old_price+@string/ryal}'
-                                android:textColor="@color/colorPrimary"
-                                android:textSize="12sp"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="8sp"
-                                android:gravity="center"
-                                android:orientation="horizontal">
-
-                                <TextView
+                                <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="2dp"
+                                    android:layout_marginTop="8sp"
+                                    android:gravity="center"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="2dp"
+                                        android:layout_marginTop="5dp"
+                                        android:layout_marginEnd="2dp"
+                                        android:clickable="false"
+                                        android:longClickable="false"
+                                        android:singleLine="true"
+                                        android:text="@string/model_num"
+                                        android:textColor="@color/gray6"
+                                        android:textSize="12sp"
+                                        app:layout_constraintBottom_toBottomOf="parent"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent" />
+
+                                    <TextView
+
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="2dp"
+                                        android:layout_marginTop="5dp"
+                                        android:layout_marginEnd="2dp"
+                                        android:text="@{model.model}"
+                                        android:textColor="@color/gray6"
+                                        android:textSize="14sp"
+                                        android:textStyle="bold" />
+
+                                </LinearLayout>
+
+
+                                <TextView
+                                    android:id="@+id/tv_oldprice"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
                                     android:layout_marginTop="5dp"
-                                    android:layout_marginEnd="2dp"
+                                    android:layout_marginEnd="10dp"
                                     android:clickable="false"
                                     android:longClickable="false"
                                     android:singleLine="true"
-                                    android:text='@{model.price+@string/ryal}'
+                                    android:text='@{model.old_price+@string/ryal}'
                                     android:textColor="@color/colorPrimary"
                                     android:textSize="12sp"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintTop_toTopOf="parent" />
 
-                                <TextView
 
+                                <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="2dp"
+                                    android:layout_marginTop="8sp"
+                                    android:gravity="center"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="2dp"
+                                        android:layout_marginTop="5dp"
+                                        android:layout_marginEnd="2dp"
+                                        android:clickable="false"
+                                        android:longClickable="false"
+                                        android:singleLine="true"
+                                        android:text='@{model.price+@string/ryal}'
+                                        android:textColor="@color/colorPrimary"
+                                        android:textSize="12sp"
+                                        app:layout_constraintBottom_toBottomOf="parent"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent" />
+
+                                    <TextView
+
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="2dp"
+                                        android:layout_marginTop="5dp"
+                                        android:layout_marginEnd="2dp"
+                                        android:text="@string/shamil_daribat_alqimih_almudafih"
+                                        android:textColor="@color/gray6"
+                                        android:textSize="14sp"
+                                        android:textStyle="bold" />
+
+                                </LinearLayout>
+
+
+                                <com.google.android.material.tabs.TabLayout
+                                    android:id="@+id/tab1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+                                    android:visibility="gone"
+                                    app:tabGravity="fill"
+                                    app:tabIndicatorHeight="0dp"
+                                    app:tabMode="fixed"
+                                    app:tabSelectedTextColor="@color/black"
+                                    app:tabTextColor="@color/black" />
+
+                                <androidx.viewpager.widget.ViewPager
+                                    android:id="@+id/pager2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_weight="1"
+                                    android:visibility="gone" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
                                     android:layout_marginTop="5dp"
-                                    android:layout_marginEnd="2dp"
-                                    android:text="@string/shamil_daribat_alqimih_almudafih"
+                                    android:text="@string/overview"
+                                    android:textColor="@color/black"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold"
+
+                                    />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="8dp"
+                                    android:text="@string/main_advantages"
+                                    android:textColor="@color/black"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold"
+
+                                    />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="5dp"
+                                    android:layout_marginBottom="10dp"
+                                    android:text='@{model.features}'
                                     android:textColor="@color/gray6"
                                     android:textSize="14sp"
                                     android:textStyle="bold" />
-
                             </LinearLayout>
 
 
-                            <com.google.android.material.tabs.TabLayout
-                                android:id="@+id/tab1"
-                                android:layout_width="match_parent"
-                                android:layout_height="40dp"
-                                android:visibility="gone"
-                                app:tabGravity="fill"
-                                app:tabIndicatorHeight="0dp"
-                                app:tabMode="fixed"
-                                app:tabSelectedTextColor="@color/black"
-                                app:tabTextColor="@color/black" />
+                        </androidx.cardview.widget.CardView>
 
-                            <androidx.viewpager.widget.ViewPager
-                                android:id="@+id/pager2"
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_marginTop="10dp"
-                                android:layout_weight="1"
-                                android:visibility="gone" />
+                    </LinearLayout>
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                android:text="@string/overview"
-                                android:textColor="@color/black"
-                                android:textSize="16sp"
-                                android:textStyle="bold"
+                </androidx.core.widget.NestedScrollView>
 
-                                />
+                <FrameLayout
+                    android:id="@+id/fl_add_to_cart"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:background="@color/colorPrimary">
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="8dp"
-                                android:text="@string/main_advantages"
-                                android:textColor="@color/black"
-                                android:textSize="16sp"
-                                android:textStyle="bold"
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:clickable="false"
+                        android:longClickable="false"
+                        android:orientation="horizontal"
 
-                                />
+                        >
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                android:layout_marginBottom="10dp"
-                                android:text='@{model.features}'
-                                android:textColor="@color/gray6"
-                                android:textSize="14sp"
-                                android:textStyle="bold" />
-                        </LinearLayout>
+                        <FrameLayout
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_gravity="center_vertical"
 
+                            >
 
-                    </androidx.cardview.widget.CardView>
+                            <com.makeramen.roundedimageview.RoundedImageView
+                                android:id="@+id/image"
+                                image="@{model.image}"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp" />
 
-                </LinearLayout>
+                            <ImageView
+                                android:id="@+id/image_arrow2"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:background="@color/colorPrimary"
+                                android:clickable="false"
+                                android:longClickable="false"
+                                android:padding="7dp"
+                                android:src="@drawable/ic_cart"
+                                android:tint="@color/white" />
+                        </FrameLayout>
 
-            </androidx.core.widget.NestedScrollView>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:clickable="false"
+                            android:gravity="center_vertical"
+                            android:longClickable="false"
+                            android:maxLines="2"
+                            android:paddingStart="5dp"
+                            android:paddingEnd="5dp"
+                            android:text="@string/add_to_cart"
+                            android:textColor="@color/white"
+                            android:textSize="15sp"
+                            tools:ignore="RtlCompat" />
+                    </LinearLayout>
+
+                </FrameLayout>
+            </LinearLayout>
 
             <net.cachapa.expandablelayout.ExpandableLayout
                 android:id="@+id/expandLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/black_trans"
+                android:clickable="true"
                 app:el_duration="300"
                 app:el_expanded="false"
                 app:el_parallax=".5"
-
 
                 >
 
@@ -410,87 +477,27 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
+                        android:padding="10dp"
                         android:text="@string/suc"
-                        android:textSize="15sp"
                         android:textColor="@color/white"
-                        />
+                        android:textSize="15sp" />
 
                     <TextView
                         android:id="@+id/tv_close"
                         android:layout_width="90dp"
                         android:layout_height="30dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/small_rounded_btn_primary"
-                        android:text="@string/close"
-                        android:textSize="15sp"
                         android:layout_marginBottom="20dp"
+                        android:background="@drawable/small_rounded_btn_primary"
                         android:gravity="center"
+                        android:text="@string/close"
                         android:textColor="@color/white"
-                        />
+                        android:textSize="15sp" />
 
                 </LinearLayout>
             </net.cachapa.expandablelayout.ExpandableLayout>
         </FrameLayout>
 
-        <FrameLayout
-            android:id="@+id/fl_add_to_cart"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:background="@color/colorPrimary">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:clickable="false"
-                android:longClickable="false"
-                android:orientation="horizontal"
-
-                >
-
-                <FrameLayout
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_gravity="center_vertical"
-
-                    >
-
-                    <com.makeramen.roundedimageview.RoundedImageView
-                        android:id="@+id/image"
-                        image="@{model.image}"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp" />
-
-                    <ImageView
-                        android:id="@+id/image_arrow2"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:background="@color/colorPrimary"
-                        android:clickable="false"
-                        android:longClickable="false"
-                        android:padding="7dp"
-                        android:src="@drawable/ic_cart"
-                        android:tint="@color/white" />
-                </FrameLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:clickable="false"
-                    android:gravity="center_vertical"
-                    android:longClickable="false"
-                    android:maxLines="2"
-                    android:paddingStart="5dp"
-                    android:paddingEnd="5dp"
-                    android:text="@string/add_to_cart"
-                    android:textColor="@color/white"
-                    android:textSize="15sp"
-                    tools:ignore="RtlCompat" />
-            </LinearLayout>
-
-        </FrameLayout>
 
     </LinearLayout>
 
