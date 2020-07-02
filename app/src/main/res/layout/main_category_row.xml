@@ -42,7 +42,7 @@
 
                 <ImageView
                     android:id="@+id/image"
-                    image="@{model.icon}"
+                    image="@{model.image}"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     app:layout_constraintStart_toStartOf="parent"

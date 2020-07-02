@@ -8,18 +8,14 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.anaqaphone.R;
 import com.anaqaphone.activities_fragments.activity_product_details.ProductDetailsActivity;
@@ -259,7 +255,7 @@ public class SearchActivity extends AppCompatActivity implements Listeners.BackL
                 uid = 0;
             }
             Api.getService(Tags.base_url).
-                    getOffersProducts("off", uid, query, department_id).
+                    Search("off", uid, query, department_id).
                     enqueue(new Callback<ProductDataModel>() {
                         @Override
                         public void onResponse(Call<ProductDataModel> call, Response<ProductDataModel> response) {

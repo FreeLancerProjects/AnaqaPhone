@@ -105,25 +105,31 @@ public interface Service {
 
 
     @GET("api/offers")
-    Call<ProductDataModel> getOffersProducts(@Query("pagination") String pagination,
-                                             @Query("user_id") int user_id);
+    Call<ProductDataModel> Search(@Query("pagination") String pagination,
+                                  @Query("user_id") int user_id);
 
-    @GET("api/brands-with-products")
+    @GET("api/category-product")
     Call<CategoryProductDataModel> getCategoryProducts(@Query("pagination") String pagination,
                                                        @Query("user_id") int user_id);
 
     @GET("api/genaral-search")
+    Call<ProductDataModel> Search(@Query("pagination") String pagination,
+                                  @Query("user_id") int user_id,
+                                  @Query("search_name") String search_name,
+                                  @Query("departemnt_id") String departemnt_id
+    );
+    @GET("api/genaral-search")
     Call<ProductDataModel> getOffersProducts(@Query("pagination") String pagination,
                                              @Query("user_id") int user_id,
-                                             @Query("search_name") String search_name,
-                                             @Query("departemnt_id") String departemnt_id
-    );
+                                             @Query("departemnt_id") String departemnt_id,
+                                             @Query("brand_id") String brand_id
 
+                                             );
     @GET("api/product")
     Call<SingleProductDataModel> Product_detials(@Query("product_id") int product_id);
     @GET("api/one-order")
     Call<OrderModel> order_detials(@Query("order_id") int order_id);
-    @GET("api/category")
+    @GET("api/brands")
     Call<MainCategoryDataModel> getMainCategory(
             @Query("pagination") String pagination
     );

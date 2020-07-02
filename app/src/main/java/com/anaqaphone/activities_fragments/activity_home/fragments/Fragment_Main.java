@@ -261,7 +261,7 @@ if(userModel!=null){
                 uid = 0;
             }
             Api.getService(Tags.base_url).
-                    getOffersProducts("off", uid).
+                    Search("off", uid).
                     enqueue(new Callback<ProductDataModel>() {
                         @Override
                         public void onResponse(Call<ProductDataModel> call, Response<ProductDataModel> response) {

@@ -1,7 +1,5 @@
 package com.anaqaphone.activities_fragments.activity_home.fragments;
 
-import android.app.Activity;
-import android.app.DownloadManager;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -27,7 +25,6 @@ import com.anaqaphone.activities_fragments.activity_home.HomeActivity;
 import com.anaqaphone.activities_fragments.activity_product_details.ProductDetailsActivity;
 import com.anaqaphone.adapters.MainCategoryAdapter;
 import com.anaqaphone.adapters.OffersAdapter;
-import com.anaqaphone.databinding.FragmentCartBinding;
 import com.anaqaphone.databinding.FragmentOfferBinding;
 import com.anaqaphone.models.MainCategoryDataModel;
 import com.anaqaphone.models.ProductDataModel;
@@ -41,7 +38,6 @@ import com.anaqaphone.tags.Tags;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import io.paperdb.Paper;
 import okhttp3.ResponseBody;
@@ -226,7 +222,7 @@ public class Fragment_Offer extends Fragment {
                 uid = 0;
             }
             Api.getService(Tags.base_url).
-                    getOffersProducts("off", uid, query, department_id).
+                    getOffersProducts("off", uid, "all", department_id).
                     enqueue(new Callback<ProductDataModel>() {
                         @Override
                         public void onResponse(Call<ProductDataModel> call, Response<ProductDataModel> response) {
