@@ -222,7 +222,7 @@ public class Fragment_Offer extends Fragment {
                 uid = 0;
             }
             Api.getService(Tags.base_url).
-                    getOffersProducts("off", uid, "all", department_id).
+                    getOffersProducts("off", uid, "all", department_id,"yes").
                     enqueue(new Callback<ProductDataModel>() {
                         @Override
                         public void onResponse(Call<ProductDataModel> call, Response<ProductDataModel> response) {

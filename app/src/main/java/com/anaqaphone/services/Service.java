@@ -118,17 +118,21 @@ public interface Service {
                                   @Query("search_name") String search_name,
                                   @Query("departemnt_id") String departemnt_id
     );
+
     @GET("api/genaral-search")
     Call<ProductDataModel> getOffersProducts(@Query("pagination") String pagination,
                                              @Query("user_id") int user_id,
                                              @Query("departemnt_id") String departemnt_id,
-                                             @Query("brand_id") String brand_id
+                                             @Query("brand_id") String brand_id,
+                                             @Query("have_offer") String have_offer
+    );
 
-                                             );
     @GET("api/product")
     Call<SingleProductDataModel> Product_detials(@Query("product_id") int product_id);
+
     @GET("api/one-order")
     Call<OrderModel> order_detials(@Query("order_id") int order_id);
+
     @GET("api/brands")
     Call<MainCategoryDataModel> getMainCategory(
             @Query("pagination") String pagination
@@ -150,6 +154,7 @@ public interface Service {
             @Query("pagination") String pagination
     )
             ;
+
     @GET("api/my-notification")
     Call<NotificationDataModel> getNotification(
             @Query("pagination") String pagination
@@ -176,15 +181,18 @@ public interface Service {
                                    @Query("limit_per_page") int limit_per_page
 
     );
+
     @POST("api/create-order")
     Call<OrderModel> createOrder(
 
             @Header("Authorization") String Authorization,
             @Body AddOrderModel addOrderModel)
             ;
+
     @FormUrlEncoded
     @POST("api/find-coupon")
     Call<SettingModel> getCouponValue(@Field("coupon_num") String coupon_num);
+
     @Multipart
     @POST("api/update-profile")
     Call<UserModel> editClientProfileWithImage(@Header("Authorization") String Authorization,
