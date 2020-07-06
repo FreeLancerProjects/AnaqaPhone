@@ -172,5 +172,13 @@
     <string name="not_found">Not Found</string>
     <string name="add_coupon">Add Coupon</string>
     <string name="edit_profile">Edit profile</string>
+    <string name="department">Departments</string>
+    <string name="out_of_stock">Out Of Stock</string>
+    <string name="arrive">Arrive</string>
+    <string name="without_arrive">Without Arrive</string>
+    <string name="total_order_price">Total Order Price</string>
+    <string name="products_price">Products Price</string>
+    <string name="arrive_price">Arrive Price</string>
+    <string name="vat">VAT</string>
 
 </resources>

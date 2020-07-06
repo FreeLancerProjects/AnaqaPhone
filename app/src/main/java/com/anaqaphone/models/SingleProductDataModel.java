@@ -23,6 +23,7 @@ public class SingleProductDataModel implements Serializable {
     private Department department_fk;
     private List<ProductsImages> products_images;
     private UserLike user_like;
+    private int stock;
 
     public int getId() {
         return id;
@@ -98,6 +99,10 @@ public class SingleProductDataModel implements Serializable {
 
     public void setUser_like(UserLike user_like) {
         this.user_like = user_like;
+    }
+
+    public int getStock() {
+        return stock;
     }
 
     public class Department implements Serializable {

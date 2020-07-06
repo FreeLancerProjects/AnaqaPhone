@@ -23,6 +23,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.anaqaphone.R;
 import com.anaqaphone.activities_fragments.activity_home.fragments.Fragment_Cart;
+import com.anaqaphone.activities_fragments.activity_home.fragments.Fragment_Department;
 import com.anaqaphone.activities_fragments.activity_home.fragments.Fragment_Main;
 import com.anaqaphone.activities_fragments.activity_home.fragments.Fragment_More;
 import com.anaqaphone.activities_fragments.activity_home.fragments.Fragment_Offer;
@@ -66,6 +67,7 @@ public class HomeActivity extends AppCompatActivity {
     private Fragment_Cart fragment_cart;
     private Fragment_Offer fragment_offer;
     private Fragment_More fragment_more;
+    private Fragment_Department fragment_department;
     private UserModel userModel;
     private String lang;
     private String token;
@@ -100,7 +102,7 @@ public class HomeActivity extends AppCompatActivity {
         binding.flSearch.setOnClickListener(view -> {
 
             Intent intent = new Intent(this, SearchActivity.class);
-            startActivityForResult(intent,100);
+            startActivityForResult(intent, 100);
             // displayFragmentSearch();
 
         });
@@ -121,7 +123,6 @@ public class HomeActivity extends AppCompatActivity {
         });
 
 
-
         if (userModel != null) {
             EventBus.getDefault().register(this);
             getNotificationCount();
@@ -138,7 +139,8 @@ public class HomeActivity extends AppCompatActivity {
         AHBottomNavigationItem item1 = new AHBottomNavigationItem(getString(R.string.home), R.drawable.ic_home);
         AHBottomNavigationItem item2 = new AHBottomNavigationItem(getString(R.string.offers), R.drawable.ic_tag);
         AHBottomNavigationItem item3 = new AHBottomNavigationItem(getString(R.string.cart), R.drawable.ic_cart);
-        AHBottomNavigationItem item4 = new AHBottomNavigationItem(getString(R.string.more), R.drawable.ic_more);
+        AHBottomNavigationItem item4 = new AHBottomNavigationItem(getString(R.string.department), R.drawable.ic_list);
+        AHBottomNavigationItem item5 = new AHBottomNavigationItem(getString(R.string.more), R.drawable.ic_more);
 
         binding.ahBottomNav.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
         binding.ahBottomNav.setDefaultBackgroundColor(ContextCompat.getColor(this, R.color.second));
@@ -151,6 +153,7 @@ public class HomeActivity extends AppCompatActivity {
         binding.ahBottomNav.addItem(item2);
         binding.ahBottomNav.addItem(item3);
         binding.ahBottomNav.addItem(item4);
+        binding.ahBottomNav.addItem(item5);
 
 
         binding.ahBottomNav.setOnTabSelectedListener((position, wasSelected) -> {
@@ -171,9 +174,11 @@ public class HomeActivity extends AppCompatActivity {
 
                     break;
                 case 3:
+                    displayFragmentDepartment();
+                    break;
+                case 4:
                     displayFragmentMore();
                     break;
-
             }
             return false;
         });
@@ -287,12 +292,14 @@ public class HomeActivity extends AppCompatActivity {
             if (fragment_cart != null && fragment_cart.isAdded()) {
                 fragmentManager.beginTransaction().hide(fragment_cart).commit();
             }
-
+            if (fragment_department != null && fragment_department.isAdded()) {
+                fragmentManager.beginTransaction().hide(fragment_department).commit();
+            }
             if (fragment_offer != null && fragment_offer.isAdded()) {
                 fragmentManager.beginTransaction().hide(fragment_offer).commit();
             }
 
-            if ( fragment_more!= null && fragment_more.isAdded()) {
+            if (fragment_more != null && fragment_more.isAdded()) {
                 fragmentManager.beginTransaction().hide(fragment_more).commit();
             }
             if (fragment_main.isAdded()) {
@@ -317,8 +324,11 @@ public class HomeActivity extends AppCompatActivity {
                 fragment_cart.updateUI();
             }
 
-            if ( fragment_more!= null && fragment_more.isAdded()) {
+            if (fragment_more != null && fragment_more.isAdded()) {
                 fragmentManager.beginTransaction().hide(fragment_more).commit();
+            }
+            if (fragment_department != null && fragment_department.isAdded()) {
+                fragmentManager.beginTransaction().hide(fragment_department).commit();
             }
             if (fragment_main != null && fragment_main.isAdded()) {
                 fragmentManager.beginTransaction().hide(fragment_main).commit();
@@ -351,8 +361,11 @@ public class HomeActivity extends AppCompatActivity {
             if (fragment_main != null && fragment_main.isAdded()) {
                 fragmentManager.beginTransaction().hide(fragment_main).commit();
             }
+            if (fragment_department != null && fragment_department.isAdded()) {
+                fragmentManager.beginTransaction().hide(fragment_department).commit();
+            }
 
-            if ( fragment_more!= null && fragment_more.isAdded()) {
+            if (fragment_more != null && fragment_more.isAdded()) {
                 fragmentManager.beginTransaction().hide(fragment_more).commit();
             }
 
@@ -385,8 +398,11 @@ public class HomeActivity extends AppCompatActivity {
             if (fragment_main != null && fragment_main.isAdded()) {
                 fragmentManager.beginTransaction().hide(fragment_main).commit();
             }
+            if (fragment_department != null && fragment_department.isAdded()) {
+                fragmentManager.beginTransaction().hide(fragment_department).commit();
+            }
 
-            if ( fragment_offer!= null && fragment_more.isAdded()) {
+            if (fragment_offer != null && fragment_offer.isAdded()) {
                 fragmentManager.beginTransaction().hide(fragment_offer).commit();
             }
 
@@ -402,13 +418,47 @@ public class HomeActivity extends AppCompatActivity {
 
             }
             binding.setTitle(getString(R.string.more));
-            updateBottomNavigationPosition(3);
+            updateBottomNavigationPosition(4);
         } catch (Exception e) {
         }
     }
 
 
+    public void displayFragmentDepartment() {
 
+        try {
+            if (fragment_department == null) {
+                fragment_department = Fragment_Department.newInstance();
+            }
+
+
+            if (fragment_main != null && fragment_main.isAdded()) {
+                fragmentManager.beginTransaction().hide(fragment_main).commit();
+            }
+            if (fragment_more != null && fragment_more.isAdded()) {
+                fragmentManager.beginTransaction().hide(fragment_more).commit();
+            }
+
+            if (fragment_offer != null && fragment_offer.isAdded()) {
+                fragmentManager.beginTransaction().hide(fragment_offer).commit();
+            }
+
+            if (fragment_cart != null && fragment_cart.isAdded()) {
+                fragmentManager.beginTransaction().hide(fragment_cart).commit();
+            }
+
+            if (fragment_department.isAdded()) {
+                fragmentManager.beginTransaction().show(fragment_department).commit();
+
+            } else {
+                fragmentManager.beginTransaction().add(R.id.fragment_app_container, fragment_department, "fragment_department").addToBackStack("fragment_department").commit();
+
+            }
+            binding.setTitle(getString(R.string.department));
+            updateBottomNavigationPosition(3);
+        } catch (Exception e) {
+        }
+    }
 
 
     private void updateTokenFireBase() {
@@ -419,7 +469,7 @@ public class HomeActivity extends AppCompatActivity {
                 token = task.getResult().getToken();
 
                 try {
-Log.e("llll",userModel.getUser().getToken());
+                    Log.e("llll", userModel.getUser().getToken());
                     Api.getService(Tags.base_url)
                             .updatePhoneToken(userModel.getUser().getToken(), token, "android")
                             .enqueue(new Callback<ResponseBody>() {
@@ -478,7 +528,7 @@ Log.e("llll",userModel.getUser().getToken());
                     token = task.getResult().getToken();
 
                     Api.getService(Tags.base_url)
-                            .logout(userModel.getUser().getToken(),token,"android")
+                            .logout(userModel.getUser().getToken(), token, "android")
                             .enqueue(new Callback<ResponseBody>() {
                                 @Override
                                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -539,7 +589,6 @@ Log.e("llll",userModel.getUser().getToken());
     }
 
 
-
     public void refreshActivity(String lang) {
         Paper.book().write("lang", lang);
         Language.setNewLocale(this, lang);
@@ -593,13 +642,9 @@ Log.e("llll",userModel.getUser().getToken());
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         List<Fragment> fragmentList = fragmentManager.getFragments();
-        for (Fragment fragment :fragmentList)
-        {
+        for (Fragment fragment : fragmentList) {
             fragment.onActivityResult(requestCode, resultCode, data);
         }
-
-
-
 
 
     }
@@ -608,38 +653,38 @@ Log.e("llll",userModel.getUser().getToken());
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         List<Fragment> fragmentList = fragmentManager.getFragments();
-        for (Fragment fragment :fragmentList)
-        {
+        for (Fragment fragment : fragmentList) {
             fragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
 
 
-    public void updateCartCount(int count){
+    public void updateCartCount(int count) {
 
 
-        if (count==0){
+        if (count == 0) {
             AHNotification notification = new AHNotification.Builder()
-                    .setBackgroundColor(ContextCompat.getColor(this,R.color.colorAccent))
-                    .setTextColor(ContextCompat.getColor(this,R.color.white))
+                    .setBackgroundColor(ContextCompat.getColor(this, R.color.colorAccent))
+                    .setTextColor(ContextCompat.getColor(this, R.color.white))
                     .setText(null)
                     .build();
-            binding.ahBottomNav.setNotification(notification,2);
+            binding.ahBottomNav.setNotification(notification, 2);
 
-        }else {
+        } else {
             AHNotification notification = new AHNotification.Builder()
-                    .setBackgroundColor(ContextCompat.getColor(this,R.color.colorAccent))
-                    .setTextColor(ContextCompat.getColor(this,R.color.white))
+                    .setBackgroundColor(ContextCompat.getColor(this, R.color.colorAccent))
+                    .setTextColor(ContextCompat.getColor(this, R.color.white))
                     .setText(String.valueOf(count))
                     .build();
-            binding.ahBottomNav.setNotification(notification,2);
+            binding.ahBottomNav.setNotification(notification, 2);
         }
     }
+
     @Override
     protected void onResume() {
         super.onResume();
         singleton = CartSingleton.newInstance();
-        if (singleton.getItemCartModelList()!=null){
+        if (singleton.getItemCartModelList() != null) {
             updateCartCount(singleton.getItemCount());
         }
 

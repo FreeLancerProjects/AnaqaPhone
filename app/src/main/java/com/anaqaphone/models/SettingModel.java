@@ -5,8 +5,11 @@ import java.io.Serializable;
 public class SettingModel implements Serializable {
 
     private Data settings;
-private double coupon_value;
-        private int coupon_id;
+    private double coupon_value;
+    private int coupon_id;
+private double delivery_value;
+private double tax;
+private double pay_when_recieving;
 
     public Data getSettings() {
         return settings;
@@ -20,7 +23,19 @@ private double coupon_value;
         return coupon_id;
     }
 
-    public static class Data implements Serializable{
+    public double getDelivery_value() {
+        return delivery_value;
+    }
+
+    public double getTax() {
+        return tax;
+    }
+
+    public double getPay_when_recieving() {
+        return pay_when_recieving;
+    }
+
+    public static class Data implements Serializable {
         private String termis_condition;
         private String about_app;
         private String whatsapp;

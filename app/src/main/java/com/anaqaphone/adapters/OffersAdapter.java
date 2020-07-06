@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Paint;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
@@ -13,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.anaqaphone.R;
+import com.anaqaphone.activities_fragments.activity_home.fragments.Fragment_Department;
 import com.anaqaphone.activities_fragments.activity_home.fragments.Fragment_Main;
 import com.anaqaphone.activities_fragments.activity_home.fragments.Fragment_Offer;
 import com.anaqaphone.activities_fragments.activity_search.SearchActivity;
@@ -73,6 +75,12 @@ public class OffersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             MyHolder myHolder = (MyHolder) holder;
             myHolder.binding.tvOldprice.setPaintFlags(myHolder.binding.tvOldprice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             myHolder.binding.setModel(list.get(position));
+            if (list.get(position).getStock() <= 0) {
+                myHolder.binding.llAddToCart.setVisibility(View.GONE);
+                myHolder.binding.tvStock.setVisibility(View.VISIBLE);
+                myHolder.binding.ll.setVisibility(View.GONE);
+                myHolder.binding.View.setVisibility(View.GONE);
+            }
             myHolder.binding.setLang(lang);
             if (list.get(position).getUser_like() != null) {
                 ((MyHolder) holder).binding.checkbox.setChecked(true);
@@ -88,8 +96,10 @@ public class OffersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 } else if (fragment instanceof Fragment_Offer) {
                     Fragment_Offer fragment_offer = (Fragment_Offer) fragment;
                     fragment_offer.updateCartCount(cartSingleton.getItemCount());
+                } else if (fragment instanceof Fragment_Department) {
+                    Fragment_Department fragment_department = (Fragment_Department) fragment;
+                    fragment_department.updateCartCount(cartSingleton.getItemCount());
                 }
-
                 Toast.makeText(context, R.string.added_suc, Toast.LENGTH_SHORT).show();
             });
             myHolder.itemView.setOnClickListener(view -> {
@@ -100,6 +110,9 @@ public class OffersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 } else if (fragment instanceof Fragment_Offer) {
                     Fragment_Offer fragment_offer = (Fragment_Offer) fragment;
                     fragment_offer.setItemDataOffers(list.get(myHolder.getAdapterPosition()));
+                } else if (fragment instanceof Fragment_Department) {
+                    Fragment_Department fragment_department = (Fragment_Department) fragment;
+                    fragment_department.setItemDataOffers(list.get(myHolder.getAdapterPosition()));
                 } else if (context instanceof SearchActivity) {
                     SearchActivity searchActivity = (SearchActivity) context;
                     searchActivity.setItemDataOffers(list.get(myHolder.getAdapterPosition()));
@@ -126,6 +139,15 @@ public class OffersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                             fragment_offer.like_dislike(list.get(myHolder.getAdapterPosition()), myHolder.getAdapterPosition());
                         } else {
                             fragment_offer.like_dislike(list.get(myHolder.getAdapterPosition()), myHolder.getAdapterPosition());
+
+                        }
+
+                    } else if (fragment instanceof Fragment_Department) {
+                        Fragment_Department fragment_department = (Fragment_Department) fragment;
+                        if (myHolder.binding.checkbox.isChecked()) {
+                            fragment_department.like_dislike(list.get(myHolder.getAdapterPosition()), myHolder.getAdapterPosition());
+                        } else {
+                            fragment_department.like_dislike(list.get(myHolder.getAdapterPosition()), myHolder.getAdapterPosition());
 
                         }
 
@@ -162,6 +184,11 @@ public class OffersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             Log.e("llldll", list.get(position).getHave_offer());
             myHolder.binding.setModel(list.get(position));
+            if (list.get(position).getStock() <= 0) {
+                myHolder.binding.llAddToCart.setVisibility(View.GONE);
+                myHolder.binding.tvStock.setVisibility(View.VISIBLE);
+                myHolder.binding.ll.setVisibility(View.GONE);
+            }
             if (list.get(position).getUser_like() != null) {
                 ((MyHolderList) holder).binding.checkbox.setChecked(true);
             }
@@ -175,6 +202,9 @@ public class OffersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 } else if (fragment instanceof Fragment_Offer) {
                     Fragment_Offer fragment_offer = (Fragment_Offer) fragment;
                     fragment_offer.updateCartCount(cartSingleton.getItemCount());
+                } else if (fragment instanceof Fragment_Department) {
+                    Fragment_Department fragment_department = (Fragment_Department) fragment;
+                    fragment_department.updateCartCount(cartSingleton.getItemCount());
                 }
                 Toast.makeText(context, R.string.added_suc, Toast.LENGTH_SHORT).show();
             });
@@ -186,8 +216,10 @@ public class OffersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 } else if (fragment instanceof Fragment_Offer) {
                     Fragment_Offer fragment_offer = (Fragment_Offer) fragment;
                     fragment_offer.setItemDataOffers(list.get(myHolder.getAdapterPosition()));
+                } else if (fragment instanceof Fragment_Department) {
+                    Fragment_Department fragment_department = (Fragment_Department) fragment;
+                    fragment_department.setItemDataOffers(list.get(myHolder.getAdapterPosition()));
                 }
-
             });
 
             myHolder.binding.checkbox.setOnClickListener(v -> {
@@ -209,6 +241,14 @@ public class OffersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                             fragment_offer.like_dislike(list.get(myHolder.getAdapterPosition()), myHolder.getAdapterPosition());
                         } else {
                             fragment_offer.like_dislike(list.get(myHolder.getAdapterPosition()), myHolder.getAdapterPosition());
+
+                        }
+                    } else if (fragment instanceof Fragment_Department) {
+                        Fragment_Department fragment_department = (Fragment_Department) fragment;
+                        if (myHolder.binding.checkbox.isChecked()) {
+                            fragment_department.like_dislike(list.get(myHolder.getAdapterPosition()), myHolder.getAdapterPosition());
+                        } else {
+                            fragment_department.like_dislike(list.get(myHolder.getAdapterPosition()), myHolder.getAdapterPosition());
 
                         }
                     }

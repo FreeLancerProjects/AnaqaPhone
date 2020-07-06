@@ -116,7 +116,16 @@
                         android:tint="@color/red"
 
                         />
-
+                    <TextView
+                        android:id="@+id/tv_stock"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_margin="3dp"
+                        android:padding="3dp"
+                        android:text="@string/out_of_stock"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="14sp" />
                     <LinearLayout
                         android:id="@+id/ll"
                         android:layout_width="match_parent"

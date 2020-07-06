@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.anaqaphone.R;
 import com.anaqaphone.activities_fragments.activity_home.HomeActivity;
+import com.anaqaphone.activities_fragments.activity_home.fragments.Fragment_Department;
 import com.anaqaphone.activities_fragments.activity_home.fragments.Fragment_Offer;
 import com.anaqaphone.databinding.MainCategoryRowBinding;
 import com.anaqaphone.models.MainCategoryDataModel;
@@ -31,6 +32,7 @@ public class MainCategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private String lang;
     private Fragment fragment;
     private Fragment_Offer fragment_offer;
+    private Fragment_Department fragment_department;
     private int i = -1;
 
     public MainCategoryAdapter(List<MainCategoryDataModel.Data> list, Context context, Fragment fragment) {
@@ -76,6 +78,10 @@ public class MainCategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             if (fragment instanceof Fragment_Offer) {
                 fragment_offer = (Fragment_Offer) fragment;
                 fragment_offer.setDepartment(list.get(holder.getLayoutPosition()).getId() + "");
+            }
+            else if(fragment instanceof Fragment_Department){
+                fragment_department = (Fragment_Department) fragment;
+                fragment_department.setDepartment(list.get(holder.getLayoutPosition()).getId() + "");
             }
             myHolder.binding.cardView.setCardBackgroundColor(context.getResources().getColor(R.color.second));
         }

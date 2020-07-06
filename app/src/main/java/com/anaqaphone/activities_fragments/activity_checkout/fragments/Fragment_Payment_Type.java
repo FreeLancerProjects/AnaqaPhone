@@ -26,14 +26,14 @@ public class Fragment_Payment_Type extends Fragment implements Listeners.Payment
     private CartSingleton singleton;
 
 
-    public static Fragment_Payment_Type newInstance(AddOrderModel addOrderModel)
-    {
+    public static Fragment_Payment_Type newInstance(AddOrderModel addOrderModel) {
         Bundle bundle = new Bundle();
-        bundle.putSerializable(TAG,addOrderModel);
+        bundle.putSerializable(TAG, addOrderModel);
         Fragment_Payment_Type fragment_payment_type = new Fragment_Payment_Type();
         fragment_payment_type.setArguments(bundle);
         return fragment_payment_type;
     }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -47,34 +47,37 @@ public class Fragment_Payment_Type extends Fragment implements Listeners.Payment
         initView();
 
 
-
     }
 
 
     private void initView() {
-        singleton=CartSingleton.newInstance();
+        singleton = CartSingleton.newInstance();
         activity = (CheckoutActivity) getActivity();
         binding.setAction(this);
-
+        binding.tvvat.setText(activity.tax + "");
+        if (activity.isarrive) {
+            binding.tvArriveprice.setText(activity.arrive + "");
+        }
+        binding.tvTotal.setText(activity.total_cost + "");
+        binding.tvdelivry.setText(activity.recive + "");
         Bundle bundle = getArguments();
-        if (bundle!=null)
-        {
+        if (bundle != null) {
             addOrderModel = (AddOrderModel) bundle.getSerializable(TAG);
         }
     }
 
 
-    public void setModel(AddOrderModel model)
-    {
-        this.addOrderModel =model;
+    public void setModel(AddOrderModel model) {
+        this.addOrderModel = model;
     }
 
     @Override
     public void onCredit() {
-        payment_type ="card";
+        payment_type = "card";
         binding.img1.setVisibility(View.VISIBLE);
         binding.img2.setVisibility(View.GONE);
         binding.img3.setVisibility(View.GONE);
+        binding.lldel.setVisibility(View.GONE);
         addOrderModel.setPayment_type(payment_type);
 
     }
@@ -85,6 +88,7 @@ public class Fragment_Payment_Type extends Fragment implements Listeners.Payment
         binding.img1.setVisibility(View.GONE);
         binding.img2.setVisibility(View.VISIBLE);
         binding.img3.setVisibility(View.GONE);
+        binding.lldel.setVisibility(View.GONE);
         addOrderModel.setPayment_type(payment_type);
 
     }
@@ -95,6 +99,7 @@ public class Fragment_Payment_Type extends Fragment implements Listeners.Payment
         binding.img1.setVisibility(View.GONE);
         binding.img2.setVisibility(View.GONE);
         binding.img3.setVisibility(View.VISIBLE);
+        binding.lldel.setVisibility(View.VISIBLE);
         addOrderModel.setPayment_type(payment_type);
 
     }
@@ -102,14 +107,11 @@ public class Fragment_Payment_Type extends Fragment implements Listeners.Payment
     @Override
     public void onNext() {
 
-        if (addOrderModel.isStep3Valid(activity))
-        {
+        if (addOrderModel.isStep3Valid(activity)) {
             addOrderModel.setProducts(singleton.getItemCartModelList());
             activity.updateModel(addOrderModel);
             activity.createOrder();
         }
-
-
 
 
     }

@@ -3,12 +3,11 @@ package com.anaqaphone.activities_fragments.activity_home.fragments;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.text.TextUtils;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,7 +24,7 @@ import com.anaqaphone.activities_fragments.activity_home.HomeActivity;
 import com.anaqaphone.activities_fragments.activity_product_details.ProductDetailsActivity;
 import com.anaqaphone.adapters.MainCategoryAdapter;
 import com.anaqaphone.adapters.OffersAdapter;
-import com.anaqaphone.databinding.FragmentOfferBinding;
+import com.anaqaphone.databinding.FragmentDepartmentBinding;
 import com.anaqaphone.models.MainCategoryDataModel;
 import com.anaqaphone.models.ProductDataModel;
 import com.anaqaphone.models.SingleProductDataModel;
@@ -34,6 +33,7 @@ import com.anaqaphone.preferences.Preferences;
 import com.anaqaphone.remote.Api;
 import com.anaqaphone.share.Common;
 import com.anaqaphone.tags.Tags;
+import com.google.android.material.tabs.TabLayout;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -45,34 +45,33 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Fragment_Offer extends Fragment {
+public class Fragment_Department extends Fragment {
 
     private HomeActivity activity;
-    private FragmentOfferBinding binding;
+    private FragmentDepartmentBinding binding;
     private Preferences preferences;
     private UserModel userModel;
     private String lang;
     private LinearLayoutManager manager;
     private GridLayoutManager manager2;
     private MainCategoryAdapter adapter;
-    private List<MainCategoryDataModel.Data> mainDepartmentsList;
+    private List<MainCategoryDataModel.Data> mainDepartmentsList, getMainDepartmentsList;
     private int square = 1, list = 2;
     private int displayType = square;
     private List<SingleProductDataModel> offersDataList;
     private OffersAdapter offersAdapter;
-    private String query = "all", department_id = "all";
+    private String brand_id = "all", department_id = "all";
 
-    public static Fragment_Offer newInstance() {
-        return new Fragment_Offer();
+    public static Fragment_Department newInstance() {
+        return new Fragment_Department();
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_offer, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_department, container, false);
         initView();
-        getBrands();
-        getOffersProducts();
+        getCategory();
         return binding.getRoot();
     }
 
@@ -84,6 +83,7 @@ public class Fragment_Offer extends Fragment {
 
     private void initView() {
         mainDepartmentsList = new ArrayList<>();
+        getMainDepartmentsList = new ArrayList<>();
         offersDataList = new ArrayList<>();
         activity = (HomeActivity) getActivity();
         Paper.init(activity);
@@ -104,48 +104,33 @@ public class Fragment_Offer extends Fragment {
         binding.recViewOffer.setLayoutManager(new GridLayoutManager(activity, 2));
         offersAdapter = new OffersAdapter(offersDataList, activity, this, displayType);
         binding.recViewOffer.setAdapter(offersAdapter);
-        binding.llType.setOnClickListener(new View.OnClickListener() {
+        binding.tab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
-            public void onClick(View v) {
+            public void onTabSelected(TabLayout.Tab tab) {
+                int pos = tab.getPosition();
+//                if (pos==0)
+//                {
+//                    getAds("all");
+//
+//                }else
+//                {
+                MainCategoryDataModel.Data categoryModel = getMainDepartmentsList.get(pos);
+                department_id = categoryModel.getId() + "";
+                getOffersProducts();
+//                }
+            }
 
-                if (displayType == square) {
-                    displayType = list;
-                    offersAdapter.setType(displayType);
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
 
-                    binding.imageType.setImageResource(R.drawable.ic_list2);
-                    binding.tvType.setText(getString(R.string.list));
-                    binding.recViewOffer.setLayoutManager(manager2);
+            }
 
-                    offersAdapter.notifyDataSetChanged();
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
 
-
-                } else {
-                    displayType = square;
-                    binding.imageType.setImageResource(R.drawable.ic_squares);
-                    binding.tvType.setText(getString(R.string.normal));
-
-                    offersAdapter.setType(displayType);
-                    binding.recViewOffer.setLayoutManager(new GridLayoutManager(activity, 2));
-
-                    offersAdapter.notifyDataSetChanged();
-
-
-                }
             }
         });
-        binding.edtSearch.setOnEditorActionListener((v, actionId, event) -> {
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                query = binding.edtSearch.getText().toString();
-                if (!TextUtils.isEmpty(query)) {
-                    Common.CloseKeyBoard(activity, binding.edtSearch);
-                    getOffersProducts();
-                    return false;
-                } else {
-                    query = "all";
-                }
-            }
-            return false;
-        });
+
     }
 
     private void getBrands() {
@@ -162,12 +147,62 @@ public class Fragment_Offer extends Fragment {
 
                             if (mainDepartmentsList.size() > 0) {
                                 adapter.notifyDataSetChanged();
-                                binding.tvNoData.setVisibility(View.GONE);
+                               // binding.tvNoData.setVisibility(View.GONE);
                             } else {
-                                binding.tvNoData.setVisibility(View.VISIBLE);
+                               // binding.tvNoData.setVisibility(View.VISIBLE);
 
                             }
+                            getOffersProducts();
 
+
+                        } else {
+                            binding.progBar.setVisibility(View.GONE);
+
+                            try {
+                                Log.e("errorNotCode", response.code() + "__" + response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+                            if (response.code() == 500) {
+                                Toast.makeText(activity, "Server Error", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(activity, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<MainCategoryDataModel> call, Throwable t) {
+                        try {
+                            binding.progBar.setVisibility(View.GONE);
+
+                            if (t.getMessage() != null) {
+                                Log.e("error_not_code", t.getMessage() + "__");
+
+                                if (t.getMessage().toLowerCase().contains("failed to connect") || t.getMessage().toLowerCase().contains("unable to resolve host")) {
+                                    Toast.makeText(activity, getString(R.string.something), Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(activity, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        } catch (Exception e) {
+                            Log.e("Error", e.getMessage() + "__");
+                        }
+                    }
+                });
+    }
+
+    private void getCategory() {
+
+        Api.getService(Tags.base_url)
+                .getCategory("off")
+                .enqueue(new Callback<MainCategoryDataModel>() {
+                    @Override
+                    public void onResponse(Call<MainCategoryDataModel> call, Response<MainCategoryDataModel> response) {
+                        binding.progBar.setVisibility(View.GONE);
+                        if (response.isSuccessful()) {
+                            updateTabUI(response.body());
 
                         } else {
                             binding.progBar.setVisibility(View.GONE);
@@ -213,6 +248,7 @@ public class Fragment_Offer extends Fragment {
         binding.progBar.setVisibility(View.VISIBLE);
         binding.tvNoData.setVisibility(View.GONE);
 
+
         try {
             int uid;
 
@@ -222,7 +258,7 @@ public class Fragment_Offer extends Fragment {
                 uid = 0;
             }
             Api.getService(Tags.base_url).
-                    getOffersProducts("off", uid, "all", department_id,"yes").
+                    getOffersProducts("off", uid, department_id, brand_id, "all").
                     enqueue(new Callback<ProductDataModel>() {
                         @Override
                         public void onResponse(Call<ProductDataModel> call, Response<ProductDataModel> response) {
@@ -234,8 +270,7 @@ public class Fragment_Offer extends Fragment {
                                 offersDataList.addAll(response.body().getData());
                                 if (offersDataList.size() > 0) {
                                     offersAdapter.notifyDataSetChanged();
-                                }
-                                else {
+                                } else {
                                     binding.tvNoData.setVisibility(View.VISIBLE);
 
                                 }
@@ -290,7 +325,7 @@ public class Fragment_Offer extends Fragment {
     }
 
     public void setDepartment(String s) {
-        department_id = s;
+        brand_id = s;
         getOffersProducts();
     }
 
@@ -358,8 +393,7 @@ public class Fragment_Offer extends Fragment {
             }
             return 1;
 
-        }
-        else {
+        } else {
 
             Common.CreateDialogAlert(activity, getString(R.string.please_sign_in_or_sign_up));
             return 0;
@@ -367,4 +401,23 @@ public class Fragment_Offer extends Fragment {
         }
     }
 
+    private void updateTabUI(MainCategoryDataModel data) {
+//        CategoryDataModel.CategoryModel categoryModel = new CategoryDataModel.CategoryModel(0,getString(R.string.show_all));
+//       data.add(0,categoryModel);
+        getMainDepartmentsList.clear();
+        getMainDepartmentsList.addAll(data.getData());
+
+        for (MainCategoryDataModel.Data categoryModel1 : data.getData()) {
+
+            binding.tab.addTab(binding.tab.newTab().setText(categoryModel1.getTitle()));
+
+
+        }
+
+        new Handler().postDelayed(
+                () -> binding.tab.getTabAt(0).select(), 100);
+        getBrands();
+
+
+    }
 }

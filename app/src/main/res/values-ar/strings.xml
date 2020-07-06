@@ -164,7 +164,7 @@
     <string name="account_number">رقم الحساب : </string>
     <string name="account_iban">رقم الايبان :</string>
     <string name="banks">بنوك</string>
-    <string name="visa">فيزا</string>
+    <string name="visa">الكترونى</string>
     <string name="paypal">باى بال</string>
     <string name="cash_on_delivery">الدفع عند الاستلام</string>
     <string name="status">حالة الطلب</string>
@@ -178,5 +178,13 @@
     <string name="not_found">لا يوجد </string>
     <string name="add_coupon">اضافة كوبون</string>
     <string name="edit_profile">تعديل الملف الشخصي</string>
+    <string name="department">الاقسام</string>
+    <string name="out_of_stock">Out Of Stock</string>
+    <string name="arrive">توصيل</string>
+    <string name="without_arrive">بدون توصيل</string>
+    <string name="total_order_price">اجمالى قينمة الطلب</string>
+    <string name="products_price">سعر المنتج</string>
+    <string name="arrive_price">سعر التوصيل</string>
+    <string name="vat">ضريبة القيمه المضافه</string>
 
 </resources>

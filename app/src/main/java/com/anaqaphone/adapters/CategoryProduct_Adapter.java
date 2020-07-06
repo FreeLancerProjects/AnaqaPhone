@@ -69,6 +69,12 @@ public class CategoryProduct_Adapter extends RecyclerView.Adapter<RecyclerView.V
         EventHolder myHolder = (EventHolder) eventHohlder;
         myHolder.binding.tvOldprice.setPaintFlags(myHolder.binding.tvOldprice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         myHolder.binding.setModel(list.get(position));
+        if(list.get(position).getStock()<=0){
+            myHolder.binding.llAddToCart.setVisibility(View.GONE);
+            myHolder.binding.tvStock.setVisibility(View.VISIBLE);
+            myHolder.binding.ll.setVisibility(View.GONE);
+            myHolder.binding.View.setVisibility(View.GONE);
+        }
         myHolder.binding.setLang(lang);
 
         myHolder.binding.llAddToCart.setOnClickListener(v -> {

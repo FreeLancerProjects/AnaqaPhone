@@ -134,10 +134,13 @@ public interface Service {
     Call<OrderModel> order_detials(@Query("order_id") int order_id);
 
     @GET("api/brands")
-    Call<MainCategoryDataModel> getMainCategory(
+    Call<MainCategoryDataModel> getBrands(
             @Query("pagination") String pagination
     );
-
+    @GET("api/category")
+    Call<MainCategoryDataModel> getCategory(
+            @Query("pagination") String pagination
+    );
     @GET("api/banks")
     Call<BankDataModel> getBanks();
 

@@ -8,8 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,7 +19,6 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.anaqaphone.R;
 import com.anaqaphone.activities_fragments.activity_checkout.CheckoutActivity;
@@ -39,7 +37,6 @@ import com.anaqaphone.remote.Api;
 import com.anaqaphone.share.Common;
 import com.anaqaphone.singleton.CartSingleton;
 import com.anaqaphone.tags.Tags;
-import com.google.android.gms.common.internal.Objects;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +63,9 @@ public class Fragment_Cart extends Fragment implements Swipe.SwipeListener {
     private double tax = 0.0;
 
     private SettingModel appDataModel;
-    private int taxx;
+    private int coupon_id;
+    private SettingModel settingmodel;
+    private boolean israaive = false;
 
     public static Fragment_Cart newInstance() {
         return new Fragment_Cart();
@@ -118,7 +117,31 @@ public class Fragment_Cart extends Fragment implements Swipe.SwipeListener {
             }
         });
         binding.btnCheckout.setOnClickListener(view -> navigateToCheckoutActivity());
-
+        binding.rbChoose1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    israaive = true;
+                    binding.llarrive.setVisibility(View.VISIBLE);
+                    binding.tvarrive.setText(settingmodel.getDelivery_value() + "");
+                    total += settingmodel.getDelivery_value();
+                    binding.tvTotal.setText(String.format(Locale.ENGLISH, "%s %s", String.valueOf(total), getString(R.string.sar)));
+                }
+            }
+        });
+        binding.rbChoose2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    binding.llarrive.setVisibility(View.GONE);
+                    if (israaive == true) {
+                        total -= settingmodel.getDelivery_value();
+                        binding.tvTotal.setText(String.format(Locale.ENGLISH, "%s %s", String.valueOf(total), getString(R.string.sar)));
+                    }
+                    israaive = false;
+                }
+            }
+        });
     }
 
 
@@ -134,7 +157,7 @@ public class Fragment_Cart extends Fragment implements Swipe.SwipeListener {
                         dialog.dismiss();
                         if (response.isSuccessful()) {
                             binding.lldiscount.setVisibility(View.VISIBLE);
-                            binding.tvdiscount.setText(response.body().getCoupon_value()+"%");
+                            binding.tvdiscount.setText(response.body().getCoupon_value() + "%");
                             Toast.makeText(activity, activity.getResources().getString(R.string.suc), Toast.LENGTH_LONG).show();
                             updateUI(response.body());
 
@@ -144,7 +167,7 @@ public class Fragment_Cart extends Fragment implements Swipe.SwipeListener {
                             } catch (Exception e) {
                             }
 
-                            if (response.code() == 404||response.code()==422) {
+                            if (response.code() == 404 || response.code() == 422) {
                                 Toast.makeText(activity, getString(R.string.not_found), Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(activity, getString(R.string.something), Toast.LENGTH_SHORT).show();
@@ -174,7 +197,8 @@ public class Fragment_Cart extends Fragment implements Swipe.SwipeListener {
     }
 
     private void updateUI(SettingModel body) {
-        taxx = body.getCoupon_id();
+        this.settingmodel = body;
+        coupon_id = body.getCoupon_id();
         total = total - (total * body.getCoupon_value()) / 100;
         binding.tvTotal.setText(String.format(Locale.ENGLISH, "%s %s", String.valueOf(total), getString(R.string.sar)));
 
@@ -185,7 +209,12 @@ public class Fragment_Cart extends Fragment implements Swipe.SwipeListener {
         if (userModel != null) {
             Intent intent = new Intent(activity, CheckoutActivity.class);
             intent.putExtra("total_cost", total);
-            intent.putExtra("coupun", taxx);
+            intent.putExtra("coupun", coupon_id);
+            intent.putExtra("tax",tax);
+            intent.putExtra("isarrive",israaive);
+            intent.putExtra("arrive",settingmodel.getDelivery_value());
+            intent.putExtra("del",settingmodel.getPay_when_recieving());
+
             startActivityForResult(intent, 100);
         } else {
             Common.CreateDialogAlert(activity, getString(R.string.please_sign_in_or_sign_up));
@@ -213,6 +242,7 @@ public class Fragment_Cart extends Fragment implements Swipe.SwipeListener {
             binding.llEmptyCart.setVisibility(View.VISIBLE);
             binding.llTotal.setVisibility(View.GONE);
             binding.llCheckout.setVisibility(View.GONE);
+            binding.llarrive.setVisibility(View.GONE);
             binding.tvdiscount.setText("");
             binding.tvTotal.setText("");
             binding.edtCopoun.setText("");
@@ -238,6 +268,8 @@ public class Fragment_Cart extends Fragment implements Swipe.SwipeListener {
         for (ItemCartModel model : itemCartModelList) {
             total += model.getPrice() * model.getAmount();
         }
+        tax=(total*settingmodel.getTax())/100;
+        total += (total * settingmodel.getTax()) / 100;
 
         binding.tvTotal.setText(String.format(Locale.ENGLISH, "%s %s", String.valueOf(total), getString(R.string.sar)));
 

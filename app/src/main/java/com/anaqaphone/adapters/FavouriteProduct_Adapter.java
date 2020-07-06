@@ -3,6 +3,7 @@ package com.anaqaphone.adapters;
 import android.content.Context;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
@@ -62,7 +63,11 @@ public class FavouriteProduct_Adapter extends RecyclerView.Adapter<RecyclerView.
         EventHolder myHolder = (EventHolder) eventHohlder;
         myHolder.binding.tvOldprice.setPaintFlags(myHolder.binding.tvOldprice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         myHolder.binding.setModel(list.get(position).getProduct());
-
+        if(list.get(position).getProduct().getStock()<=0){
+            myHolder.binding.llAddToCart.setVisibility(View.GONE);
+            myHolder.binding.tvStock.setVisibility(View.VISIBLE);
+            myHolder.binding.ll.setVisibility(View.GONE);
+        }
         myHolder.binding.llAddToCart.setOnClickListener(v -> {
             int count = Integer.parseInt(myHolder.binding.tvCounter.getText().toString());
             ItemCartModel itemCartModel = new ItemCartModel(list.get(position).getProduct().getId(), list.get(position).getProduct().getTitle(), list.get(position).getProduct().getPrice(), count, list.get(position).getProduct().getImage());
