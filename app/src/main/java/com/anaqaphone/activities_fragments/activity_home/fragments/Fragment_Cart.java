@@ -91,12 +91,15 @@ public class Fragment_Cart extends Fragment implements Swipe.SwipeListener {
     }
 
     private void getAppData() {
-
+        final ProgressDialog dialog = Common.createProgressDialog(activity, getString(R.string.wait));
+        dialog.setCancelable(false);
+        dialog.show();
         Api.getService(Tags.base_url)
                 .getSetting(lang)
                 .enqueue(new Callback<SettingModel>() {
                     @Override
                     public void onResponse(Call<SettingModel> call, Response<SettingModel> response) {
+                        dialog.dismiss();
                         if (response.isSuccessful() && response.body() != null) {
 
                             settingmodel = response.body();
@@ -123,6 +126,7 @@ public class Fragment_Cart extends Fragment implements Swipe.SwipeListener {
                     @Override
                     public void onFailure(Call<SettingModel> call, Throwable t) {
                         try {
+                            dialog.dismiss();
                             //binding.progBar.setVisibility(View.GONE);
 
                             if (t.getMessage() != null) {
@@ -280,7 +284,7 @@ public class Fragment_Cart extends Fragment implements Swipe.SwipeListener {
             singleton = CartSingleton.newInstance();
 
         }*/
-
+        binding.recView.setAdapter(adapter);
         itemCartModelList.clear();
         itemCartModelList.addAll(singleton.getItemCartModelList());
 

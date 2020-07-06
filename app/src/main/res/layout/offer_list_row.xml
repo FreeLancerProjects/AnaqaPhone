@@ -126,7 +126,9 @@
                         android:padding="3dp"
                         android:text="@string/out_of_stock"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:visibility="gone"
+                        />
 
                     <LinearLayout
                         android:id="@+id/ll"
