@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.anaqaphone.R;
+import com.anaqaphone.activities_fragments.activity_about_app.AboutAppActivity;
 import com.anaqaphone.activities_fragments.activity_checkout.CheckoutActivity;
 import com.anaqaphone.activities_fragments.activity_home.HomeActivity;
 import com.anaqaphone.activities_fragments.activity_order_details.OrderDetailsActivity;
@@ -38,6 +39,7 @@ import com.anaqaphone.share.Common;
 import com.anaqaphone.singleton.CartSingleton;
 import com.anaqaphone.tags.Tags;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -75,8 +77,9 @@ public class Fragment_Cart extends Fragment implements Swipe.SwipeListener {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_cart, container, false);
-
         initView();
+
+        getAppData();
 
         return binding.getRoot();
     }
@@ -84,6 +87,57 @@ public class Fragment_Cart extends Fragment implements Swipe.SwipeListener {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+    }
+
+    private void getAppData() {
+
+        Api.getService(Tags.base_url)
+                .getSetting(lang)
+                .enqueue(new Callback<SettingModel>() {
+                    @Override
+                    public void onResponse(Call<SettingModel> call, Response<SettingModel> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+
+                            settingmodel = response.body();
+                            updateUI();
+
+                        } else {
+                            try {
+
+                                Log.e("error", response.code() + "_" + response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            if (response.code() == 500) {
+                                // Toast.makeText(AboutAppActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
+
+                            } else {
+                                //Toast.makeText(AboutAppActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+
+
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<SettingModel> call, Throwable t) {
+                        try {
+                            //binding.progBar.setVisibility(View.GONE);
+
+                            if (t.getMessage() != null) {
+                                Log.e("error", t.getMessage());
+                                if (t.getMessage().toLowerCase().contains("failed to connect") || t.getMessage().toLowerCase().contains("unable to resolve host")) {
+                                    //      Toast.makeText(AboutAppActivity.this, R.string.something, Toast.LENGTH_SHORT).show();
+                                } else {
+                                    //    Toast.makeText(AboutAppActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                        } catch (Exception e) {
+                        }
+                    }
+                });
 
     }
 
@@ -100,13 +154,11 @@ public class Fragment_Cart extends Fragment implements Swipe.SwipeListener {
         manager = new LinearLayoutManager(activity);
         binding.recView.setLayoutManager(manager);
         adapter = new CartAdapter(this, itemCartModelList, activity);
-        binding.recView.setAdapter(adapter);
         binding.btnShop.setOnClickListener(view -> activity.displayFragmentMain());
         ItemTouchHelper.SimpleCallback simpleCallback = new Swipe(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT, this);
         ItemTouchHelper helper = new ItemTouchHelper(simpleCallback);
         helper.attachToRecyclerView(binding.recView);
 
-        updateUI();
         binding.flSearch.setOnClickListener(view -> {
             String coupon = binding.edtCopoun.getText().toString();
             Log.e("bbb", coupon);
@@ -210,10 +262,10 @@ public class Fragment_Cart extends Fragment implements Swipe.SwipeListener {
             Intent intent = new Intent(activity, CheckoutActivity.class);
             intent.putExtra("total_cost", total);
             intent.putExtra("coupun", coupon_id);
-            intent.putExtra("tax",tax);
-            intent.putExtra("isarrive",israaive);
-            intent.putExtra("arrive",settingmodel.getDelivery_value());
-            intent.putExtra("del",settingmodel.getPay_when_recieving());
+            intent.putExtra("tax", tax);
+            intent.putExtra("isarrive", israaive);
+            intent.putExtra("arrive", settingmodel.getDelivery_value());
+            intent.putExtra("del", settingmodel.getPay_when_recieving());
 
             startActivityForResult(intent, 100);
         } else {
@@ -231,6 +283,7 @@ public class Fragment_Cart extends Fragment implements Swipe.SwipeListener {
 
         itemCartModelList.clear();
         itemCartModelList.addAll(singleton.getItemCartModelList());
+
         Log.e("lllll", itemCartModelList.size() + "");
         binding.lldiscount.setVisibility(View.GONE);
         adapter.notifyDataSetChanged();
@@ -268,7 +321,7 @@ public class Fragment_Cart extends Fragment implements Swipe.SwipeListener {
         for (ItemCartModel model : itemCartModelList) {
             total += model.getPrice() * model.getAmount();
         }
-        tax=(total*settingmodel.getTax())/100;
+        tax = (total * settingmodel.getTax()) / 100;
         total += (total * settingmodel.getTax()) / 100;
 
         binding.tvTotal.setText(String.format(Locale.ENGLISH, "%s %s", String.valueOf(total), getString(R.string.sar)));
