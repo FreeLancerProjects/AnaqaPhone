@@ -24,6 +24,7 @@ public class AddOrderModel extends BaseObservable implements Serializable {
     private String order_time;
     private String coupon_id;
     private String payment_type;
+
     public ObservableField<String> error_address = new ObservableField<>();
 
 

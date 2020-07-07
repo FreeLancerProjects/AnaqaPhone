@@ -25,7 +25,7 @@
             app:tabBackground="@drawable/tab_order_indicator"
             app:tabGravity="fill"
             app:tabIndicatorHeight="0dp"
-            app:tabMode="fixed"
+            app:tabMode="auto"
             app:tabSelectedTextColor="@color/white"
             app:tabTextColor="@color/white" />
 

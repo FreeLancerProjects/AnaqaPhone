@@ -239,6 +239,8 @@ public class CheckoutActivity extends AppCompatActivity implements Listeners.Bac
 
 
     public void createOrder() {
+        addOrderModel.setTotal_price(total_cost);
+
         try {
             ProgressDialog dialog = Common.createProgressDialog(this, getString(R.string.wait));
             dialog.setCancelable(false);
