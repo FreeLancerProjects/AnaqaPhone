@@ -60,10 +60,13 @@ public class Fragment_Payment_Type extends Fragment implements Listeners.Payment
         }
         binding.tvTotal.setText(activity.total_cost + "");
         binding.tvdelivry.setText(activity.recive + "");
+        binding.tvProductprice.setText(activity.total_items + "");
         Bundle bundle = getArguments();
         if (bundle != null) {
             addOrderModel = (AddOrderModel) bundle.getSerializable(TAG);
         }
+        onCash();
+
     }
 
 
@@ -79,7 +82,8 @@ public class Fragment_Payment_Type extends Fragment implements Listeners.Payment
         binding.img3.setVisibility(View.GONE);
         binding.lldel.setVisibility(View.GONE);
         addOrderModel.setPayment_type(payment_type);
-
+        activity.total_cost = activity.total_cost - activity.recive;
+        binding.tvTotal.setText((activity.total_cost) + "");
     }
 
     @Override
@@ -91,6 +95,7 @@ public class Fragment_Payment_Type extends Fragment implements Listeners.Payment
         binding.lldel.setVisibility(View.GONE);
         addOrderModel.setPayment_type(payment_type);
 
+
     }
 
     @Override
@@ -101,6 +106,8 @@ public class Fragment_Payment_Type extends Fragment implements Listeners.Payment
         binding.img3.setVisibility(View.VISIBLE);
         binding.lldel.setVisibility(View.VISIBLE);
         addOrderModel.setPayment_type(payment_type);
+        activity.total_cost = activity.total_cost + activity.recive;
+        binding.tvTotal.setText((activity.total_cost) + "");
 
     }
 

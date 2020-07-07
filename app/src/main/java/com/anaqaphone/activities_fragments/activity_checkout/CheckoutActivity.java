@@ -61,7 +61,7 @@ public class CheckoutActivity extends AppCompatActivity implements Listeners.Bac
     public double arrive;
     public boolean isarrive;
     private OrderModel orderModel;
-    public double recive;
+    public double recive, total_items;
 
 
     @Override
@@ -90,7 +90,7 @@ public class CheckoutActivity extends AppCompatActivity implements Listeners.Bac
         arrive = intent.getDoubleExtra("arrive", 0);
         isarrive = intent.getBooleanExtra("isarrive", false);
         recive = intent.getDoubleExtra("del", 0);
-
+        total_items = intent.getDoubleExtra("total_items", 0.0);
 
     }
 

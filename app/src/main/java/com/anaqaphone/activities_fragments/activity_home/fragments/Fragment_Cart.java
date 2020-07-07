@@ -63,7 +63,7 @@ public class Fragment_Cart extends Fragment implements Swipe.SwipeListener {
     private ItemCartUploadModel itemCartModel;
     private double total = 0.0;
     private double tax = 0.0;
-
+    private double totalitems = 0.0;
     private SettingModel appDataModel;
     private int coupon_id;
     private SettingModel settingmodel;
@@ -179,8 +179,8 @@ public class Fragment_Cart extends Fragment implements Swipe.SwipeListener {
                 if (isChecked) {
                     israaive = true;
                     binding.llarrive.setVisibility(View.VISIBLE);
-                    binding.tvarrive.setText(settingmodel.getDelivery_value() + "");
-                    total += settingmodel.getDelivery_value();
+                    binding.tvarrive.setText(settingmodel.getSettings().getDelivery_value() + "");
+                    total += settingmodel.getSettings().getDelivery_value();
                     binding.tvTotal.setText(String.format(Locale.ENGLISH, "%s %s", String.valueOf(total), getString(R.string.sar)));
                 }
             }
@@ -191,7 +191,7 @@ public class Fragment_Cart extends Fragment implements Swipe.SwipeListener {
                 if (isChecked) {
                     binding.llarrive.setVisibility(View.GONE);
                     if (israaive == true) {
-                        total -= settingmodel.getDelivery_value();
+                        total -= settingmodel.getSettings().getDelivery_value();
                         binding.tvTotal.setText(String.format(Locale.ENGLISH, "%s %s", String.valueOf(total), getString(R.string.sar)));
                     }
                     israaive = false;
@@ -268,8 +268,9 @@ public class Fragment_Cart extends Fragment implements Swipe.SwipeListener {
             intent.putExtra("coupun", coupon_id);
             intent.putExtra("tax", tax);
             intent.putExtra("isarrive", israaive);
-            intent.putExtra("arrive", settingmodel.getDelivery_value());
-            intent.putExtra("del", settingmodel.getPay_when_recieving());
+            intent.putExtra("arrive", settingmodel.getSettings().getDelivery_value());
+            intent.putExtra("del", settingmodel.getSettings().getPay_when_recieving());
+            intent.putExtra("total_items", totalitems);
 
             startActivityForResult(intent, 100);
         } else {
@@ -325,8 +326,9 @@ public class Fragment_Cart extends Fragment implements Swipe.SwipeListener {
         for (ItemCartModel model : itemCartModelList) {
             total += model.getPrice() * model.getAmount();
         }
-        tax = (total * settingmodel.getTax()) / 100;
-        total += (total * settingmodel.getTax()) / 100;
+        totalitems = total;
+        tax = (total * settingmodel.getSettings().getTax()) / 100;
+        total += (total * settingmodel.getSettings().getTax()) / 100;
 
         binding.tvTotal.setText(String.format(Locale.ENGLISH, "%s %s", String.valueOf(total), getString(R.string.sar)));
 

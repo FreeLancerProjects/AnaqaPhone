@@ -7,9 +7,7 @@ public class SettingModel implements Serializable {
     private Data settings;
     private double coupon_value;
     private int coupon_id;
-private double delivery_value;
-private double tax;
-private double pay_when_recieving;
+
 
     public Data getSettings() {
         return settings;
@@ -23,17 +21,7 @@ private double pay_when_recieving;
         return coupon_id;
     }
 
-    public double getDelivery_value() {
-        return delivery_value;
-    }
 
-    public double getTax() {
-        return tax;
-    }
-
-    public double getPay_when_recieving() {
-        return pay_when_recieving;
-    }
 
     public static class Data implements Serializable {
         private String termis_condition;
@@ -43,7 +31,9 @@ private double pay_when_recieving;
         private String facebook;
         private String twitter;
         private String offer_muted;
-
+        private double delivery_value;
+        private double tax;
+        private double pay_when_recieving;
         public String getTermis_condition() {
             return termis_condition;
         }
@@ -71,6 +61,17 @@ private double pay_when_recieving;
 
         public String getOffer_muted() {
             return offer_muted;
+        }
+        public double getDelivery_value() {
+            return delivery_value;
+        }
+
+        public double getTax() {
+            return tax;
+        }
+
+        public double getPay_when_recieving() {
+            return pay_when_recieving;
         }
     }
 }
