@@ -285,6 +285,8 @@ public class Fragment_Cart extends Fragment implements Swipe.SwipeListener {
             singleton = CartSingleton.newInstance();
 
         }*/
+        israaive=false;
+        binding.rbChoose2.setChecked(true);
         binding.recView.setAdapter(adapter);
         itemCartModelList.clear();
         itemCartModelList.addAll(singleton.getItemCartModelList());
@@ -399,7 +401,9 @@ public class Fragment_Cart extends Fragment implements Swipe.SwipeListener {
             binding.llCheckout.setVisibility(View.GONE);
             binding.llEmptyCart.setVisibility(View.VISIBLE);
             binding.llTotal.setVisibility(View.GONE);
-
+            binding.llSearch.setVisibility(View.GONE);
+            israaive=false;
+            binding.rbChoose2.setChecked(true);
             OrderModel orderModel = (OrderModel) data.getSerializableExtra("data");
             navigateToOrderDetailsActivity(orderModel);
 

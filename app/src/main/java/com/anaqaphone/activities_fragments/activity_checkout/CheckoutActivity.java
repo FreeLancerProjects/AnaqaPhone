@@ -19,6 +19,7 @@ import com.anaqaphone.R;
 import com.anaqaphone.activities_fragments.activity_checkout.fragments.Fragment_Address;
 import com.anaqaphone.activities_fragments.activity_checkout.fragments.Fragment_Date;
 import com.anaqaphone.activities_fragments.activity_checkout.fragments.Fragment_Payment_Type;
+import com.anaqaphone.activities_fragments.telr_activity.TelrActivity;
 import com.anaqaphone.databinding.ActivityCheckoutBinding;
 import com.anaqaphone.interfaces.Listeners;
 import com.anaqaphone.language.Language;
@@ -240,7 +241,17 @@ public class CheckoutActivity extends AppCompatActivity implements Listeners.Bac
 
     public void createOrder() {
         addOrderModel.setTotal_price(total_cost);
+        if(isarrive){
+            addOrderModel.setDelivery_pay(arrive);
+            addOrderModel.setDelivery("yes");
+        }
+        else {
+            addOrderModel.setDelivery_pay(0);
 
+            addOrderModel.setDelivery("no");
+        }
+        addOrderModel.setUser_id(userModel.getUser().getId());
+        addOrderModel.setTax(tax);
         try {
             ProgressDialog dialog = Common.createProgressDialog(this, getString(R.string.wait));
             dialog.setCancelable(false);
@@ -248,7 +259,7 @@ public class CheckoutActivity extends AppCompatActivity implements Listeners.Bac
             dialog.show();
             //  String date = new SimpleDateFormat("dd-MM-yyyy",Locale.ENGLISH).format(new Date(addOrderModel.getDate()));
             //  itemCartUploadModel = new ItemCartUploadModel(userModel.getUser().getUser_id(),addOrderModel.getAddress(),String.valueOf(addOrderModel.getLat()),String.valueOf(addOrderModel.getLng()),date,String.valueOf(addOrderModel.getTime()/1000),addOrderModel.getPayment_type(),singleton.getItemCartModelList(),String.valueOf(copoun),String.valueOf(total_cost));
-            Api.getService(Tags.base_url)
+            Api.getService("http://pay.anaqh.com.sa/")
                     .createOrder(userModel.getUser().getToken(), addOrderModel)
                     .enqueue(new Callback<OrderModel>() {
                         @Override
@@ -260,12 +271,18 @@ public class CheckoutActivity extends AppCompatActivity implements Listeners.Bac
                                 if (response.body() != null) {
 
                                     orderModel = response.body();
-                                    if (addOrderModel.getPayment_type().equals("cash")) {
+                                    if (addOrderModel.getPay_type().equals("cash")) {
                                         Toast.makeText(CheckoutActivity.this, getString(R.string.suc), Toast.LENGTH_SHORT).show();
                                         Intent intent = getIntent();
                                         intent.putExtra("data", orderModel);
                                         setResult(RESULT_OK, intent);
                                         finish();
+                                    }
+                                    else {
+                                        Intent intent = new Intent(CheckoutActivity.this, TelrActivity.class);
+                                        intent.putExtra("data", response.body().getTler());
+                                        startActivityForResult(intent, 200);
+
                                     }
 //                                    }else {
 //                                        Intent intent = new Intent(CheckoutActivity.this, OnlinePaymentActivity.class);
@@ -336,7 +353,7 @@ public class CheckoutActivity extends AppCompatActivity implements Listeners.Bac
             fragment.onActivityResult(requestCode, resultCode, data);
         }
 
-        if (requestCode == 100) {
+        if (requestCode == 100||requestCode==200) {
             if (resultCode == RESULT_OK) {
                 Toast.makeText(CheckoutActivity.this, getString(R.string.suc), Toast.LENGTH_SHORT).show();
                 Intent intent = getIntent();

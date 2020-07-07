@@ -23,8 +23,12 @@ public class AddOrderModel extends BaseObservable implements Serializable {
     private String order_date;
     private String order_time;
     private String coupon_id;
-    private String payment_type;
-
+    private String pay_type;
+    private double tax;
+    private String delivery;
+    private double delivery_pay;
+    private int user_id;
+    private double cash_pay;
     public ObservableField<String> error_address = new ObservableField<>();
 
 
@@ -36,8 +40,12 @@ public class AddOrderModel extends BaseObservable implements Serializable {
         setOrder_date("");
         setOrder_time("");
         setDetails("");
-        setPayment_type("");
-
+        setPay_type("");
+        setDelivery("");
+        setDelivery_pay(0.0);
+        setTax(0.0);
+        setUser_id(0);
+        setCash_pay(0.0);
     }
 
     public boolean isStep1Valid(Context context) {
@@ -68,7 +76,7 @@ public class AddOrderModel extends BaseObservable implements Serializable {
 //    }
 
     public boolean isStep3Valid(Context context) {
-        if (!payment_type.isEmpty()) {
+        if (!pay_type.isEmpty()) {
             return true;
         } else {
             Toast.makeText(context, R.string.ch_payment_type, Toast.LENGTH_SHORT).show();
@@ -150,11 +158,51 @@ public class AddOrderModel extends BaseObservable implements Serializable {
         this.coupon_id = coupon_id;
     }
 
-    public String getPayment_type() {
-        return payment_type;
+    public String getPay_type() {
+        return pay_type;
     }
 
-    public void setPayment_type(String payment_type) {
-        this.payment_type = payment_type;
+    public void setPay_type(String pay_type) {
+        this.pay_type = pay_type;
+    }
+
+    public double getTax() {
+        return tax;
+    }
+
+    public void setTax(double tax) {
+        this.tax = tax;
+    }
+
+    public String getDelivery() {
+        return delivery;
+    }
+
+    public void setDelivery(String delivery) {
+        this.delivery = delivery;
+    }
+
+    public double getDelivery_pay() {
+        return delivery_pay;
+    }
+
+    public void setDelivery_pay(double delivery_pay) {
+        this.delivery_pay = delivery_pay;
+    }
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
+
+    public double getCash_pay() {
+        return cash_pay;
+    }
+
+    public void setCash_pay(double cash_pay) {
+        this.cash_pay = cash_pay;
     }
 }

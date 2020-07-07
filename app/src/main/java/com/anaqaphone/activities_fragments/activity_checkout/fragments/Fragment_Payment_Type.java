@@ -81,9 +81,12 @@ public class Fragment_Payment_Type extends Fragment implements Listeners.Payment
         binding.img2.setVisibility(View.GONE);
         binding.img3.setVisibility(View.GONE);
         binding.lldel.setVisibility(View.GONE);
-        addOrderModel.setPayment_type(payment_type);
+        addOrderModel.setPay_type(payment_type);
+        addOrderModel.setCash_pay(0.0);
         activity.total_cost = activity.total_cost - activity.recive;
         binding.tvTotal.setText((activity.total_cost) + "");
+
+
     }
 
     @Override
@@ -93,7 +96,7 @@ public class Fragment_Payment_Type extends Fragment implements Listeners.Payment
         binding.img2.setVisibility(View.VISIBLE);
         binding.img3.setVisibility(View.GONE);
         binding.lldel.setVisibility(View.GONE);
-        addOrderModel.setPayment_type(payment_type);
+        addOrderModel.setPay_type(payment_type);
 
 
     }
@@ -105,9 +108,10 @@ public class Fragment_Payment_Type extends Fragment implements Listeners.Payment
         binding.img2.setVisibility(View.GONE);
         binding.img3.setVisibility(View.VISIBLE);
         binding.lldel.setVisibility(View.VISIBLE);
-        addOrderModel.setPayment_type(payment_type);
+        addOrderModel.setPay_type(payment_type);
         activity.total_cost = activity.total_cost + activity.recive;
         binding.tvTotal.setText((activity.total_cost) + "");
+        addOrderModel.setCash_pay(activity.recive);
 
     }
 

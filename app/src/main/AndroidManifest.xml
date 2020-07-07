@@ -89,6 +89,10 @@
             android:configChanges="keyboardHidden|screenSize|orientation"
 
             />
+        <activity android:name=".activities_fragments.telr_activity.TelrActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+
+            />
         <activity android:name=".activities_fragments.activity_splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
