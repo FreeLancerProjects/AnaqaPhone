@@ -57,6 +57,8 @@ public class Fragment_Payment_Type extends Fragment implements Listeners.Payment
         binding.tvvat.setText(activity.tax + "");
         if (activity.isarrive) {
             binding.tvArriveprice.setText(activity.arrive + "");
+        } else {
+            binding.llarive.setVisibility(View.GONE);
         }
         binding.tvTotal.setText(activity.total_cost + "");
         binding.tvdelivry.setText(activity.recive + "");

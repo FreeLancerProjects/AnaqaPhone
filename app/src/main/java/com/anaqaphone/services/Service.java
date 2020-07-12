@@ -1,8 +1,6 @@
 package com.anaqaphone.services;
 
 
-import android.app.DownloadManager;
-
 import com.anaqaphone.models.AddOrderModel;
 import com.anaqaphone.models.BankDataModel;
 import com.anaqaphone.models.CategoryProductDataModel;

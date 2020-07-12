@@ -334,6 +334,7 @@ android:visibility="gone"
 
 
                 <LinearLayout
+                    android:id="@+id/llarive"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
@@ -372,14 +373,13 @@ android:visibility="gone"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:orientation="horizontal"
-
+                    android:visibility="gone"
                     >
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-
                         android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:text="@string/vat"
@@ -467,20 +467,21 @@ android:visibility="gone"
                 android:onClick="@{()->action.onNext()}"
 
                 />
+
             <Button
                 android:id="@+id/btnPrevious"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/rounded_white"
+                android:onClick="@{()->action.onPrevious()}"
+                android:text="@string/previous"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="17sp"
-                android:text="@string/previous"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:onClick="@{()->action.onPrevious()}"
 
                 />
         </LinearLayout>

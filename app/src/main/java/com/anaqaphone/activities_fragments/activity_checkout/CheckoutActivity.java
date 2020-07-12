@@ -361,7 +361,7 @@ public class CheckoutActivity extends AppCompatActivity implements Listeners.Bac
                 setResult(RESULT_OK, intent);
                 finish();
             } else if (resultCode == RESULT_CANCELED) {
-                Toast.makeText(this, "بلح", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this,getString(R.string.cancel) , Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -374,6 +374,6 @@ public class CheckoutActivity extends AppCompatActivity implements Listeners.Bac
             fragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
-
+ 
 
 }

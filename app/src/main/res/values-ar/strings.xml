@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">اناقة الهاتف</string>
+    <string name="app_name">أناقة الهاتف</string>
     <string name="map_api_key">AIzaSyC4l5QxL27z4w0uuD_5X3g0IRhaUdvb0Q4</string>
     <string name="map_key">AIzaSyC4l5QxL27z4w0uuD_5X3g0IRhaUdvb0Q4</string>
     <string name="open">فتح</string>
@@ -179,10 +179,10 @@
     <string name="add_coupon">اضافة كوبون</string>
     <string name="edit_profile">تعديل الملف الشخصي</string>
     <string name="department">الاقسام</string>
-    <string name="out_of_stock">Out Of Stock</string>
+    <string name="out_of_stock">تم انتهاء الكميه </string>
     <string name="arrive">توصيل</string>
     <string name="without_arrive">بدون توصيل</string>
-    <string name="total_order_price">اجمالى قينمة الطلب</string>
+    <string name="total_order_price">اجمالى قيمة الطلب</string>
     <string name="products_price">سعر المنتج</string>
     <string name="arrive_price">سعر التوصيل</string>
     <string name="vat">ضريبة القيمه المضافه</string>
