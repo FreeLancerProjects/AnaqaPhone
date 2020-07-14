@@ -400,7 +400,7 @@
                                         android:textColor="@color/black"
                                         android:textSize="16sp"
                                         android:textStyle="bold"
-                                        android:visibility='@{model.color==null?View.GONE:View.VISIBLE}' />
+                                        android:visibility='@{model.color==null?View.GONE:View.VISIBLE,default=visible}' />
 
                                     <FrameLayout
                                         android:layout_width="match_parent"
