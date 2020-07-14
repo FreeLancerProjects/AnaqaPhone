@@ -113,7 +113,7 @@ public class UI_General_Method {
 
     @BindingAdapter({"order_status", "pay_type"})
     public static void orderStatus(TextView textView, String status, String pay_type) {
-        if (pay_type.equals("credit")) {
+        if (pay_type.equals("card")) {
             textView.setText(textView.getContext().getString(R.string.accepted));
 
         } else if (status.equals("new_order")) {
