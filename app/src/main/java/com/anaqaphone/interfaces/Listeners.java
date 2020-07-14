@@ -33,6 +33,8 @@ public interface Listeners {
         void arLang();
         void enLang();
         void profile();
+        void whatsapp();
+
 
     }
 

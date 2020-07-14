@@ -26,9 +26,12 @@ import com.anaqaphone.activities_fragments.activity_order.OrderActivity;
 import com.anaqaphone.activities_fragments.bank_activity.BanksActivity;
 import com.anaqaphone.databinding.FragmentMoreBinding;
 import com.anaqaphone.interfaces.Listeners;
+import com.anaqaphone.models.SettingModel;
 import com.anaqaphone.models.UserModel;
 import com.anaqaphone.preferences.Preferences;
+import com.anaqaphone.remote.Api;
 import com.anaqaphone.share.Common;
+import com.anaqaphone.tags.Tags;
 
 
 import java.io.IOException;
@@ -45,6 +48,7 @@ public class Fragment_More extends Fragment implements Listeners.SettingActions 
     private Preferences preferences;
     private String lang;
     private UserModel userModel;
+    private SettingModel settingmodel;
 
     public static Fragment_More newInstance() {
 
@@ -62,6 +66,7 @@ public class Fragment_More extends Fragment implements Listeners.SettingActions 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initView();
+        getAppData();
     }
 
     private void initView() {
@@ -81,6 +86,7 @@ public class Fragment_More extends Fragment implements Listeners.SettingActions 
             binding.btnAr.setBackgroundResource(R.drawable.small_rounded_btn_second);
             binding.btnEn.setBackgroundResource(R.drawable.small_rounded_btn_primary);
         }
+
     }
 
 
@@ -198,10 +204,66 @@ public class Fragment_More extends Fragment implements Listeners.SettingActions 
         }
     }
 
+    @Override
+    public void whatsapp() {
+if(settingmodel!=null&&settingmodel.getSettings().getWhatsapp()!=null){
+    ViewSocial("https://api.whatsapp.com/send?phone=" +settingmodel.getSettings().getWhatsapp());
+}
+    }
 
+    private void getAppData()
+    {
+
+        Api.getService(Tags.base_url)
+                .getSetting(lang)
+                .enqueue(new Callback<SettingModel>() {
+                    @Override
+                    public void onResponse(Call<SettingModel> call, Response<SettingModel> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+
+                          settingmodel=response.body();
+
+                        } else {
+                            try {
+
+                                Log.e("error", response.code() + "_" + response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            if (response.code() == 500) {
+
+                            } else {
+
+
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<SettingModel> call, Throwable t) {
+                        try {
+
+                            if (t.getMessage() != null) {
+                                Log.e("error", t.getMessage());
+                                if (t.getMessage().toLowerCase().contains("failed to connect") || t.getMessage().toLowerCase().contains("unable to resolve host")) {
+                                } else {
+                                }
+                            }
+
+                        } catch (Exception e) {
+                        }
+                    }
+                });
+
+    }
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+    }
+    private void ViewSocial(String path) {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(path));
+        startActivity(intent);
 
     }
 }

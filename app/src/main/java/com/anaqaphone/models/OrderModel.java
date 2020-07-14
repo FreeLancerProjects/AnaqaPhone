@@ -12,6 +12,7 @@ public class OrderModel implements Serializable {
     private double total_price;
     private long order_date;
     private String order_time;
+    private String pay_type;
     private int coupon_id;
     private String address;
     private double latitude;
@@ -49,6 +50,10 @@ public class OrderModel implements Serializable {
         return order_time;
     }
 
+    public String getPay_type() {
+        return pay_type;
+    }
+
     public int getCoupon_id() {
         return coupon_id;
     }
@@ -76,7 +81,8 @@ public class OrderModel implements Serializable {
     public List<OrdersDetails> getOrder_product() {
         return order_product;
     }
-private Data tler;
+
+    private Data tler;
 
     public Data getTler() {
         return tler;
@@ -180,11 +186,12 @@ private Data tler;
             }
         }
     }
-    public class  Data implements Serializable{
+
+    public class Data implements Serializable {
         private String url;
-        private String  succes_url;
-        private String  canceled_url;
-        private String  declined_url;
+        private String succes_url;
+        private String canceled_url;
+        private String declined_url;
 
         public String getUrl() {
             return url;

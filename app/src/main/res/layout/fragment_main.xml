@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
 
     >
+
     <data>
 
         <variable
@@ -17,189 +18,194 @@
             />
     </data>
 
-
-    <androidx.core.widget.NestedScrollView
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:fitsSystemWindows="true"
-        android:scrollbars="none"
-        android:background="@color/gray0"
-        >
-        <LinearLayout
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nested"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
-            <FrameLayout
-                android:id="@+id/flSlider"
+            android:background="@color/gray0"
+            android:fillViewport="true"
+            android:fitsSystemWindows="true"
+            android:scrollbars="none">
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                >
-                <androidx.viewpager.widget.ViewPager
-                    android:id="@+id/pager"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:id="@+id/flSlider"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
-                <com.google.android.material.tabs.TabLayout
-                    android:id="@+id/tab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="7dp"
-                    android:layout_gravity="bottom|center_horizontal"
-                    android:layout_margin="8dp"
-                    app:tabIndicatorHeight="0dp"
-                    app:tabMaxWidth="7dp"
-                    app:tabGravity="fill"
-                    app:tabMode="scrollable"
-                    app:tabBackground="@drawable/tab_indicator"
-                    android:layout_marginBottom="8dp"
-                    />
+                    android:layout_height="200dp">
 
-                <ProgressBar
-                    android:id="@+id/progBarSlider"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_gravity="center"
-                    />
-            </FrameLayout>
+                    <androidx.viewpager.widget.ViewPager
+                        android:id="@+id/pager"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
 
-            <FrameLayout
-                android:id="@+id/flMostSeller"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:layout_marginTop="10dp"
-                android:minHeight="200dp"
+                    <com.google.android.material.tabs.TabLayout
+                        android:id="@+id/tab"
+                        android:layout_width="wrap_content"
+                        android:layout_height="7dp"
+                        android:layout_gravity="bottom|center_horizontal"
+                        android:layout_margin="8dp"
+                        android:layout_marginBottom="8dp"
+                        app:tabBackground="@drawable/tab_indicator"
+                        app:tabGravity="fill"
+                        app:tabIndicatorHeight="0dp"
+                        app:tabMaxWidth="7dp"
+                        app:tabMode="scrollable" />
 
-                >
-                <LinearLayout
-                    android:id="@+id/llFavoriteOffer"
+                    <ProgressBar
+                        android:id="@+id/progBarSlider"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="center" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/flMostSeller"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
+                    android:layout_marginTop="10dp"
+                    android:minHeight="200dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+
                     >
-                    <androidx.constraintlayout.widget.ConstraintLayout
+
+                    <LinearLayout
+                        android:id="@+id/llFavoriteOffer"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        >
-                        <TextView
-                            android:layout_width="wrap_content"
+                        android:orientation="vertical">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/favorite_offers"
+                                android:textColor="@color/black"
+                                android:textSize="13sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <Button
+                                android:layout_width="wrap_content"
+                                android:layout_height="35dp"
+                                android:layout_margin="5dp"
+                                android:background="@drawable/rounded_stroke_primary"
+                                android:text="@string/show_all"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="13sp"
+                                android:visibility="gone"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recViewFavoriteOffers"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/black"
-                            android:text="@string/favorite_offers"
-                            android:textSize="13sp"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            />
-                        <Button
-                            android:layout_width="wrap_content"
-                            android:layout_height="35dp"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            android:textColor="@color/colorPrimary"
-                            android:textSize="13sp"
-                            android:text="@string/show_all"
-                            android:background="@drawable/rounded_stroke_primary"
-                            android:layout_margin="5dp"
-                            android:visibility="gone"
-                            />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                            android:layout_marginTop="10dp" />
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recViewFavoriteOffers"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        />
+                    </LinearLayout>
 
-                </LinearLayout>
+                    <ProgressBar
+                        android:id="@+id/progBarOffer"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="center" />
 
-                <ProgressBar
-                    android:id="@+id/progBarOffer"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_gravity="center"
-                    />
+                </FrameLayout>
 
-            </FrameLayout>
-
-            <FrameLayout
-                android:id="@+id/flMostRate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:layout_marginTop="10dp"
-                android:minHeight="200dp"
-
-
-                >
-                <LinearLayout
+                <FrameLayout
+                    android:id="@+id/flMostRate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
+                    android:layout_marginTop="10dp"
+                    android:minHeight="200dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+
+
                     >
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        >
+                        android:orientation="vertical">
 
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/mobile_accessories"
+                                android:textColor="@color/black"
+                                android:textSize="13sp"
+                                android:visibility="gone"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <Button
+                                android:layout_width="wrap_content"
+                                android:layout_height="35dp"
+                                android:layout_margin="5dp"
+                                android:background="@drawable/rounded_stroke_primary"
+                                android:text="@string/show_all"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="13sp"
+                                android:visibility="gone"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+
+                                />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recViewAccessories"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/black"
-                            android:text="@string/mobile_accessories"
-                            android:textSize="13sp"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                          android:visibility="gone"
-                            />
+                            android:layout_marginTop="10dp" />
 
-                        <Button
-                            android:layout_width="wrap_content"
-                            android:layout_height="35dp"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            android:textColor="@color/colorPrimary"
-                            android:textSize="13sp"
-                            android:text="@string/show_all"
-                            android:background="@drawable/rounded_stroke_primary"
-                            android:layout_margin="5dp"
-                            android:visibility="gone"
+                    </LinearLayout>
 
-                            />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <ProgressBar
+                        android:id="@+id/progBarAccessories"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="center" />
+                </FrameLayout>
 
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recViewAccessories"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
 
-                </LinearLayout>
-
-                <ProgressBar
-                    android:id="@+id/progBarAccessories"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_gravity="center"
-                    />
-            </FrameLayout>
-
-
-
-
-
-
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
-
-
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:rotation="90"
+            android:src="@drawable/ic_left_arrow"
+            android:tint="@color/colorPrimary"
+            android:visibility="gone"
+            app:backgroundTint="@color/white"
+            app:borderWidth="2dp"
+            app:elevation="5dp" />
+    </FrameLayout>
 </layout>

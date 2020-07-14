@@ -24,6 +24,7 @@ public class SingleProductDataModel implements Serializable {
     private List<ProductsImages> products_images;
     private UserLike user_like;
     private int stock;
+    private String color;
 
     public int getId() {
         return id;
@@ -103,6 +104,10 @@ public class SingleProductDataModel implements Serializable {
 
     public int getStock() {
         return stock;
+    }
+
+    public String getColor() {
+        return color;
     }
 
     public class Department implements Serializable {

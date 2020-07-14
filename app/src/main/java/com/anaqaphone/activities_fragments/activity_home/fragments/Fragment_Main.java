@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+import androidx.core.widget.NestedScrollView;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -108,6 +109,25 @@ public class Fragment_Main extends Fragment {
         binding.recViewAccessories.setLayoutManager(new LinearLayoutManager(activity));
         categoryProducts_adapter = new MainCategoryProducts_Adapter(categoryProductDataModels, activity, this);
         binding.recViewAccessories.setAdapter(categoryProducts_adapter);
+        binding.nested.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if(scrollY>oldScrollY&&scrollY>activity.getWindow().getWindowManager().getDefaultDisplay().getHeight()){
+                    binding.fab.setVisibility(View.VISIBLE);
+                }
+                else {
+                    binding.fab.setVisibility(View.GONE);
+
+                }
+            }
+        });
+        binding.fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                binding.nested.fullScroll(View.FOCUS_UP);
+                binding.fab.setVisibility(View.GONE);
+            }
+        });
     }
 
     private void get_slider() {

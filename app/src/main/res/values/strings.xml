@@ -165,7 +165,7 @@
     <string name="total_cost">Total Cost</string>
     <string name="amount">amount</string>
     <string name="new_order">Pending</string>
-    <string name="in_way">In Way</string>
+    <string name="in_way">Charged</string>
     <string name="accepted">Accepted</string>
     <string name="refused">Refused</string>
     <string name="completed">Completed</string>
@@ -180,5 +180,7 @@
     <string name="products_price">Products Price</string>
     <string name="arrive_price">Arrive Price</string>
     <string name="vat">VAT</string>
+    <string name="all_rights_reserved_for_anaqaphone">© All Rights Reserved For AnaqaPhone</string>
+    <string name="colors">Color</string>
 
 </resources>

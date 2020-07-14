@@ -143,7 +143,7 @@
     <string name="order_num">رقم الطلب</string>
     <string name="added_suc">تم الاضافة الى سلة التسوق</string>
     <string name="cart_empty">السلة فارغة</string>
-    <string name="welcome_in_anaqa_phone">اهلا بك في اناقة الهاتف</string>
+    <string name="welcome_in_anaqa_phone">اهلا بك في أناقة الهاتف</string>
     <string name="enter_verification_code">ادخل كود التفعيل</string>
     <string name="cannot_signup">لا يمكن التسجيل دون الموافقة على الشروط والاحكام</string>
     <string name="favorite_offers">عروضنا المفضلة</string>
@@ -171,7 +171,7 @@
     <string name="total_cost">اجمالى السعر</string>
     <string name="amount">الكمية</string>
     <string name="new_order">قيد الانتظار</string>
-    <string name="in_way">جار التوصيل</string>
+    <string name="in_way"> تم الشحن</string>
     <string name="accepted">تم إستلام طلبك</string>
     <string name="refused">تم الرفض</string>
     <string name="completed">مكتمل</string>
@@ -186,5 +186,7 @@
     <string name="products_price">سعر المنتج</string>
     <string name="arrive_price">سعر التوصيل</string>
     <string name="vat">ضريبة القيمه المضافه</string>
+    <string name="all_rights_reserved_for_anaqaphone">© جميع الحقوق محفوظة  أناقة الهاتف</string>
+    <string name="colors">Color</string>
 
 </resources>
