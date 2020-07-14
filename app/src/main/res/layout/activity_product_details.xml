@@ -16,7 +16,9 @@
         <variable
             name="lang"
             type="String" />
-<import type="android.graphics.Color"/>
+
+        <import type="android.graphics.Color" />
+
         <variable
             name="model"
             type="com.anaqaphone.models.SingleProductDataModel" />
@@ -384,10 +386,12 @@
                                     android:textColor="@color/gray6"
                                     android:textSize="14sp"
                                     android:textStyle="bold" />
+
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:orientation="horizontal">
+
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
@@ -396,13 +400,12 @@
                                         android:textColor="@color/black"
                                         android:textSize="16sp"
                                         android:textStyle="bold"
+                                        android:visibility='@{model.color==null?View.GONE:View.VISIBLE}' />
 
-                                        />
                                     <FrameLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
-                                        android:background="@{Color.parseColor(model.color)}"
-                                        >
+                                        android:background='@{model.color!=null?Color.parseColor(model.color):"#00000"}'>
 
                                     </FrameLayout>
                                 </LinearLayout>
