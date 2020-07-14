@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -123,16 +124,16 @@ public class ProductDetailsActivity extends AppCompatActivity implements Listene
 
 
         binding.flAddToCart.setOnClickListener(v -> addToCart(singleProductDataModel));
-binding.tvClose.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-        if(binding.expandLayout.isExpanded()){
-            binding.expandLayout.collapse(true);}
-        else {
-            binding.expandLayout.expand(true);
-        }
-    }
-});
+        binding.tvClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (binding.expandLayout.isExpanded()) {
+                    binding.expandLayout.collapse(true);
+                } else {
+                    binding.expandLayout.expand(true);
+                }
+            }
+        });
     }
 
     private void getOrder() {
@@ -193,7 +194,9 @@ binding.tvClose.setOnClickListener(new View.OnClickListener() {
         binding.setModel(body);
         this.singleProductDataModel = body;
         binding.progBarSlider.setVisibility(View.GONE);
-
+        if (body.getColor() != null) {
+            binding.frame.setBackgroundColor(Color.parseColor(body.getColor()));
+        }
 
         NUM_PAGES = body.getProducts_images().size();
         slidingImage__adapter = new ProductDetialsSlidingImage_Adapter(this, body.getProducts_images());
@@ -204,9 +207,9 @@ binding.tvClose.setOnClickListener(new View.OnClickListener() {
     public void addToCart(SingleProductDataModel singleProductDataModel) {
         ItemCartModel itemCartModel = new ItemCartModel(singleProductDataModel.getId(), singleProductDataModel.getTitle(), singleProductDataModel.getPrice(), 1, singleProductDataModel.getImage());
         cartSingleton.addItem(itemCartModel);
-        if(binding.expandLayout.isExpanded()){
-        binding.expandLayout.collapse(true);}
-        else {
+        if (binding.expandLayout.isExpanded()) {
+            binding.expandLayout.collapse(true);
+        } else {
             binding.expandLayout.expand(true);
         }
         Toast.makeText(this, getResources().getString(R.string.add_to_cart), Toast.LENGTH_SHORT).show();
