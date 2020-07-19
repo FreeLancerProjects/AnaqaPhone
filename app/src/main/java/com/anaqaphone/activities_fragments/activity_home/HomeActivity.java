@@ -137,9 +137,9 @@ public class HomeActivity extends AppCompatActivity {
     private void setUpBottomNavigation() {
 
         AHBottomNavigationItem item1 = new AHBottomNavigationItem(getString(R.string.home), R.drawable.ic_home);
-        AHBottomNavigationItem item2 = new AHBottomNavigationItem(getString(R.string.offers), R.drawable.ic_tag);
-        AHBottomNavigationItem item3 = new AHBottomNavigationItem(getString(R.string.cart), R.drawable.ic_cart);
-        AHBottomNavigationItem item4 = new AHBottomNavigationItem(getString(R.string.department), R.drawable.ic_list);
+        AHBottomNavigationItem item2 = new AHBottomNavigationItem(getString(R.string.department), R.drawable.ic_list);
+        AHBottomNavigationItem item3 = new AHBottomNavigationItem(getString(R.string.offers), R.drawable.ic_tag);
+        AHBottomNavigationItem item4 = new AHBottomNavigationItem(getString(R.string.cart), R.drawable.ic_cart);
         AHBottomNavigationItem item5 = new AHBottomNavigationItem(getString(R.string.more), R.drawable.ic_more);
 
         binding.ahBottomNav.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
@@ -163,18 +163,18 @@ public class HomeActivity extends AppCompatActivity {
                     break;
                 case 1:
 
-                    displayFragmentOffer();
+                    displayFragmentDepartment();
 
 
                     break;
                 case 2:
 
-                    displayFragmentCart();
+                    displayFragmentOffer();
 
 
                     break;
                 case 3:
-                    displayFragmentDepartment();
+                    displayFragmentCart();
                     break;
                 case 4:
                     displayFragmentMore();
@@ -344,7 +344,7 @@ public class HomeActivity extends AppCompatActivity {
 
             }
             binding.setTitle(getString(R.string.cart));
-            updateBottomNavigationPosition(2);
+            updateBottomNavigationPosition(3);
         } catch (Exception e) {
         }
 
@@ -381,7 +381,7 @@ public class HomeActivity extends AppCompatActivity {
 
             }
             binding.setTitle(getString(R.string.offers));
-            updateBottomNavigationPosition(1);
+            updateBottomNavigationPosition(2);
         } catch (Exception e) {
         }
     }
@@ -455,7 +455,7 @@ public class HomeActivity extends AppCompatActivity {
 
             }
             binding.setTitle(getString(R.string.department));
-            updateBottomNavigationPosition(3);
+            updateBottomNavigationPosition(1);
         } catch (Exception e) {
         }
     }
