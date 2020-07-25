@@ -188,5 +188,8 @@
     <string name="vat">ضريبة القيمه المضافه</string>
     <string name="all_rights_reserved_for_anaqaphone">© جميع الحقوق محفوظة  أناقة الهاتف</string>
     <string name="colors">اللون</string>
+    <string name="contact_us_on_whatsapp">راسلنا على الواتس اب </string>
+    <string name="cart_not_empty">يوجد طلبات فى السله من فضلك يجب اكمالها قبل غلق التطبيق</string>
+    <string name="if_you">اذا خرجت من التطبيق سوف يتم مسح السله</string>
 
 </resources>

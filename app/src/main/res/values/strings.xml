@@ -182,5 +182,8 @@
     <string name="vat">VAT</string>
     <string name="all_rights_reserved_for_anaqaphone">© All Rights Reserved For AnaqaPhone</string>
     <string name="colors">Color</string>
+    <string name="contact_us_on_whatsapp">Contact Us On Whatsapp</string>
+    <string name="cart_not_empty">Cart Not Empty</string>
+    <string name="if_you">If YOU Close App Cart Will Delet</string>
 
 </resources>

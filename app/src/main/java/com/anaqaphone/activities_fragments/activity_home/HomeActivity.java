@@ -1,20 +1,29 @@
 package com.anaqaphone.activities_fragments.activity_home;
 
-import android.app.AlertDialog;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.AudioAttributes;
+import android.media.AudioManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
@@ -52,6 +61,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Random;
 
 import io.paperdb.Paper;
 import okhttp3.ResponseBody;
@@ -72,7 +82,7 @@ public class HomeActivity extends AppCompatActivity {
     private String lang;
     private String token;
     private CartSingleton singleton;
-
+    private int back = 0;
 
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
@@ -613,14 +623,122 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (fragment_main != null && fragment_main.isAdded() && fragment_main.isVisible()) {
-            finish();
 
+        if (fragment_main != null && fragment_main.isAdded() && fragment_main.isVisible()) {
+            if(userModel!=null){
+            if (singleton.getItemCartModelList() != null && singleton.getItemCartModelList().size() > 0) {
+                if (back == 0) {
+                    back = 1;
+                    String sound_Path = "android.resource://" + getPackageName() + "/" + R.raw.not;
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+                        String CHANNEL_ID = "my_channel_02";
+                        CharSequence CHANNEL_NAME = "my_channel_name";
+                        int IMPORTANCE = NotificationManager.IMPORTANCE_HIGH;
+
+                        final NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+                        final NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, IMPORTANCE);
+                        channel.setShowBadge(true);
+                        channel.setSound(Uri.parse(sound_Path), new AudioAttributes.Builder()
+                                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                                .setUsage(AudioAttributes.USAGE_NOTIFICATION_EVENT)
+                                .setLegacyStreamType(AudioManager.STREAM_NOTIFICATION)
+                                .build()
+                        );
+
+                        builder.setChannelId(CHANNEL_ID);
+                        builder.setSound(Uri.parse(sound_Path), AudioManager.STREAM_NOTIFICATION);
+                        builder.setSmallIcon(R.drawable.logo);
+
+
+                        builder.setContentTitle(getResources().getString(R.string.cart));
+
+
+                        builder.setContentText(getResources().getString(R.string.cart_not_empty));
+
+
+                        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+                        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.logo_only);
+                        builder.setLargeIcon(bitmap);
+                        manager.createNotificationChannel(channel);
+                        manager.notify(new Random().nextInt(200), builder.build());
+                    } else {
+
+                        final NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+
+                        builder.setSound(Uri.parse(sound_Path), AudioManager.STREAM_NOTIFICATION);
+                        builder.setSmallIcon(R.drawable.logo);
+
+                        builder.setContentTitle(getResources().getString(R.string.cart));
+
+
+                        builder.setContentText(getResources().getString(R.string.cart_not_empty));
+
+
+                        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+                        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.logo_only);
+                        builder.setLargeIcon(bitmap);
+                        manager.notify(new Random().nextInt(200), builder.build());
+
+                    }
+                } else {
+                   // back=1;
+                    CreatecloseDialog();
+
+                }
+            }
+           else {
+                finish();
+            }}
+            else {
+                navigateToSignInActivity();
+            }
         } else {
             displayFragmentMain();
         }
     }
 
+    private void CreatecloseDialog() {
+
+        final androidx.appcompat.app.AlertDialog dialog = new AlertDialog.Builder(this)
+                .setCancelable(true)
+                .create();
+
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_delete, null);
+        TextView tvDelete = view.findViewById(R.id.tvDelete);
+        TextView tvCancel = view.findViewById(R.id.tvCancel);
+        TextView tvtitle = view.findViewById(R.id.tvtitle);
+        TextView tvcart = view.findViewById(R.id.tvcart);
+
+        tvDelete.setText(getResources().getString(R.string.back));
+        tvcart.setText(getResources().getString(R.string.cart));
+        tvtitle.setText(getResources().getString(R.string.if_you));
+        tvCancel.setOnClickListener(v -> {
+            back = 0;
+            dialog.dismiss();
+
+        });
+
+        tvDelete.setOnClickListener(v -> {
+            try {
+                dialog.dismiss();
+                finish();
+            } catch (Exception e) {
+            }
+
+            dialog.dismiss();
+        });
+
+        dialog.getWindow().getAttributes().windowAnimations = R.style.dialog_congratulation_animation;
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_window_bg);
+        dialog.setView(view);
+        dialog.show();
+
+    }
 
     private void navigateToSignInActivity() {
         Intent intent = new Intent(this, LoginActivity.class);
