@@ -9,8 +9,11 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.anaqaphone.R;
+import com.anaqaphone.activities_fragments.activity_order_details.OrderDetailsActivity;
+import com.anaqaphone.activities_fragments.activity_product_details.ProductDetailsActivity;
 import com.anaqaphone.databinding.ProductDetailsRowBinding;
 import com.anaqaphone.models.OrderModel;
+import com.iarcuschin.simpleratingbar.SimpleRatingBar;
 
 import java.util.List;
 
@@ -46,7 +49,15 @@ public class ProductDetailsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         OrderModel.OrdersDetails  model = list.get(position);
 
         myHolder.binding.setModel(model);
-
+myHolder.binding.simplarate.setOnRatingBarChangeListener(new SimpleRatingBar.OnRatingBarChangeListener() {
+    @Override
+    public void onRatingChanged(SimpleRatingBar simpleRatingBar, float rating, boolean fromUser) {
+        if(context instanceof OrderDetailsActivity){
+            OrderDetailsActivity productDetailsActivity=(OrderDetailsActivity)context;
+            productDetailsActivity.makerate(list.get(myHolder.getLayoutPosition()).getProduct_id(),rating);
+        }
+    }
+});
 
 
     }

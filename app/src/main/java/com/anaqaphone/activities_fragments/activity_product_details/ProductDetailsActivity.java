@@ -20,6 +20,7 @@ import androidx.databinding.DataBindingUtil;
 
 //import com.anaqaphone.Animate.CircleAnimationUtil;
 import com.anaqaphone.R;
+import com.anaqaphone.activities_fragments.activity_verification_code.VerificationCodeActivity;
 import com.anaqaphone.adapters.ProductDetialsSlidingImage_Adapter;
 import com.anaqaphone.databinding.ActivityProductDetailsBinding;
 import com.anaqaphone.interfaces.Listeners;
@@ -42,6 +43,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import io.paperdb.Paper;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -279,4 +281,5 @@ public class ProductDetailsActivity extends AppCompatActivity implements Listene
 //        }
         }
     }
+
 }

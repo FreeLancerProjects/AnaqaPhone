@@ -135,10 +135,12 @@ public interface Service {
     Call<MainCategoryDataModel> getBrands(
             @Query("pagination") String pagination
     );
+
     @GET("api/category")
     Call<MainCategoryDataModel> getCategory(
             @Query("pagination") String pagination
     );
+
     @GET("api/banks")
     Call<BankDataModel> getBanks();
 
@@ -208,5 +210,14 @@ public interface Service {
     Call<UserModel> editClientProfileWithoutImage(@Header("Authorization") String Authorization,
                                                   @Part("name") RequestBody name,
                                                   @Part("email") RequestBody email
+    );
+
+    @FormUrlEncoded
+    @POST("api/add-rate")
+    Call<ResponseBody> rate(
+            @Header("Authorization") String Authorization,
+            @Field("product_id") String product_id,
+            @Field("user_id") String user_id,
+            @Field("rate") String rate
     );
 }

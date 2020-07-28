@@ -2,6 +2,7 @@ package com.anaqaphone.ui_general_method;
 
 import android.net.Uri;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,6 +12,7 @@ import androidx.databinding.BindingAdapter;
 import com.anaqaphone.R;
 import com.anaqaphone.share.Time_Ago;
 import com.anaqaphone.tags.Tags;
+import com.iarcuschin.simpleratingbar.SimpleRatingBar;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import com.squareup.picasso.Picasso;
@@ -189,7 +191,16 @@ public class UI_General_Method {
 
     }
 
-
+    @BindingAdapter("rate")
+    public static void rate (SimpleRatingBar simpleRatingBar, double rate)
+    {
+        SimpleRatingBar.AnimationBuilder builder = simpleRatingBar.getAnimationBuilder()
+                .setRatingTarget((float) rate)
+                .setDuration(1000)
+                .setRepeatCount(0)
+                .setInterpolator(new LinearInterpolator());
+        builder.start();
+    }
     @BindingAdapter("time_AM_BM")
     public static void timeAM_BM(TextView textView, String time_AM_BM) {
         if (time_AM_BM != null && !time_AM_BM.isEmpty()) {

@@ -25,6 +25,8 @@ public class SingleProductDataModel implements Serializable {
     private UserLike user_like;
     private int stock;
     private String color;
+    private boolean user_rate;
+    private double rate;
 
     public int getId() {
         return id;
@@ -108,6 +110,14 @@ public class SingleProductDataModel implements Serializable {
 
     public String getColor() {
         return color;
+    }
+
+    public boolean isUser_rate() {
+        return user_rate;
+    }
+
+    public double getRate() {
+        return rate;
     }
 
     public class Department implements Serializable {
