@@ -20,6 +20,7 @@ import androidx.databinding.DataBindingUtil;
 
 //import com.anaqaphone.Animate.CircleAnimationUtil;
 import com.anaqaphone.R;
+import com.anaqaphone.activities_fragments.activity_images.ImagesActivity;
 import com.anaqaphone.activities_fragments.activity_verification_code.VerificationCodeActivity;
 import com.anaqaphone.adapters.ProductDetialsSlidingImage_Adapter;
 import com.anaqaphone.databinding.ActivityProductDetailsBinding;
@@ -282,4 +283,9 @@ public class ProductDetailsActivity extends AppCompatActivity implements Listene
         }
     }
 
+    public void show() {
+        Intent intent = new Intent(this, ImagesActivity.class);
+        intent.putExtra("data",singleProductDataModel);
+        startActivityForResult(intent, 100);
+    }
 }

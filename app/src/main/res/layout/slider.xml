@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="5dp">
+
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/image"
         android:layout_width="match_parent"
@@ -11,6 +12,5 @@
         android:layout_gravity="center"
         android:adjustViewBounds="true"
         app:riv_corner_radius="10dp"
-        app:riv_mutate_background="true"
-        />
+        app:riv_mutate_background="true" />
 </FrameLayout>
