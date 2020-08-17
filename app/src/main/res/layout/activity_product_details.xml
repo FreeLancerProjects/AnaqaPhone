@@ -224,6 +224,24 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical">
+                                <com.iarcuschin.simpleratingbar.SimpleRatingBar
+                                    android:id="@+id/simplarate"
+                                    rate="@{model.rate}"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="end"
+                                    android:gravity="end|center_vertical"
+                                    app:srb_drawBorderEnabled="true"
+                                    app:srb_isIndicator="true"
+
+                                    app:srb_numberOfStars="5"
+                                    app:srb_starBackgroundColor="@color/white"
+                                    app:srb_starBorderWidth="3"
+                                    app:srb_starSize="15dp"
+                                    app:srb_starsSeparation="10dp"
+                                    app:srb_stepSize=".5"
+
+                                    />
 
                                 <androidx.constraintlayout.widget.ConstraintLayout
                                     android:layout_width="match_parent"
@@ -242,25 +260,6 @@
                                         app:layout_constraintStart_toStartOf="parent"
                                         />
 
-                                    <com.iarcuschin.simpleratingbar.SimpleRatingBar
-                                        android:id="@+id/simplarate"
-                                        rate="@{model.rate}"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
-                                        android:layout_marginBottom="8dp"
-                                        android:gravity="end|center_vertical"
-                                        app:srb_drawBorderEnabled="true"
-                                        app:srb_isIndicator="true"
-                                        app:srb_numberOfStars="5"
-                                        app:srb_starBackgroundColor="@color/white"
-                                        app:srb_starBorderWidth="3"
-                                        app:srb_starSize="15dp"
-                                        app:srb_starsSeparation="10dp"
-                                        app:srb_stepSize=".5"
-                                        app:layout_constraintTop_toTopOf="parent"
-                                        app:layout_constraintEnd_toEndOf="parent"
-                                        />
                                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                                 <TextView

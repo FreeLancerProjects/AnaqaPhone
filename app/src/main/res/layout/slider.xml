@@ -10,7 +10,6 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:adjustViewBounds="true"
-        android:scaleType="fitXY"
         app:riv_corner_radius="10dp"
         app:riv_mutate_background="true"
         />
