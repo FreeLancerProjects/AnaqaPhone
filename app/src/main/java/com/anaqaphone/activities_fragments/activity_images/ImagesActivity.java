@@ -83,7 +83,6 @@ public class ImagesActivity extends AppCompatActivity implements Listeners.BackL
         binding.recimage.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
         binding.recimage.setAdapter(productImageAdapter);
         binding.setModel(productDataModel);
-        binding.pager.setFocusableInTouchMode(true);
         binding.progBarSlider.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(this, R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
         UPDATEUI(singleProductDataModel);
 
