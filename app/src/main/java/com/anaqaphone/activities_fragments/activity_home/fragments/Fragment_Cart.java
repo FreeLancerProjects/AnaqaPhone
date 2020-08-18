@@ -60,7 +60,7 @@ public class Fragment_Cart extends Fragment implements Swipe.SwipeListener {
     private CartSingleton singleton;
     private CartAdapter adapter;
     private List<ItemCartModel> itemCartModelList;
-    private ItemCartUploadModel itemCartModel;
+  //  private ItemCartUploadModel itemCartModel;
     private double total = 0.0;
     private double tax = 0.0;
     private double totalitems = 0.0;

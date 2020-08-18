@@ -203,7 +203,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="3dp"
-                            app:cardBackgroundColor="@color/colorPrimary"
                             app:cardCornerRadius="5dp"
                             app:cardElevation="3dp"
                             app:contentPadding="10dp"
@@ -212,7 +211,6 @@
 
 
                             <FrameLayout
-                                android:id="@+id/frame"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content">
 

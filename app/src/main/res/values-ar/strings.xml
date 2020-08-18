@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--    AIzaSyC4l5QxL27z4w0uuD_5X3g0IRhaUdvb0Q4-->
     <string name="app_name">أناقة الهاتف</string>
-    <string name="map_api_key">AIzaSyC4l5QxL27z4w0uuD_5X3g0IRhaUdvb0Q4</string>
-    <string name="map_key">AIzaSyC4l5QxL27z4w0uuD_5X3g0IRhaUdvb0Q4</string>
+    <string name="map_api_key">AIzaSyAeyMUJgKAhnNXbILHONb1um72CNzELFRY</string>
+    <string name="map_key">AIzaSyAeyMUJgKAhnNXbILHONb1um72CNzELFRY</string>
     <string name="open">فتح</string>
     <string name="close">غلق</string>
     <string name="home">الرئيسية</string>
@@ -192,5 +193,7 @@
     <string name="cart_not_empty">يوجد طلبات فى السله من فضلك يجب اكمالها قبل غلق التطبيق</string>
     <string name="if_you">اذا خرجت من التطبيق سوف يتم مسح السله</string>
     <string name="sizes">الذاكره الداخليه</string>
+    <string name="select_color">اختر اللون</string>
+    <string name="select_size">اختر الذاكرة الداخلية</string>
 
 </resources>

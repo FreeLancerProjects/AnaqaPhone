@@ -53,7 +53,7 @@ public class CheckoutActivity extends AppCompatActivity implements Listeners.Bac
     private Fragment_Payment_Type fragment_payment_type;
     private AddOrderModel addOrderModel;
     private CartSingleton singleton;
-    private ItemCartUploadModel itemCartUploadModel;
+   // private ItemCartUploadModel itemCartUploadModel;
     private UserModel userModel;
     private Preferences preferences;
     public double total_cost = 0.0;

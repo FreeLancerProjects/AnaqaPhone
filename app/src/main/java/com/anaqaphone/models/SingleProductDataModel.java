@@ -11,6 +11,7 @@ public class SingleProductDataModel implements Serializable {
     private int departemnt_id;
     private int markter_id;
     private double price;
+    private int price_id;
     private String contents;
     private String details;
     private String features;
@@ -23,6 +24,7 @@ public class SingleProductDataModel implements Serializable {
     private Department department_fk;
     private List<ProductsImages> products_images;
     private UserLike user_like;
+    private List<Sizes> sizes;
     private int stock;
     private String color;
     private boolean user_rate;
@@ -50,6 +52,10 @@ public class SingleProductDataModel implements Serializable {
 
     public double getPrice() {
         return price;
+    }
+
+    public int getPrice_id() {
+        return price_id;
     }
 
     public String getContents() {
@@ -120,6 +126,10 @@ public class SingleProductDataModel implements Serializable {
         return rate;
     }
 
+    public List<Sizes> getSizes() {
+        return sizes;
+    }
+
     public class Department implements Serializable {
         private int id;
         private String title;
@@ -180,4 +190,82 @@ public class SingleProductDataModel implements Serializable {
 
     }
 
+    public class Sizes implements Serializable {
+        private int id;
+        private int size_id;
+        private int product_id;
+        private Size size;
+        private List<Colors> colors;
+
+        public int getId() {
+            return id;
+        }
+
+        public int getSize_id() {
+            return size_id;
+        }
+
+        public int getProduct_id() {
+            return product_id;
+        }
+
+        public Size getSize() {
+            return size;
+        }
+
+        public List<Colors> getColors() {
+            return colors;
+        }
+
+        public class Size implements Serializable {
+            private int id;
+            private String title;
+
+            public int getId() {
+                return id;
+            }
+
+            public String getTitle() {
+                return title;
+            }
+        }
+
+        public class Colors implements Serializable {
+            private int id;
+            private int product_size_id;
+            private String title;
+            private String image;
+            private int stock;
+            private double price;
+            private String is_default;
+
+            public int getId() {
+                return id;
+            }
+
+            public int getProduct_size_id() {
+                return product_size_id;
+            }
+
+            public String getTitle() {
+                return title;
+            }
+
+            public String getImage() {
+                return image;
+            }
+
+            public int getStock() {
+                return stock;
+            }
+
+            public double getPrice() {
+                return price;
+            }
+
+            public String getIs_default() {
+                return is_default;
+            }
+        }
+    }
 }

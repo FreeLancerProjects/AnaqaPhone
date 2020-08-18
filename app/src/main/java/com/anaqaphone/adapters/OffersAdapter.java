@@ -86,22 +86,22 @@ public class OffersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 ((MyHolder) holder).binding.checkbox.setChecked(true);
             }
 
-            myHolder.binding.llAddToCart.setOnClickListener(v -> {
-                int count = Integer.parseInt(myHolder.binding.tvCounter.getText().toString());
-                ItemCartModel itemCartModel = new ItemCartModel(list.get(position).getId(), list.get(position).getTitle(), list.get(position).getPrice(), count, list.get(position).getImage());
-                cartSingleton.addItem(itemCartModel);
-                if (fragment instanceof Fragment_Main) {
-                    Fragment_Main fragment_main = (Fragment_Main) fragment;
-                    fragment_main.updateCartCount(cartSingleton.getItemCount());
-                } else if (fragment instanceof Fragment_Offer) {
-                    Fragment_Offer fragment_offer = (Fragment_Offer) fragment;
-                    fragment_offer.updateCartCount(cartSingleton.getItemCount());
-                } else if (fragment instanceof Fragment_Department) {
-                    Fragment_Department fragment_department = (Fragment_Department) fragment;
-                    fragment_department.updateCartCount(cartSingleton.getItemCount());
-                }
-                Toast.makeText(context, R.string.added_suc, Toast.LENGTH_SHORT).show();
-            });
+//            myHolder.binding.llAddToCart.setOnClickListener(v -> {
+//                int count = Integer.parseInt(myHolder.binding.tvCounter.getText().toString());
+//                ItemCartModel itemCartModel = new ItemCartModel(list.get(position).getId(), list.get(position).getTitle(), list.get(position).getPrice(), count, list.get(position).getImage());
+//                cartSingleton.addItem(itemCartModel);
+//                if (fragment instanceof Fragment_Main) {
+//                    Fragment_Main fragment_main = (Fragment_Main) fragment;
+//                    fragment_main.updateCartCount(cartSingleton.getItemCount());
+//                } else if (fragment instanceof Fragment_Offer) {
+//                    Fragment_Offer fragment_offer = (Fragment_Offer) fragment;
+//                    fragment_offer.updateCartCount(cartSingleton.getItemCount());
+//                } else if (fragment instanceof Fragment_Department) {
+//                    Fragment_Department fragment_department = (Fragment_Department) fragment;
+//                    fragment_department.updateCartCount(cartSingleton.getItemCount());
+//                }
+//                Toast.makeText(context, R.string.added_suc, Toast.LENGTH_SHORT).show();
+//            });
             myHolder.itemView.setOnClickListener(view -> {
                 if (fragment instanceof Fragment_Main) {
 
@@ -192,22 +192,22 @@ public class OffersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             if (list.get(position).getUser_like() != null) {
                 ((MyHolderList) holder).binding.checkbox.setChecked(true);
             }
-            myHolder.binding.llAddToCart.setOnClickListener(v -> {
-                int count = Integer.parseInt(myHolder.binding.tvCounter.getText().toString());
-                ItemCartModel itemCartModel = new ItemCartModel(list.get(position).getId(), list.get(position).getTitle(), list.get(position).getPrice(), count, list.get(position).getImage());
-                cartSingleton.addItem(itemCartModel);
-                if (fragment instanceof Fragment_Main) {
-                    Fragment_Main fragment_main = (Fragment_Main) fragment;
-                    fragment_main.updateCartCount(cartSingleton.getItemCount());
-                } else if (fragment instanceof Fragment_Offer) {
-                    Fragment_Offer fragment_offer = (Fragment_Offer) fragment;
-                    fragment_offer.updateCartCount(cartSingleton.getItemCount());
-                } else if (fragment instanceof Fragment_Department) {
-                    Fragment_Department fragment_department = (Fragment_Department) fragment;
-                    fragment_department.updateCartCount(cartSingleton.getItemCount());
-                }
-                Toast.makeText(context, R.string.added_suc, Toast.LENGTH_SHORT).show();
-            });
+//            myHolder.binding.llAddToCart.setOnClickListener(v -> {
+//                int count = Integer.parseInt(myHolder.binding.tvCounter.getText().toString());
+//                ItemCartModel itemCartModel = new ItemCartModel(list.get(position).getId(), list.get(position).getTitle(), list.get(position).getPrice(), count, list.get(position).getImage());
+//                cartSingleton.addItem(itemCartModel);
+//                if (fragment instanceof Fragment_Main) {
+//                    Fragment_Main fragment_main = (Fragment_Main) fragment;
+//                    fragment_main.updateCartCount(cartSingleton.getItemCount());
+//                } else if (fragment instanceof Fragment_Offer) {
+//                    Fragment_Offer fragment_offer = (Fragment_Offer) fragment;
+//                    fragment_offer.updateCartCount(cartSingleton.getItemCount());
+//                } else if (fragment instanceof Fragment_Department) {
+//                    Fragment_Department fragment_department = (Fragment_Department) fragment;
+//                    fragment_department.updateCartCount(cartSingleton.getItemCount());
+//                }
+//                Toast.makeText(context, R.string.added_suc, Toast.LENGTH_SHORT).show();
+//            });
             myHolder.itemView.setOnClickListener(view -> {
                 if (fragment instanceof Fragment_Main) {
 

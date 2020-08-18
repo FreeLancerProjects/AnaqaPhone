@@ -16,6 +16,7 @@ import com.anaqaphone.databinding.BankRowBinding;
 import com.anaqaphone.databinding.ImageRowBinding;
 import com.anaqaphone.models.BankDataModel;
 import com.anaqaphone.models.SingleProductDataModel;
+import com.anaqaphone.tags.Tags;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -43,7 +44,7 @@ public class ProductImageAdapter extends RecyclerView.Adapter<ProductImageAdapte
     @Override
     public void onBindViewHolder(@NonNull final MyHolder holder, int position) {
 
-        Picasso.get().load(Uri.parse(productsImages.get(position).getFull_file())).into(holder.binding.image);
+        Picasso.get().load(Uri.parse(Tags.IMAGE_URL+productsImages.get(position).getFull_file())).into(holder.binding.image);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

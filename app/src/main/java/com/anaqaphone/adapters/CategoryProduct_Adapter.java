@@ -77,16 +77,16 @@ public class CategoryProduct_Adapter extends RecyclerView.Adapter<RecyclerView.V
         }
         myHolder.binding.setLang(lang);
 
-        myHolder.binding.llAddToCart.setOnClickListener(v -> {
-            int count = Integer.parseInt(myHolder.binding.tvCounter.getText().toString());
-            ItemCartModel itemCartModel = new ItemCartModel(list.get(position).getId(), list.get(position).getTitle(), list.get(position).getPrice(), count, list.get(position).getImage());
-            cartSingleton.addItem(itemCartModel);
-            if (fragment instanceof Fragment_Main) {
-                Fragment_Main fragment_main = (Fragment_Main) fragment;
-                fragment_main.updateCartCount(cartSingleton.getItemCount());
-            }
-            Toast.makeText(context, R.string.added_suc, Toast.LENGTH_SHORT).show();
-        });
+//        myHolder.binding.llAddToCart.setOnClickListener(v -> {
+//            int count = Integer.parseInt(myHolder.binding.tvCounter.getText().toString());
+//            ItemCartModel itemCartModel = new ItemCartModel(list.get(position).getId(), list.get(position).getTitle(), list.get(position).getPrice(), count, list.get(position).getImage());
+//            cartSingleton.addItem(itemCartModel);
+//            if (fragment instanceof Fragment_Main) {
+//                Fragment_Main fragment_main = (Fragment_Main) fragment;
+//                fragment_main.updateCartCount(cartSingleton.getItemCount());
+//            }
+//            Toast.makeText(context, R.string.added_suc, Toast.LENGTH_SHORT).show();
+//        });
         myHolder.itemView.setOnClickListener(view -> {
             if (fragment instanceof Fragment_Main) {
 

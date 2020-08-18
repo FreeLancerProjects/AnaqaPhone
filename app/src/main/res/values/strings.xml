@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">AnaqaPhone</string>
-    <string name="map_api_key">AIzaSyC4l5QxL27z4w0uuD_5X3g0IRhaUdvb0Q4</string>
-    <string name="map_key">AIzaSyC4l5QxL27z4w0uuD_5X3g0IRhaUdvb0Q4</string>
+    <string name="map_api_key">AIzaSyAeyMUJgKAhnNXbILHONb1um72CNzELFRY</string>
+    <string name="map_key">AIzaSyAeyMUJgKAhnNXbILHONb1um72CNzELFRY</string>
     <string name="open">open</string>
     <string name="close">close</string>
 
@@ -186,5 +186,7 @@
     <string name="cart_not_empty">Cart Not Empty</string>
     <string name="if_you">If YOU Close App Cart Will Delet</string>
     <string name="sizes">Memmory</string>
+    <string name="select_color">Select Color</string>
+    <string name="select_size">Select Memory</string>
 
 </resources>

@@ -68,16 +68,16 @@ public class FavouriteProduct_Adapter extends RecyclerView.Adapter<RecyclerView.
             myHolder.binding.tvStock.setVisibility(View.VISIBLE);
             myHolder.binding.ll.setVisibility(View.GONE);
         }
-        myHolder.binding.llAddToCart.setOnClickListener(v -> {
-            int count = Integer.parseInt(myHolder.binding.tvCounter.getText().toString());
-            ItemCartModel itemCartModel = new ItemCartModel(list.get(position).getProduct().getId(), list.get(position).getProduct().getTitle(), list.get(position).getProduct().getPrice(), count, list.get(position).getProduct().getImage());
-            cartSingleton.addItem(itemCartModel);
-            if (context instanceof MyFavoriteActivity) {
-                MyFavoriteActivity myFavoriteActivity = (MyFavoriteActivity) context;
-                // myFavoriteActivity.updateCartCount(cartSingleton.getItemCount());
-            }
-            Toast.makeText(context, R.string.added_suc, Toast.LENGTH_SHORT).show();
-        });
+//        myHolder.binding.llAddToCart.setOnClickListener(v -> {
+//            int count = Integer.parseInt(myHolder.binding.tvCounter.getText().toString());
+//            ItemCartModel itemCartModel = new ItemCartModel(list.get(position).getProduct().getId(), list.get(position).getProduct().getTitle(), list.get(position).getProduct().getPrice(), count, list.get(position).getProduct().getImage());
+//            cartSingleton.addItem(itemCartModel);
+//            if (context instanceof MyFavoriteActivity) {
+//                MyFavoriteActivity myFavoriteActivity = (MyFavoriteActivity) context;
+//                // myFavoriteActivity.updateCartCount(cartSingleton.getItemCount());
+//            }
+//            Toast.makeText(context, R.string.added_suc, Toast.LENGTH_SHORT).show();
+//        });
         myHolder.itemView.setOnClickListener(view -> {
             if (context instanceof MyFavoriteActivity) {
 

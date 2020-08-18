@@ -83,6 +83,7 @@ public class ImagesActivity extends AppCompatActivity implements Listeners.BackL
         binding.recimage.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
         binding.recimage.setAdapter(productImageAdapter);
         binding.setModel(productDataModel);
+        binding.pager.setFocusableInTouchMode(true);
         binding.progBarSlider.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(this, R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
         UPDATEUI(singleProductDataModel);
 
@@ -95,9 +96,9 @@ public class ImagesActivity extends AppCompatActivity implements Listeners.BackL
         binding.setModel(body);
         this.singleProductDataModel = body;
         binding.progBarSlider.setVisibility(View.GONE);
-        if (body.getColor() != null) {
-            binding.frame.setBackgroundColor(Color.parseColor(body.getColor()));
-        }
+//        if (body.getColor() != null) {
+//            binding.frame.setBackgroundColor(Color.parseColor(body.getColor()));
+//        }
 
         slidingImage__adapter = new ProductDetialsSlidingImage_Adapter(this, body.getProducts_images());
         binding.pager.setAdapter(slidingImage__adapter);
