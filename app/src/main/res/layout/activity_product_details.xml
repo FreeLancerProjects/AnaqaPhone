@@ -558,9 +558,9 @@
 
                     <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="150dp"
+                        android:layout_height="90dp"
                         android:padding="10dp"
-                        android:text="@string/suc"
+                        android:text="@string/successfully_added_to_the_cart"
                         android:textColor="@color/white"
                         android:textSize="15sp" />
 

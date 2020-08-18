@@ -188,5 +188,6 @@
     <string name="sizes">Memmory</string>
     <string name="select_color">Select Color</string>
     <string name="select_size">Select Memory</string>
+    <string name="successfully_added_to_the_cart">Successfully added to the cart</string>
 
 </resources>

@@ -195,5 +195,6 @@
     <string name="sizes">الذاكره الداخليه</string>
     <string name="select_color">اختر اللون</string>
     <string name="select_size">اختر الذاكرة الداخلية</string>
+    <string name="successfully_added_to_the_cart">تم اضافة الى عربة التسوق بنجاح</string>
 
 </resources>
