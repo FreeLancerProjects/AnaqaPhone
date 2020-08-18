@@ -99,7 +99,7 @@
                             android:clickable="false"
                             android:longClickable="false"
                             android:singleLine="true"
-                            android:text='@{model.product_info.price+" "+@string/sar}'
+                            android:text='@{model.price+" "+@string/sar}'
                             android:textColor="@color/colorPrimary"
                             android:textSize="13sp"
 

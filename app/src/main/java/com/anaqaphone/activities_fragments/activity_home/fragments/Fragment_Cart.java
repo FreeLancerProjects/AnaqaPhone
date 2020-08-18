@@ -173,6 +173,8 @@ public class Fragment_Cart extends Fragment implements Swipe.SwipeListener {
             }
         });
         binding.btnCheckout.setOnClickListener(view -> navigateToCheckoutActivity());
+//        Log.e("llll",settingmodel.getSettings().getDelivery_value()+"");
+
         binding.rbChoose1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -255,7 +257,7 @@ public class Fragment_Cart extends Fragment implements Swipe.SwipeListener {
     private void updateUI(SettingModel body) {
         this.settingmodel = body;
         coupon_id = body.getCoupon_id();
-        total = total - (total * body.getCoupon_value()) / 100;
+        total = total -( (total * body.getCoupon_value()) / 100);
         binding.tvTotal.setText(String.format(Locale.ENGLISH, "%s %s", String.valueOf(total), getString(R.string.sar)));
 
     }
@@ -326,8 +328,9 @@ public class Fragment_Cart extends Fragment implements Swipe.SwipeListener {
         total = 0;
         tax = 0;
         for (ItemCartModel model : itemCartModelList) {
-            total += model.getPrice() * model.getAmount();
+            total += model.getPrice() ;
         }
+
         totalitems = total;
         tax = (total * settingmodel.getSettings().getTax()) / 100;
         total += (total * settingmodel.getSettings().getTax()) / 100;

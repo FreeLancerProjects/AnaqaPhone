@@ -244,8 +244,11 @@ public class ProductDetailsActivity extends AppCompatActivity implements Listene
         if ((singleProductDataModel.getSizes() != null && singleProductDataModel.getSizes().size() > 0 && !color_id.equals(null) && !size_id.equals(null)) || (singleProductDataModel.getSizes().size() == 0)) {
             if (cartSingleton.getItemCartModelList() != null && cartSingleton.getItemCartModelList().size() > 0) {
                 int postion = -1;
+
                 for (int i = 0; i < cartSingleton.getItemCartModelList().size(); i++) {
                     ItemCartModel itemCartModel = cartSingleton.getItemCartModelList().get(i);
+                    Log.e("fllflfl", color_id + " " + itemCartModel.getPrice_id());
+
                     if (selected_product_id.equals(itemCartModel.getProduct_id() + "") && color_id.equals(itemCartModel.getPrice_id())) {
                         postion = i;
                         break;
@@ -336,6 +339,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements Listene
     public void setsizeid(SingleProductDataModel.Sizes sizes) {
         colorsList.clear();
         colorsList.addAll(sizes.getColors());
+        productColorsAdapter.i=0;
         productColorsAdapter.notifyDataSetChanged();
         size_id = sizes.getSize_id() + "";
 

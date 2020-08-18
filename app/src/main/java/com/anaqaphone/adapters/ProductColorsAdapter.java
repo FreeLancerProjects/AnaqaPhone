@@ -22,7 +22,7 @@ public class ProductColorsAdapter extends RecyclerView.Adapter<ProductColorsAdap
 
     private List<SingleProductDataModel.Sizes.Colors> colorsList;
     private Context context;
-    private int i=0;
+    public int i=0;
 
     public ProductColorsAdapter(List<SingleProductDataModel.Sizes.Colors> colorsList, Context context) {
         this.colorsList = colorsList;

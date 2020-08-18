@@ -152,7 +152,6 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:button="@drawable/rb_bg"
-                        android:checked="true"
                         android:padding="5dp"
                         android:text="@string/without_arrive"
                         android:textColor="@color/black"
