@@ -29,7 +29,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AboutAppActivity extends AppCompatActivity implements Listeners.BackListener{
+public class AboutAppActivity extends AppCompatActivity implements Listeners.BackListener {
     private ActivityAboutAppBinding binding;
     private String lang;
     private int type;
@@ -37,8 +37,9 @@ public class AboutAppActivity extends AppCompatActivity implements Listeners.Bac
     @Override
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
-        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang","ar")));
+        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang", "ar")));
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,27 +50,23 @@ public class AboutAppActivity extends AppCompatActivity implements Listeners.Bac
 
     private void getDataFromIntent() {
         Intent intent = getIntent();
-        if (intent!=null&&intent.hasExtra("type"))
-        {
-            type = intent.getIntExtra("type",0);
+        if (intent != null && intent.hasExtra("type")) {
+            type = intent.getIntExtra("type", 0);
 
         }
     }
 
 
-    private void initView()
-    {
+    private void initView() {
         Paper.init(this);
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
         binding.setBackListener(this);
         binding.setLang(lang);
-        binding.progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(this,R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
+        binding.progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(this, R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
 
-        if (type==1)
-        {
+        if (type == 1) {
             binding.setTitle(getString(R.string.terms_and_conditions));
-        }else if (type ==2)
-        {
+        } else if (type == 2) {
             binding.setTitle(getString(R.string.about_app));
 
         }
@@ -78,8 +75,8 @@ public class AboutAppActivity extends AppCompatActivity implements Listeners.Bac
         getAppData();
 
     }
-    private void getAppData()
-    {
+
+    private void getAppData() {
 
         Api.getService(Tags.base_url)
                 .getSetting(lang)
@@ -89,12 +86,10 @@ public class AboutAppActivity extends AppCompatActivity implements Listeners.Bac
                         binding.progBar.setVisibility(View.GONE);
                         if (response.isSuccessful() && response.body() != null) {
 
-                            if (type==1)
-                            {
+                            if (type == 1) {
 
                                 binding.setContent(response.body().getSettings().getTermis_condition());
-                            }else
-                            {
+                            } else {
                                 binding.setContent(response.body().getSettings().getAbout_app());
 
                             }
