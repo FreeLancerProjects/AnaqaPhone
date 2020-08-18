@@ -24,6 +24,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -54,14 +55,16 @@ import com.anaqaphone.models.PlaceGeocodeData;
 import com.anaqaphone.models.PlaceMapDetailsData;
 import com.anaqaphone.remote.Api;
 import com.anaqaphone.share.Common;
+
 import java.io.IOException;
 import java.util.Locale;
+
 import io.paperdb.Paper;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Fragment_Address extends Fragment  implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, Listeners.NextPreviousAction {
+public class Fragment_Address extends Fragment implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, Listeners.NextPreviousAction {
     private static final String TAG = "data";
     private CheckoutActivity activity;
     private FragmentAddressBinding binding;
@@ -79,10 +82,9 @@ public class Fragment_Address extends Fragment  implements OnMapReadyCallback, G
     private AddOrderModel addOrderModel;
 
 
-    public static Fragment_Address newInstance(AddOrderModel addOrderModel)
-    {
+    public static Fragment_Address newInstance(AddOrderModel addOrderModel) {
         Bundle bundle = new Bundle();
-        bundle.putSerializable(TAG,addOrderModel);
+        bundle.putSerializable(TAG, addOrderModel);
         Fragment_Address fragment_address = new Fragment_Address();
         fragment_address.setArguments(bundle);
         return fragment_address;
@@ -107,12 +109,12 @@ public class Fragment_Address extends Fragment  implements OnMapReadyCallback, G
         activity = (CheckoutActivity) getActivity();
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
         binding.setAction(this);
-        binding.progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity,R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
+        binding.progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity, R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
         binding.edtSearch.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 String query = binding.edtSearch.getText().toString();
                 if (!TextUtils.isEmpty(query)) {
-                    Common.CloseKeyBoard(activity,binding.edtSearch);
+                    Common.CloseKeyBoard(activity, binding.edtSearch);
                     Search(query);
                     return false;
                 }
@@ -121,27 +123,26 @@ public class Fragment_Address extends Fragment  implements OnMapReadyCallback, G
         });
 
         Bundle bundle = getArguments();
-        if (bundle!=null)
-        {
+        if (bundle != null) {
             addOrderModel = (AddOrderModel) bundle.getSerializable(TAG);
         }
         updateUI();
         CheckPermission();
     }
 
-    public void setModel(AddOrderModel model)
-    {
-        this.addOrderModel =model;
+    public void setModel(AddOrderModel model) {
+        this.addOrderModel = model;
     }
-    private void CheckPermission()
-    {
-        if (ActivityCompat.checkSelfPermission(activity,fineLocPerm) != PackageManager.PERMISSION_GRANTED) {
+
+    private void CheckPermission() {
+        if (ActivityCompat.checkSelfPermission(activity, fineLocPerm) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(activity, new String[]{fineLocPerm}, loc_req);
         } else {
 
             initGoogleApi();
         }
     }
+
     private void initGoogleApi() {
         googleApiClient = new GoogleApiClient.Builder(activity)
                 .addApi(LocationServices.API)
@@ -172,8 +173,8 @@ public class Fragment_Address extends Fragment  implements OnMapReadyCallback, G
             mMap.setOnMapClickListener(latLng -> {
                 lat = latLng.latitude;
                 lng = latLng.longitude;
-                AddMarker(lat,lng);
-                getGeoData(lat,lng);
+                AddMarker(lat, lng);
+                getGeoData(lat, lng);
 
             });
 
@@ -317,7 +318,7 @@ public class Fragment_Address extends Fragment  implements OnMapReadyCallback, G
 
                 case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
                     try {
-                        status.startResolutionForResult(activity,100);
+                        status.startResolutionForResult(activity, 100);
                     } catch (IntentSender.SendIntentException e) {
                         e.printStackTrace();
                     }
@@ -330,8 +331,7 @@ public class Fragment_Address extends Fragment  implements OnMapReadyCallback, G
 
     @Override
     public void onConnectionSuspended(int i) {
-        if (googleApiClient!=null)
-        {
+        if (googleApiClient != null) {
             googleApiClient.connect();
         }
     }
@@ -343,28 +343,25 @@ public class Fragment_Address extends Fragment  implements OnMapReadyCallback, G
 
 
     @SuppressLint("MissingPermission")
-    private void startLocationUpdate()
-    {
-        locationCallback = new LocationCallback()
-        {
+    private void startLocationUpdate() {
+        locationCallback = new LocationCallback() {
             @Override
             public void onLocationResult(LocationResult locationResult) {
                 onLocationChanged(locationResult.getLastLocation());
             }
         };
         LocationServices.getFusedLocationProviderClient(activity)
-                .requestLocationUpdates(locationRequest,locationCallback, Looper.myLooper());
+                .requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
     }
 
     @Override
     public void onLocationChanged(Location location) {
         lat = location.getLatitude();
         lng = location.getLongitude();
-        AddMarker(lat,lng);
-        getGeoData(lat,lng);
+        AddMarker(lat, lng);
+        getGeoData(lat, lng);
 
-        if (googleApiClient!=null)
-        {
+        if (googleApiClient != null) {
             LocationServices.getFusedLocationProviderClient(activity).removeLocationUpdates(locationCallback);
             googleApiClient.disconnect();
             googleApiClient = null;
@@ -374,10 +371,8 @@ public class Fragment_Address extends Fragment  implements OnMapReadyCallback, G
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (googleApiClient!=null)
-        {
-            if (locationCallback!=null)
-            {
+        if (googleApiClient != null) {
+            if (locationCallback != null) {
                 LocationServices.getFusedLocationProviderClient(activity).removeLocationUpdates(locationCallback);
                 googleApiClient.disconnect();
                 googleApiClient = null;
@@ -389,13 +384,10 @@ public class Fragment_Address extends Fragment  implements OnMapReadyCallback, G
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        if (requestCode == loc_req)
-        {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
-            {
+        if (requestCode == loc_req) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 initGoogleApi();
-            }else
-            {
+            } else {
                 Toast.makeText(activity, "Permission denied", Toast.LENGTH_SHORT).show();
             }
         }
@@ -405,10 +397,9 @@ public class Fragment_Address extends Fragment  implements OnMapReadyCallback, G
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 100&&resultCode== Activity.RESULT_OK)
-        {
+        if (requestCode == 100 && resultCode == Activity.RESULT_OK) {
 
-            Log.e("dd","ff");
+            Log.e("dd", "ff");
             startLocationUpdate();
         }
 
@@ -417,7 +408,7 @@ public class Fragment_Address extends Fragment  implements OnMapReadyCallback, G
     @Override
     public void onNext() {
 
-        if (addOrderModel.isStep1Valid(activity)){
+        if (addOrderModel.isStep1Valid(activity)) {
             activity.updateModel(addOrderModel);
             activity.displayFragmentPaymentType();
         }

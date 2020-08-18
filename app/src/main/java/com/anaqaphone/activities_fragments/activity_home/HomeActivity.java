@@ -625,75 +625,74 @@ public class HomeActivity extends AppCompatActivity {
     public void onBackPressed() {
 
         if (fragment_main != null && fragment_main.isAdded() && fragment_main.isVisible()) {
-            if(userModel!=null){
-            if (singleton.getItemCartModelList() != null && singleton.getItemCartModelList().size() > 0) {
-                if (back == 0) {
-                    back = 1;
-                    String sound_Path = "android.resource://" + getPackageName() + "/" + R.raw.not;
+            if (userModel != null) {
+                if (singleton.getItemCartModelList() != null && singleton.getItemCartModelList().size() > 0) {
+                    if (back == 0) {
+                        back = 1;
+                        String sound_Path = "android.resource://" + getPackageName() + "/" + R.raw.not;
 
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
-                        String CHANNEL_ID = "my_channel_02";
-                        CharSequence CHANNEL_NAME = "my_channel_name";
-                        int IMPORTANCE = NotificationManager.IMPORTANCE_HIGH;
+                            String CHANNEL_ID = "my_channel_02";
+                            CharSequence CHANNEL_NAME = "my_channel_name";
+                            int IMPORTANCE = NotificationManager.IMPORTANCE_HIGH;
 
-                        final NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-                        final NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, IMPORTANCE);
-                        channel.setShowBadge(true);
-                        channel.setSound(Uri.parse(sound_Path), new AudioAttributes.Builder()
-                                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                                .setUsage(AudioAttributes.USAGE_NOTIFICATION_EVENT)
-                                .setLegacyStreamType(AudioManager.STREAM_NOTIFICATION)
-                                .build()
-                        );
+                            final NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+                            final NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, IMPORTANCE);
+                            channel.setShowBadge(true);
+                            channel.setSound(Uri.parse(sound_Path), new AudioAttributes.Builder()
+                                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                                    .setUsage(AudioAttributes.USAGE_NOTIFICATION_EVENT)
+                                    .setLegacyStreamType(AudioManager.STREAM_NOTIFICATION)
+                                    .build()
+                            );
 
-                        builder.setChannelId(CHANNEL_ID);
-                        builder.setSound(Uri.parse(sound_Path), AudioManager.STREAM_NOTIFICATION);
-                        builder.setSmallIcon(R.drawable.logo);
-
-
-                        builder.setContentTitle(getResources().getString(R.string.cart));
+                            builder.setChannelId(CHANNEL_ID);
+                            builder.setSound(Uri.parse(sound_Path), AudioManager.STREAM_NOTIFICATION);
+                            builder.setSmallIcon(R.drawable.logo);
 
 
-                        builder.setContentText(getResources().getString(R.string.cart_not_empty));
+                            builder.setContentTitle(getResources().getString(R.string.cart));
 
 
-                        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                            builder.setContentText(getResources().getString(R.string.cart_not_empty));
 
-                        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.logo_only);
-                        builder.setLargeIcon(bitmap);
-                        manager.createNotificationChannel(channel);
-                        manager.notify(new Random().nextInt(200), builder.build());
+
+                            NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+                            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.logo_only);
+                            builder.setLargeIcon(bitmap);
+                            manager.createNotificationChannel(channel);
+                            manager.notify(new Random().nextInt(200), builder.build());
+                        } else {
+
+                            final NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+
+                            builder.setSound(Uri.parse(sound_Path), AudioManager.STREAM_NOTIFICATION);
+                            builder.setSmallIcon(R.drawable.logo);
+
+                            builder.setContentTitle(getResources().getString(R.string.cart));
+
+
+                            builder.setContentText(getResources().getString(R.string.cart_not_empty));
+
+
+                            NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+                            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.logo_only);
+                            builder.setLargeIcon(bitmap);
+                            manager.notify(new Random().nextInt(200), builder.build());
+
+                        }
                     } else {
-
-                        final NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-
-                        builder.setSound(Uri.parse(sound_Path), AudioManager.STREAM_NOTIFICATION);
-                        builder.setSmallIcon(R.drawable.logo);
-
-                        builder.setContentTitle(getResources().getString(R.string.cart));
-
-
-                        builder.setContentText(getResources().getString(R.string.cart_not_empty));
-
-
-                        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-
-                        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.logo_only);
-                        builder.setLargeIcon(bitmap);
-                        manager.notify(new Random().nextInt(200), builder.build());
+                        // back=1;
+                        CreatecloseDialog();
 
                     }
                 } else {
-                   // back=1;
-                    CreatecloseDialog();
-
+                    finish();
                 }
-            }
-           else {
-                finish();
-            }}
-            else {
+            } else {
                 navigateToSignInActivity();
             }
         } else {

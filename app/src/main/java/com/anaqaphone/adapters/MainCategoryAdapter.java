@@ -74,18 +74,16 @@ public class MainCategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 notifyDataSetChanged();
             }
         });
-        if(i==position){
+        if (i == position) {
             if (fragment instanceof Fragment_Offer) {
                 fragment_offer = (Fragment_Offer) fragment;
                 fragment_offer.setDepartment(list.get(holder.getLayoutPosition()).getId() + "");
-            }
-            else if(fragment instanceof Fragment_Department){
+            } else if (fragment instanceof Fragment_Department) {
                 fragment_department = (Fragment_Department) fragment;
                 fragment_department.setDepartment(list.get(holder.getLayoutPosition()).getId() + "");
             }
             myHolder.binding.cardView.setCardBackgroundColor(context.getResources().getColor(R.color.second));
-        }
-        else{
+        } else {
             myHolder.binding.cardView.setCardBackgroundColor(Color.parseColor(mainDepartments.getBackground()));
         }
 

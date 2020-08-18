@@ -192,8 +192,7 @@ public class UI_General_Method {
     }
 
     @BindingAdapter("rate")
-    public static void rate (SimpleRatingBar simpleRatingBar, double rate)
-    {
+    public static void rate(SimpleRatingBar simpleRatingBar, double rate) {
         SimpleRatingBar.AnimationBuilder builder = simpleRatingBar.getAnimationBuilder()
                 .setRatingTarget((float) rate)
                 .setDuration(1000)
@@ -201,6 +200,7 @@ public class UI_General_Method {
                 .setInterpolator(new LinearInterpolator());
         builder.start();
     }
+
     @BindingAdapter("time_AM_BM")
     public static void timeAM_BM(TextView textView, String time_AM_BM) {
         if (time_AM_BM != null && !time_AM_BM.isEmpty()) {

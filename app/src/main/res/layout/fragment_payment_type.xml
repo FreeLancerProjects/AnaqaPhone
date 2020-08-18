@@ -3,25 +3,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="action"
             type="com.anaqaphone.interfaces.Listeners.PaymentTypeAction" />
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
-        >
+        android:background="@color/white">
 
         <LinearLayout
             android:id="@+id/lll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/cardView"
             android:layout_marginBottom="20dp"
+
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@id/cardView"
+            app:layout_constraintTop_toTopOf="parent"
 
             >
 
@@ -30,33 +31,33 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
-                android:textSize="18sp"
-                android:textColor="@color/colorPrimary"
                 android:text="@string/payment"
-                android:visibility="gone"
-                />
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                android:visibility="gone" />
+
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardElevation="3dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="10dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginTop="40dp"
-                android:layout_marginBottom="20dp"
+                app:cardElevation="3dp"
 
                 >
+
                 <LinearLayout
                     android:id="@+id/llCredit"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
+                    android:onClick="@{()->action.onCredit()}"
                     android:orientation="horizontal"
-                    android:weightSum="1"
                     android:paddingStart="15dp"
                     android:paddingEnd="15dp"
-                    android:onClick="@{()->action.onCredit()}"
-
+                    android:weightSum="1"
 
 
                     >
@@ -65,23 +66,23 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_gravity="center_vertical"
-                        android:src="@drawable/mastercard"
-                        />
+                        android:src="@drawable/mastercard" />
+
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
                         android:layout_weight=".85"
                         android:clickable="false"
                         android:gravity="center_vertical"
-                        android:text="@string/visa"
                         android:longClickable="false"
                         android:paddingStart="10dp"
                         android:paddingEnd="10dp"
                         android:singleLine="true"
+                        android:text="@string/visa"
                         android:textColor="@color/colorPrimary"
                         android:textSize="15sp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
 
 
                         />
@@ -106,27 +107,24 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardElevation="3dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                android:visibility="gone"
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="10dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
-android:visibility="gone"
-                >
+                app:cardElevation="3dp">
 
                 <LinearLayout
                     android:id="@+id/llPaypal"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
+                    android:onClick="@{()->action.onPaypal()}"
                     android:orientation="horizontal"
-                    android:weightSum="1"
                     android:paddingStart="15dp"
                     android:paddingEnd="15dp"
-                    android:onClick="@{()->action.onPaypal()}"
-
-
+                    android:weightSum="1"
 
 
                     >
@@ -135,24 +133,23 @@ android:visibility="gone"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_gravity="center_vertical"
-                        android:src="@drawable/paypal"
-                        />
+                        android:src="@drawable/paypal" />
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
                         android:layout_weight=".85"
                         android:clickable="false"
                         android:gravity="center_vertical"
-                        android:text="@string/paypal"
                         android:longClickable="false"
                         android:paddingStart="10dp"
                         android:paddingEnd="10dp"
                         android:singleLine="true"
+                        android:text="@string/paypal"
                         android:textColor="@color/colorPrimary"
                         android:textSize="15sp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
 
 
                         />
@@ -175,17 +172,16 @@ android:visibility="gone"
             </androidx.cardview.widget.CardView>
 
 
-
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardElevation="3dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="10dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
+                app:cardElevation="3dp"
 
                 >
 
@@ -193,12 +189,11 @@ android:visibility="gone"
                     android:id="@+id/llCash"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
+                    android:onClick="@{()->action.onCash()}"
                     android:orientation="horizontal"
-                    android:weightSum="1"
                     android:paddingStart="15dp"
                     android:paddingEnd="15dp"
-                    android:onClick="@{()->action.onCash()}"
-
+                    android:weightSum="1"
 
 
                     >
@@ -209,25 +204,24 @@ android:visibility="gone"
                         android:layout_height="30dp"
                         android:layout_gravity="center_vertical"
                         android:src="@drawable/ic_cash"
-                        android:tint="@color/colorPrimary"
-                        />
+                        android:tint="@color/colorPrimary" />
+
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight=".85"
                         android:clickable="false"
                         android:gravity="center_vertical"
-                        android:text="@string/cash_on_delivery"
                         android:longClickable="false"
                         android:paddingStart="10dp"
                         android:paddingEnd="10dp"
                         android:singleLine="true"
+                        android:text="@string/cash_on_delivery"
                         android:textColor="@color/colorPrimary"
                         android:textSize="15sp"
 
 
                         />
-
 
 
                     <ImageView
@@ -258,8 +252,7 @@ android:visibility="gone"
             app:cardCornerRadius="5dp"
             app:cardElevation="8dp"
             app:contentPadding="10dp"
-            app:layout_constraintBottom_toTopOf="@+id/ll"
-            >
+            app:layout_constraintBottom_toTopOf="@+id/ll">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -332,7 +325,6 @@ android:visibility="gone"
                 </LinearLayout>
 
 
-
                 <LinearLayout
                     android:id="@+id/llarive"
                     android:layout_width="match_parent"
@@ -368,13 +360,13 @@ android:visibility="gone"
 
                         />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:orientation="horizontal"
-                    android:visibility="gone"
-                    >
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="0dp"
@@ -401,14 +393,14 @@ android:visibility="gone"
 
                         />
                 </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/lldel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:orientation="horizontal"
-android:visibility="gone"
-                    >
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="0dp"
@@ -444,27 +436,27 @@ android:visibility="gone"
             android:id="@+id/ll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="20dp"
-            android:orientation="horizontal"
             android:gravity="center_vertical"
-            >
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent">
+
             <Button
                 android:id="@+id/btnNext"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/rounded_primary_btn"
+                android:onClick="@{()->action.onNext()}"
+                android:text="@string/next"
                 android:textColor="@color/white"
                 android:textSize="17sp"
-                android:text="@string/next"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:onClick="@{()->action.onNext()}"
 
                 />
 

@@ -34,14 +34,14 @@ public class Fragment_Date extends Fragment implements DatePickerDialog.OnDateSe
     private AddOrderModel addOrderModel;
 
 
-    public static Fragment_Date newInstance(AddOrderModel addOrderModel)
-    {
+    public static Fragment_Date newInstance(AddOrderModel addOrderModel) {
         Bundle bundle = new Bundle();
-        bundle.putSerializable(TAG,addOrderModel);
-        Fragment_Date fragment_date  = new Fragment_Date();
+        bundle.putSerializable(TAG, addOrderModel);
+        Fragment_Date fragment_date = new Fragment_Date();
         fragment_date.setArguments(bundle);
         return fragment_date;
     }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -63,8 +63,7 @@ public class Fragment_Date extends Fragment implements DatePickerDialog.OnDateSe
         binding.setAction(this);
 
         Bundle bundle = getArguments();
-        if (bundle!=null)
-        {
+        if (bundle != null) {
             addOrderModel = (AddOrderModel) bundle.getSerializable(TAG);
         }
 
@@ -89,9 +88,8 @@ public class Fragment_Date extends Fragment implements DatePickerDialog.OnDateSe
     }
 
 
-    public void setModel(AddOrderModel model)
-    {
-        this.addOrderModel =model;
+    public void setModel(AddOrderModel model) {
+        this.addOrderModel = model;
     }
 
     private void CreateDatePickerDialog() {
@@ -113,7 +111,7 @@ public class Fragment_Date extends Fragment implements DatePickerDialog.OnDateSe
 
     private void createTimePickerDialog() {
         Calendar calendar = Calendar.getInstance();
-        timePickerDialog = TimePickerDialog.newInstance(this, calendar.get(Calendar.HOUR_OF_DAY)+1, calendar.get(Calendar.MINUTE), false);
+        timePickerDialog = TimePickerDialog.newInstance(this, calendar.get(Calendar.HOUR_OF_DAY) + 1, calendar.get(Calendar.MINUTE), false);
         timePickerDialog.dismissOnPause(true);
         timePickerDialog.setAccentColor(ActivityCompat.getColor(activity, R.color.colorPrimary));
         timePickerDialog.setCancelColor(ActivityCompat.getColor(activity, R.color.gray4));
@@ -140,7 +138,7 @@ public class Fragment_Date extends Fragment implements DatePickerDialog.OnDateSe
         binding.tvDate.setText(d);
         date = calendar.getTimeInMillis();
 
-        addOrderModel.setOrder_date(date+"");
+        addOrderModel.setOrder_date(date + "");
 
         SimpleDateFormat dateFormat2 = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
 
@@ -158,7 +156,7 @@ public class Fragment_Date extends Fragment implements DatePickerDialog.OnDateSe
         String t = dateFormat.format(new Date(calendar.getTimeInMillis()));
         binding.tvTime.setText(t);
         time = calendar.getTimeInMillis();
-        addOrderModel.setOrder_time(time+"");
+        addOrderModel.setOrder_time(time + "");
     }
 
 

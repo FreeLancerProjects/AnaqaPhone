@@ -4,13 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="java.util.Locale"/>
+
+        <import type="java.util.Locale" />
+
         <variable
             name="lang"
             type="String" />
+
         <variable
             name="random"
             type="java.util.Random" />
+
         <variable
             name="model"
             type="com.anaqaphone.models.UserModel" />
@@ -25,6 +29,7 @@
         android:layout_height="match_parent"
         android:background="@color/white"
         android:orientation="vertical">
+
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -102,17 +107,18 @@
                         app:layout_constraintTop_toTopOf="parent">
 
                     </FrameLayout>
+
                     <ImageView
                         android:id="@+id/imageEdit"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:src="@drawable/ic_edit"
                         android:layout_margin="8dp"
                         android:padding="5dp"
+                        android:src="@drawable/ic_edit"
                         android:tint="@color/white"
-                        />
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/image"
                         image="@{model.user.logo}"
@@ -325,11 +331,7 @@
                     </LinearLayout>
 
 
-
-
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
             </LinearLayout>

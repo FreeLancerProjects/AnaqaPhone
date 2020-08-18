@@ -56,13 +56,13 @@ public class ClientProfileActivity extends AppCompatActivity implements Listener
         binding.setBackListener(this);
 
         binding.setModel(userModel);
-binding.imageEdit.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
-        Intent intent = new Intent(ClientProfileActivity.this, EditProfileActivity.class);
-        startActivity(intent);
-    }
-});
+        binding.imageEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ClientProfileActivity.this, EditProfileActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
@@ -76,8 +76,8 @@ binding.imageEdit.setOnClickListener(new View.OnClickListener() {
     @Override
     protected void onResume() {
         super.onResume();
-        if(preferences!=null){
-            userModel=preferences.getUserData(this);
+        if (preferences != null) {
+            userModel = preferences.getUserData(this);
             binding.setModel(userModel);
         }
     }

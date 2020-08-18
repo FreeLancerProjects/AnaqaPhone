@@ -75,14 +75,15 @@
                     android:text='@{model.title.length()>21?model.title.substring(0,21):model.title}'
                     android:textColor="@color/black"
                     android:textSize="14sp" />
+
                 <com.iarcuschin.simpleratingbar.SimpleRatingBar
-                    rate="@{model.rate}"
                     android:id="@+id/simplarate"
+                    rate="@{model.rate}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_marginBottom="8dp"
                     android:gravity="center"
-                    android:layout_gravity="center"
                     app:srb_drawBorderEnabled="true"
                     app:srb_isIndicator="true"
                     app:srb_numberOfStars="5"
@@ -90,8 +91,8 @@
                     app:srb_starBorderWidth="3"
                     app:srb_starSize="15dp"
                     app:srb_starsSeparation="10dp"
-                    app:srb_stepSize=".5"
-                    />
+                    app:srb_stepSize=".5" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -138,8 +139,7 @@
                     android:text="@string/out_of_stock"
                     android:textColor="@color/colorPrimary"
                     android:textSize="14sp"
-                    android:visibility="gone"
-                    />
+                    android:visibility="gone" />
 
                 <LinearLayout
                     android:id="@+id/ll"

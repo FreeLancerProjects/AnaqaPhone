@@ -4,12 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="backListener"
             type="com.anaqaphone.interfaces.Listeners.BackListener" />
+
         <variable
             name="lang"
             type="String" />
+
         <variable
             name="title"
             type="String" />
@@ -19,17 +22,18 @@
             type="String" />
 
 
-
     </data>
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
             android:background="@color/gray0"
-            >
+            android:orientation="vertical">
+
             <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -44,11 +48,11 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
                     android:gravity="center_vertical"
                     android:onClick="@{()->backListener.back()}"
                     android:orientation="horizontal"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
 
                     >
 
@@ -78,24 +82,26 @@
                         android:textSize="15sp" />
                 </LinearLayout>
             </androidx.appcompat.widget.Toolbar>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/gray4"/>
+                android:background="@color/gray4" />
+
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:fitsSystemWindows="true"
-                android:fillViewport="true"
                 android:background="@color/white"
-                >
+                android:fillViewport="true"
+                android:fitsSystemWindows="true">
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:padding="10sp"
+                    android:text="@{content}"
                     android:textColor="@color/black"
                     android:textSize="15sp"
-                    android:text="@{content}"
 
                     />
 
@@ -106,7 +112,7 @@
             android:id="@+id/progBar"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center" />
 
     </FrameLayout>
 

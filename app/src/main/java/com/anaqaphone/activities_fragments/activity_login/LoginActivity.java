@@ -77,7 +77,7 @@ public class LoginActivity extends AppCompatActivity implements Listeners.LoginL
         binding.setLoginModel(loginModel);
         binding.setListener(this);
         Paper.init(this);
-        lang = Paper.book().read("lang","ar");
+        lang = Paper.book().read("lang", "ar");
         binding.setLang(lang);
 
         binding.edtPhone.addTextChangedListener(new TextWatcher() {
@@ -93,8 +93,7 @@ public class LoginActivity extends AppCompatActivity implements Listeners.LoginL
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (editable.toString().startsWith("0"))
-                {
+                if (editable.toString().startsWith("0")) {
                     binding.edtPhone.setText("");
                 }
             }
@@ -105,7 +104,7 @@ public class LoginActivity extends AppCompatActivity implements Listeners.LoginL
         binding.btnSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent =new Intent(LoginActivity.this, HomeActivity.class);
+                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                 startActivity(intent);
             }
         });
@@ -116,7 +115,7 @@ public class LoginActivity extends AppCompatActivity implements Listeners.LoginL
 
         dialog = new AlertDialog.Builder(this)
                 .create();
-        countriesAdapter = new CountriesAdapter(countryModelList,this);
+        countriesAdapter = new CountriesAdapter(countryModelList, this);
 
         DialogCountriesBinding binding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.dialog_countries, null, false);
         binding.recView.setLayoutManager(new LinearLayoutManager(this));
@@ -136,9 +135,8 @@ public class LoginActivity extends AppCompatActivity implements Listeners.LoginL
 
     @Override
     public void validate() {
-        if (loginModel.isDataValid(this))
-        {
-            Common.CloseKeyBoard(this,binding.edtPhone);
+        if (loginModel.isDataValid(this)) {
+            Common.CloseKeyBoard(this, binding.edtPhone);
 
 
             navigateToVerificationCodeActivity();
@@ -153,8 +151,8 @@ public class LoginActivity extends AppCompatActivity implements Listeners.LoginL
     private void navigateToVerificationCodeActivity() {
 
         Intent intent = new Intent(this, VerificationCodeActivity.class);
-        intent.putExtra("phone_code",phone_code);
-        intent.putExtra("phone",loginModel.getPhone());
+        intent.putExtra("phone_code", phone_code);
+        intent.putExtra("phone", loginModel.getPhone());
         startActivity(intent);
         finish();
 
@@ -232,11 +230,11 @@ public class LoginActivity extends AppCompatActivity implements Listeners.LoginL
                 CreatecloseDialog();
 
             }
-        }
-        else {
+        } else {
             finish();
         }
     }
+
     private void CreatecloseDialog() {
 
         final androidx.appcompat.app.AlertDialog dialog = new androidx.appcompat.app.AlertDialog.Builder(this)

@@ -41,6 +41,7 @@ public class Language {
     private static void persistLanguage(Context c, String language) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(c);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("lang",language);
+        editor.putString("lang", language);
         editor.apply();
-    }}
+    }
+}

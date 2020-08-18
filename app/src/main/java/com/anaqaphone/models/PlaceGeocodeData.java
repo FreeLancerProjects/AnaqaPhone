@@ -10,8 +10,8 @@ public class PlaceGeocodeData implements Serializable {
     public List<Geocode> getResults() {
         return results;
     }
-    public class Geocode implements Serializable
-    {
+
+    public class Geocode implements Serializable {
         private String formatted_address;
         private String place_id;
         private Geometry geometry;
@@ -29,16 +29,15 @@ public class PlaceGeocodeData implements Serializable {
         }
     }
 
-    public class Geometry implements Serializable
-    {
+    public class Geometry implements Serializable {
         private Location location;
 
         public Location getLocation() {
             return location;
         }
     }
-    public class Location implements Serializable
-    {
+
+    public class Location implements Serializable {
         private double lat;
         private double lng;
 

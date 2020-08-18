@@ -206,13 +206,12 @@ public class Fragment_More extends Fragment implements Listeners.SettingActions 
 
     @Override
     public void whatsapp() {
-if(settingmodel!=null&&settingmodel.getSettings().getWhatsapp()!=null){
-    ViewSocial("https://api.whatsapp.com/send?phone=" +settingmodel.getSettings().getWhatsapp());
-}
+        if (settingmodel != null && settingmodel.getSettings().getWhatsapp() != null) {
+            ViewSocial("https://api.whatsapp.com/send?phone=" + settingmodel.getSettings().getWhatsapp());
+        }
     }
 
-    private void getAppData()
-    {
+    private void getAppData() {
 
         Api.getService(Tags.base_url)
                 .getSetting(lang)
@@ -221,7 +220,7 @@ if(settingmodel!=null&&settingmodel.getSettings().getWhatsapp()!=null){
                     public void onResponse(Call<SettingModel> call, Response<SettingModel> response) {
                         if (response.isSuccessful() && response.body() != null) {
 
-                          settingmodel=response.body();
+                            settingmodel = response.body();
 
                         } else {
                             try {
@@ -256,11 +255,13 @@ if(settingmodel!=null&&settingmodel.getSettings().getWhatsapp()!=null){
                 });
 
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
     }
+
     private void ViewSocial(String path) {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(path));
         startActivity(intent);

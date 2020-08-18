@@ -1,4 +1,5 @@
 package com.anaqaphone.models;
+
 import java.io.Serializable;
 import java.util.List;
 

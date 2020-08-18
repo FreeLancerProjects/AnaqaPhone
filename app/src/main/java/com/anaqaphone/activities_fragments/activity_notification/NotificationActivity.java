@@ -40,21 +40,22 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class NotificationActivity extends AppCompatActivity implements Listeners.BackListener{
+public class NotificationActivity extends AppCompatActivity implements Listeners.BackListener {
     private ActivityNotificationBinding binding;
     private String lang;
     private List<NotificationDataModel.NotificationModel> notificationModelList;
     private NotificationAdapter adapter;
     private Preferences preferences;
     private UserModel userModel;
-    private int current_page=1;
-    private boolean isLoading=false;
+    private int current_page = 1;
+    private boolean isLoading = false;
 
     @Override
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
-        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang","ar")));
+        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang", "ar")));
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,10 +64,7 @@ public class NotificationActivity extends AppCompatActivity implements Listeners
     }
 
 
-
-
-    private void initView()
-    {
+    private void initView() {
         Paper.init(this);
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
         binding.setBackListener(this);
@@ -80,9 +78,9 @@ public class NotificationActivity extends AppCompatActivity implements Listeners
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
         binding.setBackListener(this);
         binding.setLang(lang);
-        binding.progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(this,R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
+        binding.progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(this, R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
         binding.recView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new NotificationAdapter(notificationModelList,this);
+        adapter = new NotificationAdapter(notificationModelList, this);
         binding.recView.setAdapter(adapter);
 
 
@@ -112,11 +110,10 @@ public class NotificationActivity extends AppCompatActivity implements Listeners
 
     }
 
-    private void getNotification()
-    {
+    private void getNotification() {
         try {
             Api.getService(Tags.base_url)
-                    .getNotification("off",userModel.getUser().getToken())
+                    .getNotification("off", userModel.getUser().getToken())
                     .enqueue(new Callback<NotificationDataModel>() {
                         @Override
                         public void onResponse(Call<NotificationDataModel> call, Response<NotificationDataModel> response) {
@@ -174,8 +171,7 @@ public class NotificationActivity extends AppCompatActivity implements Listeners
         }
     }
 
-    private void loadMore(int page)
-    {
+    private void loadMore(int page) {
         /*try {
 
             Api.getService(Tags.base_url)
@@ -245,16 +241,17 @@ public class NotificationActivity extends AppCompatActivity implements Listeners
 
         }*/
     }
+
     public void setItemData(NotificationDataModel.NotificationModel notificationModel, int adapterPosition) {
 
 
         try {
-            ProgressDialog dialog = Common.createProgressDialog(this,getString(R.string.wait));
+            ProgressDialog dialog = Common.createProgressDialog(this, getString(R.string.wait));
             dialog.setCancelable(false);
             dialog.setCanceledOnTouchOutside(false);
             dialog.show();
             Api.getService(Tags.base_url)
-                    .deleteNotification(userModel.getUser().getToken(),notificationModel.getId())
+                    .deleteNotification(userModel.getUser().getToken(), notificationModel.getId())
                     .enqueue(new Callback<ResponseBody>() {
                         @Override
                         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -310,6 +307,7 @@ public class NotificationActivity extends AppCompatActivity implements Listeners
 
         }
     }
+
     @Override
     public void back() {
         finish();

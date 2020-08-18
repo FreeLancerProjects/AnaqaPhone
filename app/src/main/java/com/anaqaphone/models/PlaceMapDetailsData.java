@@ -10,8 +10,7 @@ public class PlaceMapDetailsData implements Serializable {
         return candidates;
     }
 
-    public class PlaceData implements Serializable
-    {
+    public class PlaceData implements Serializable {
         private String id;
         private String place_id;
         private Geometry geometry;
@@ -33,9 +32,9 @@ public class PlaceMapDetailsData implements Serializable {
             return formatted_address;
         }
     }
-    public class Geometry implements Serializable
-    {
-       private Location location;
+
+    public class Geometry implements Serializable {
+        private Location location;
 
         public Location getLocation() {
             return location;

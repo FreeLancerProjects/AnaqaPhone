@@ -47,8 +47,6 @@ public class ItemCartModel implements Serializable {
     }
 
 
-
-
     public void setTitle(String title) {
         this.title = title;
     }

@@ -15,7 +15,7 @@ public class ItemCartUploadModel implements Serializable {
     private String total_cost;
     private List<ItemCartModel> orders_details;
 
-    public ItemCartUploadModel(String user_id, String address, String address_lat, String address_long, String delivery_date, String delivery_time,String payment_type, List<ItemCartModel> order_details,String tax,String total_cost) {
+    public ItemCartUploadModel(String user_id, String address, String address_lat, String address_long, String delivery_date, String delivery_time, String payment_type, List<ItemCartModel> order_details, String tax, String total_cost) {
         this.user_id = user_id;
         this.address = address;
         this.address_lat = address_lat;
@@ -115,15 +115,17 @@ public class ItemCartUploadModel implements Serializable {
         private double cost;
         private String title;
         private String sub_image;
-        public Orders_details(int item_id,String product_code, String title, double cost,int amount,String sub_image) {
+
+        public Orders_details(int item_id, String product_code, String title, double cost, int amount, String sub_image) {
             this.item_id = item_id;
             this.product_code = product_code;
             this.title = title;
             this.cost = cost;
             this.amount = amount;
-            this.sub_image=sub_image;
+            this.sub_image = sub_image;
 
         }
+
         public int getItem_id() {
             return item_id;
         }

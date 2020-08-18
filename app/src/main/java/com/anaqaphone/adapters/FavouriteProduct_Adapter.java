@@ -63,7 +63,7 @@ public class FavouriteProduct_Adapter extends RecyclerView.Adapter<RecyclerView.
         EventHolder myHolder = (EventHolder) eventHohlder;
         myHolder.binding.tvOldprice.setPaintFlags(myHolder.binding.tvOldprice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         myHolder.binding.setModel(list.get(position).getProduct());
-        if(list.get(position).getProduct().getStock()<=0){
+        if (list.get(position).getProduct().getStock() <= 0) {
             myHolder.binding.llAddToCart.setVisibility(View.GONE);
             myHolder.binding.tvStock.setVisibility(View.VISIBLE);
             myHolder.binding.ll.setVisibility(View.GONE);
@@ -74,7 +74,7 @@ public class FavouriteProduct_Adapter extends RecyclerView.Adapter<RecyclerView.
             cartSingleton.addItem(itemCartModel);
             if (context instanceof MyFavoriteActivity) {
                 MyFavoriteActivity myFavoriteActivity = (MyFavoriteActivity) context;
-               // myFavoriteActivity.updateCartCount(cartSingleton.getItemCount());
+                // myFavoriteActivity.updateCartCount(cartSingleton.getItemCount());
             }
             Toast.makeText(context, R.string.added_suc, Toast.LENGTH_SHORT).show();
         });
@@ -93,7 +93,7 @@ public class FavouriteProduct_Adapter extends RecyclerView.Adapter<RecyclerView.
 
                 MyFavoriteActivity myFavoriteActivity = (MyFavoriteActivity) context;
 
-                myFavoriteActivity.like_dislike( list.get(myHolder.getAdapterPosition()).getProduct(), myHolder.getAdapterPosition(),1);
+                myFavoriteActivity.like_dislike(list.get(myHolder.getAdapterPosition()).getProduct(), myHolder.getAdapterPosition(), 1);
 
             }
 

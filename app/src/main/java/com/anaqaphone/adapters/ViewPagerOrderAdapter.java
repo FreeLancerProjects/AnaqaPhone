@@ -12,6 +12,7 @@ import java.util.List;
 public class ViewPagerOrderAdapter extends FragmentPagerAdapter {
     private List<Fragment> fragmentList;
     private List<String> title;
+
     public ViewPagerOrderAdapter(@NonNull FragmentManager fm, int behavior) {
         super(fm, behavior);
         fragmentList = new ArrayList<>();
@@ -19,16 +20,16 @@ public class ViewPagerOrderAdapter extends FragmentPagerAdapter {
     }
 
 
-    public void addFragments(List<Fragment> fragmentList){
+    public void addFragments(List<Fragment> fragmentList) {
 
         this.fragmentList.addAll(fragmentList);
     }
 
-    public void addTitles(List<String> title)
-    {
+    public void addTitles(List<String> title) {
         this.title.addAll(title);
 
     }
+
     @NonNull
     @Override
     public Fragment getItem(int position) {

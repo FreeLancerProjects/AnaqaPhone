@@ -40,6 +40,7 @@ public class BanksActivity extends AppCompatActivity implements Listeners.BackLi
     private UserModel userModel;
     private BankAdapter bankAdapter;
     private List<BankDataModel.BankModel> bankModelList;
+
     @Override
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
@@ -55,15 +56,15 @@ public class BanksActivity extends AppCompatActivity implements Listeners.BackLi
     }
 
     private void initView() {
-        bankModelList=new ArrayList<>();
-        bankAdapter=new BankAdapter(bankModelList,this);
-        preferences=Preferences.getInstance();
-        userModel=preferences.getUserData(this);
+        bankModelList = new ArrayList<>();
+        bankAdapter = new BankAdapter(bankModelList, this);
+        preferences = Preferences.getInstance();
+        userModel = preferences.getUserData(this);
         Paper.init(this);
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
         binding.setLang(lang);
         binding.setBackListener(this);
-        binding.recbank.setLayoutManager(new GridLayoutManager(this,1));
+        binding.recbank.setLayoutManager(new GridLayoutManager(this, 1));
         binding.recbank.setItemViewCacheSize(25);
         binding.recbank.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
         binding.recbank.setDrawingCacheEnabled(true);
@@ -71,27 +72,25 @@ public class BanksActivity extends AppCompatActivity implements Listeners.BackLi
         getBankAccount();
 
 
-
     }
+
     private void getBankAccount() {
         Api.getService(Tags.base_url)
                 .getBanks()
                 .enqueue(new Callback<BankDataModel>() {
                     @Override
                     public void onResponse(Call<BankDataModel> call, Response<BankDataModel> response) {
-                      //  progBar.setVisibility(View.GONE);
-                        if (response.isSuccessful()&&response.body()!=null)
-                        {
+                        //  progBar.setVisibility(View.GONE);
+                        if (response.isSuccessful() && response.body() != null) {
                             bankModelList.addAll(response.body().getData());
                             bankAdapter.notifyDataSetChanged();
-                        }else
-                        {
+                        } else {
                             try {
-                                Log.e("Error",response.code()+"_"+response.errorBody().string());
+                                Log.e("Error", response.code() + "_" + response.errorBody().string());
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
-                            Toast.makeText(BanksActivity.this,getString(R.string.failed), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(BanksActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
                         }
                     }
 
@@ -99,10 +98,9 @@ public class BanksActivity extends AppCompatActivity implements Listeners.BackLi
                     public void onFailure(Call<BankDataModel> call, Throwable t) {
                         try {
 
-                          //  progBar.setVisibility(View.GONE);
+                            //  progBar.setVisibility(View.GONE);
                             Toast.makeText(BanksActivity.this, getString(R.string.something), Toast.LENGTH_LONG).show();
-                        }catch (Exception e)
-                        {
+                        } catch (Exception e) {
                         }
                     }
                 });
@@ -112,7 +110,6 @@ public class BanksActivity extends AppCompatActivity implements Listeners.BackLi
     public void back() {
         finish();
     }
-
 
 
 }

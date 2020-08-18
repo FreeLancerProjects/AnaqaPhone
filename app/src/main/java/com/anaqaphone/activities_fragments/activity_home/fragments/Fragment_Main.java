@@ -112,10 +112,9 @@ public class Fragment_Main extends Fragment {
         binding.nested.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                if(scrollY>oldScrollY&&scrollY>activity.getWindow().getWindowManager().getDefaultDisplay().getHeight()){
+                if (scrollY > oldScrollY && scrollY > activity.getWindow().getWindowManager().getDefaultDisplay().getHeight()) {
                     binding.fab.setVisibility(View.VISIBLE);
-                }
-                else {
+                } else {
                     binding.fab.setVisibility(View.GONE);
 
                 }
@@ -204,68 +203,67 @@ public class Fragment_Main extends Fragment {
     }
 
     public int like_dislike(SingleProductDataModel productModel, int pos, int i) {
-if(userModel!=null){
-        try {
-            Log.e("llll", userModel.getUser().getToken());
+        if (userModel != null) {
+            try {
+                Log.e("llll", userModel.getUser().getToken());
 
-            Api.getService(Tags.base_url)
-                    .addFavoriteProduct(userModel.getUser().getToken(), productModel.getId() + "")
-                    .enqueue(new Callback<ResponseBody>() {
-                        @Override
-                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                            if (response.isSuccessful()) {
-                                if (i == 1) {
-                                    getCategoryProducts();
-                                } else {
-                                    getOffersProducts();
-                                }
-
-                            } else {
-
-
-                                if (response.code() == 500) {
-                                    Toast.makeText(activity, "Server Error", Toast.LENGTH_SHORT).show();
-
-
-                                } else {
-                                    Toast.makeText(activity, getString(R.string.failed), Toast.LENGTH_SHORT).show();
-
-                                    try {
-
-                                        Log.e("error", response.code() + "_" + response.errorBody().string());
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<ResponseBody> call, Throwable t) {
-                            try {
-
-                                if (t.getMessage() != null) {
-                                    Log.e("error", t.getMessage());
-                                    if (t.getMessage().toLowerCase().contains("failed to connect") || t.getMessage().toLowerCase().contains("unable to resolve host")) {
-                                        Toast.makeText(activity, R.string.something, Toast.LENGTH_SHORT).show();
+                Api.getService(Tags.base_url)
+                        .addFavoriteProduct(userModel.getUser().getToken(), productModel.getId() + "")
+                        .enqueue(new Callback<ResponseBody>() {
+                            @Override
+                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                if (response.isSuccessful()) {
+                                    if (i == 1) {
+                                        getCategoryProducts();
                                     } else {
-                                        Toast.makeText(activity, t.getMessage(), Toast.LENGTH_SHORT).show();
+                                        getOffersProducts();
+                                    }
+
+                                } else {
+
+
+                                    if (response.code() == 500) {
+                                        Toast.makeText(activity, "Server Error", Toast.LENGTH_SHORT).show();
+
+
+                                    } else {
+                                        Toast.makeText(activity, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+
+                                        try {
+
+                                            Log.e("error", response.code() + "_" + response.errorBody().string());
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
                                     }
                                 }
-
-                            } catch (Exception e) {
                             }
-                        }
-                    });
-        } catch (Exception e) {
-        }
-        return 1;
-        }
-         else {
-            Common.CreateDialogAlert(activity, getString(R.string.please_sign_in_or_sign_up));
-    return 0;
 
-}
+                            @Override
+                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                try {
+
+                                    if (t.getMessage() != null) {
+                                        Log.e("error", t.getMessage());
+                                        if (t.getMessage().toLowerCase().contains("failed to connect") || t.getMessage().toLowerCase().contains("unable to resolve host")) {
+                                            Toast.makeText(activity, R.string.something, Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Toast.makeText(activity, t.getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+
+                                } catch (Exception e) {
+                                }
+                            }
+                        });
+            } catch (Exception e) {
+            }
+            return 1;
+        } else {
+            Common.CreateDialogAlert(activity, getString(R.string.please_sign_in_or_sign_up));
+            return 0;
+
+        }
     }
 
     public void getOffersProducts() {
@@ -275,7 +273,7 @@ if(userModel!=null){
 
             if (userModel != null) {
                 uid = userModel.getUser().getId();
-                Log.e("token",userModel.getUser().getToken());
+                Log.e("token", userModel.getUser().getToken());
 
             } else {
                 uid = 0;

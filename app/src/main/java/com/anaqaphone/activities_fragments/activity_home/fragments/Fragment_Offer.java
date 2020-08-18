@@ -222,7 +222,7 @@ public class Fragment_Offer extends Fragment {
                 uid = 0;
             }
             Api.getService(Tags.base_url).
-                    getOffersProducts("off", uid, "all", department_id,"yes").
+                    getOffersProducts("off", uid, "all", department_id, "yes").
                     enqueue(new Callback<ProductDataModel>() {
                         @Override
                         public void onResponse(Call<ProductDataModel> call, Response<ProductDataModel> response) {
@@ -234,8 +234,7 @@ public class Fragment_Offer extends Fragment {
                                 offersDataList.addAll(response.body().getData());
                                 if (offersDataList.size() > 0) {
                                     offersAdapter.notifyDataSetChanged();
-                                }
-                                else {
+                                } else {
                                     binding.tvNoData.setVisibility(View.VISIBLE);
 
                                 }
@@ -358,8 +357,7 @@ public class Fragment_Offer extends Fragment {
             }
             return 1;
 
-        }
-        else {
+        } else {
 
             Common.CreateDialogAlert(activity, getString(R.string.please_sign_in_or_sign_up));
             return 0;

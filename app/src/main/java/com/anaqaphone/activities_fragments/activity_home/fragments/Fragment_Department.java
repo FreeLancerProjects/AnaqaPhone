@@ -147,9 +147,9 @@ public class Fragment_Department extends Fragment {
 
                             if (mainDepartmentsList.size() > 0) {
                                 adapter.notifyDataSetChanged();
-                               // binding.tvNoData.setVisibility(View.GONE);
+                                // binding.tvNoData.setVisibility(View.GONE);
                             } else {
-                               // binding.tvNoData.setVisibility(View.VISIBLE);
+                                // binding.tvNoData.setVisibility(View.VISIBLE);
 
                             }
                             getOffersProducts();

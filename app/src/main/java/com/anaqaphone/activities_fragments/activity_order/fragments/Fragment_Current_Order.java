@@ -46,8 +46,8 @@ public class Fragment_Current_Order extends Fragment {
     private List<OrderModel> orderModelList;
     private Preferences preferences;
     private UserModel userModel;
-    private int current_page=1;
-    private boolean isLoading=false;
+    private int current_page = 1;
+    private boolean isLoading = false;
 
     public static Fragment_Current_Order newInstance() {
         return new Fragment_Current_Order();
@@ -56,7 +56,7 @@ public class Fragment_Current_Order extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_current_previous_order,container,false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_current_previous_order, container, false);
         initView();
         return binding.getRoot();
     }
@@ -64,31 +64,29 @@ public class Fragment_Current_Order extends Fragment {
     private void initView() {
         orderModelList = new ArrayList<>();
         activity = (OrderActivity) getActivity();
-        binding.progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity,R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
+        binding.progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity, R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
         manager = new LinearLayoutManager(activity);
         binding.recView.setLayoutManager(manager);
         preferences = Preferences.getInstance();
         userModel = preferences.getUserData(activity);
         binding.recView.setLayoutManager(new LinearLayoutManager(activity));
-        adapter = new OrderAdapter(activity,orderModelList,this);
+        adapter = new OrderAdapter(activity, orderModelList, this);
         binding.recView.setAdapter(adapter);
 
         binding.recView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                if (dy>0)
-                {
+                if (dy > 0) {
                     int total_item = binding.recView.getAdapter().getItemCount();
-                    int last_visible_item = ((LinearLayoutManager)binding.recView.getLayoutManager()).findLastCompletelyVisibleItemPosition();
+                    int last_visible_item = ((LinearLayoutManager) binding.recView.getLayoutManager()).findLastCompletelyVisibleItemPosition();
 
-                    if (total_item>=20&&(total_item-last_visible_item)==5&&!isLoading)
-                    {
+                    if (total_item >= 20 && (total_item - last_visible_item) == 5 && !isLoading) {
 
                         isLoading = true;
-                        int page = current_page+1;
+                        int page = current_page + 1;
                         orderModelList.add(null);
-                        adapter.notifyItemInserted(orderModelList.size()-1);
+                        adapter.notifyItemInserted(orderModelList.size() - 1);
 
                         loadMore(page);
                     }
@@ -100,12 +98,11 @@ public class Fragment_Current_Order extends Fragment {
 
     }
 
-    private void getOrders()
-    {
+    private void getOrders() {
         try {
             current_page = 1;
             Api.getService(Tags.base_url)
-                    .getOrders(userModel.getUser().getToken(),"current","on",current_page,20)
+                    .getOrders(userModel.getUser().getToken(), "current", "on", current_page, 20)
                     .enqueue(new Callback<OrderDataModel>() {
                         @Override
                         public void onResponse(Call<OrderDataModel> call, Response<OrderDataModel> response) {
@@ -163,12 +160,11 @@ public class Fragment_Current_Order extends Fragment {
         }
     }
 
-    private void loadMore(int page)
-    {
+    private void loadMore(int page) {
         try {
 
             Api.getService(Tags.base_url)
-                    .getOrders(userModel.getUser().getToken(),"current","on",page,20)
+                    .getOrders(userModel.getUser().getToken(), "current", "on", page, 20)
                     .enqueue(new Callback<OrderDataModel>() {
                         @Override
                         public void onResponse(Call<OrderDataModel> call, Response<OrderDataModel> response) {
@@ -179,13 +175,13 @@ public class Fragment_Current_Order extends Fragment {
 
                             if (response.isSuccessful() && response.body() != null && response.body().getData() != null) {
 
-                                int oldPos = orderModelList.size()-1;
+                                int oldPos = orderModelList.size() - 1;
 
                                 orderModelList.addAll(response.body().getData());
 
                                 if (response.body().getData().size() > 0) {
                                     current_page = response.body().getMeta().getCurrent_page();
-                                    adapter.notifyItemRangeChanged(oldPos,orderModelList.size()-1);
+                                    adapter.notifyItemRangeChanged(oldPos, orderModelList.size() - 1);
 
                                 }
                             } else {
@@ -237,7 +233,7 @@ public class Fragment_Current_Order extends Fragment {
 
     public void setItemData(OrderModel model) {
         Intent intent = new Intent(activity, OrderDetailsActivity.class);
-        intent.putExtra("data",model);
+        intent.putExtra("data", model);
         startActivity(intent);
     }
 }

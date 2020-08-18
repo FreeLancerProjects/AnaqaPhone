@@ -69,7 +69,7 @@ public class CategoryProduct_Adapter extends RecyclerView.Adapter<RecyclerView.V
         EventHolder myHolder = (EventHolder) eventHohlder;
         myHolder.binding.tvOldprice.setPaintFlags(myHolder.binding.tvOldprice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         myHolder.binding.setModel(list.get(position));
-        if(list.get(position).getStock()<=0){
+        if (list.get(position).getStock() <= 0) {
             myHolder.binding.llAddToCart.setVisibility(View.GONE);
             myHolder.binding.tvStock.setVisibility(View.VISIBLE);
             myHolder.binding.ll.setVisibility(View.GONE);
@@ -101,33 +101,31 @@ public class CategoryProduct_Adapter extends RecyclerView.Adapter<RecyclerView.V
             if (fragment instanceof Fragment_Main) {
 
                 Fragment_Main fragment_main = (Fragment_Main) fragment;
-if(Preferences.getInstance().getUserData(context)!=null){
-                if (myHolder.binding.checkbox.isChecked()) {
-                   int data= fragment_main.like_dislike( list.get(myHolder.getAdapterPosition()), myHolder.getAdapterPosition(),1);
+                if (Preferences.getInstance().getUserData(context) != null) {
+                    if (myHolder.binding.checkbox.isChecked()) {
+                        int data = fragment_main.like_dislike(list.get(myHolder.getAdapterPosition()), myHolder.getAdapterPosition(), 1);
 
 
+                    } else {
+                        int data = fragment_main.like_dislike(list.get(myHolder.getAdapterPosition()), myHolder.getAdapterPosition(), 1);
+
+                    }
                 } else {
-                  int data=  fragment_main.like_dislike( list.get(myHolder.getAdapterPosition()), myHolder.getAdapterPosition(),1);
+                    myHolder.binding.checkbox.setChecked(false);
+                    Common.CreateDialogAlert(context, context.getResources().
+                            getString(R.string.please_sign_in_or_sign_up));
+                    notifyDataSetChanged();
+
 
                 }
-            }
-else {
-    myHolder.binding.checkbox.setChecked(false);
-    Common.CreateDialogAlert(context, context.getResources().
-            getString(R.string.please_sign_in_or_sign_up));
-    notifyDataSetChanged();
-
-
-
-
-}
 
             }
 
 
         });
-        if(Preferences.getInstance().getUserData(context)==null){
-            myHolder.binding.checkbox.setChecked(false);}
+        if (Preferences.getInstance().getUserData(context) == null) {
+            myHolder.binding.checkbox.setChecked(false);
+        }
 
 
     }

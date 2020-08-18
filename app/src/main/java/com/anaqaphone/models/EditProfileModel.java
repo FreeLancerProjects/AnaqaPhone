@@ -22,56 +22,39 @@ public class EditProfileModel extends BaseObservable {
     public ObservableField<String> error_email = new ObservableField<>();
 
 
+    public boolean isDataValid(Context context) {
 
-    public boolean isDataValid(Context context)
-    {
-
-        Log.e("name",name);
-        Log.e("email",email);
+        Log.e("name", name);
+        Log.e("email", email);
 
 
-
-        if (!TextUtils.isEmpty(name)&&
-                !TextUtils.isEmpty(email)&&
+        if (!TextUtils.isEmpty(name) &&
+                !TextUtils.isEmpty(email) &&
                 Patterns.EMAIL_ADDRESS.matcher(email).matches()
-        )
-        {
-
+        ) {
 
 
             error_name.set(null);
             error_email.set(null);
 
             return true;
-        }else
-        {
+        } else {
 
 
-            if (name.isEmpty())
-            {
+            if (name.isEmpty()) {
                 error_name.set(context.getString(R.string.field_required));
-            }else
-            {
+            } else {
                 error_name.set(null);
             }
 
-            if (email.isEmpty())
-            {
+            if (email.isEmpty()) {
                 error_email.set(context.getString(R.string.field_required));
 
-            }else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches())
-            {
+            } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                 error_email.set(context.getString(R.string.inv_email));
-            }
-            else
-            {
+            } else {
                 error_email.set(null);
             }
-
-
-
-
-
 
 
             return false;
@@ -84,9 +67,7 @@ public class EditProfileModel extends BaseObservable {
         notifyPropertyChanged(BR.name);
         this.email = "";
         notifyPropertyChanged(BR.email);
-        this.image_url ="";
-
-
+        this.image_url = "";
 
 
     }
@@ -122,10 +103,6 @@ public class EditProfileModel extends BaseObservable {
         notifyPropertyChanged(BR.email);
 
     }
-
-
-
-
 
 
 }

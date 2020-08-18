@@ -56,7 +56,7 @@ public class ProductDetialsSlidingImage_Adapter extends PagerAdapter {
         imageLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.e("l;lll",";llll");
+                Log.e("l;lll", ";llll");
                 if (context instanceof ProductDetailsActivity) {
                     ProductDetailsActivity productDetailsActivity = (ProductDetailsActivity) context;
                     productDetailsActivity.show();

@@ -33,8 +33,6 @@ public class Preferences {
     }
 
 
-
-
     public void create_update_userdata(Context context, UserModel userModel) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("user", Context.MODE_PRIVATE);
         Gson gson = new Gson();
@@ -53,6 +51,7 @@ public class Preferences {
         UserModel userModel = gson.fromJson(user_data, UserModel.class);
         return userModel;
     }
+
     private void create_update_session(Context context, String session) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("session", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -78,8 +77,7 @@ public class Preferences {
     }
 
 
-    public void create_update_userData(Context context , UserModel userModel)
-    {
+    public void create_update_userData(Context context, UserModel userModel) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("user", Context.MODE_PRIVATE);
         Gson gson = new Gson();
         String user_data = gson.toJson(userModel);

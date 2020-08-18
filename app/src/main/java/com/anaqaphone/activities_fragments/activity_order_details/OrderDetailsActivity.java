@@ -69,8 +69,8 @@ public class OrderDetailsActivity extends AppCompatActivity implements Listeners
 
 
     private void initView() {
-        preferences=Preferences.getInstance();
-        userModel=preferences.getUserData(this);
+        preferences = Preferences.getInstance();
+        userModel = preferences.getUserData(this);
         orderDetailsList = new ArrayList<>();
         Paper.init(this);
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());

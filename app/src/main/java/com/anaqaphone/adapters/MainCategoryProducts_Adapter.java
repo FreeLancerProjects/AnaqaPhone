@@ -55,7 +55,7 @@ public class MainCategoryProducts_Adapter extends RecyclerView.Adapter<RecyclerV
 
         EventHolder eventHolder = (EventHolder) holder;
         eventHolder.binding.setModel(list.get(position));
-        if(list.get(position).getProducts()==null||list.get(position).getProducts().size()==0){
+        if (list.get(position).getProducts() == null || list.get(position).getProducts().size() == 0) {
             eventHolder.itemView.setVisibility(View.GONE);
         }
         CategoryProduct_Adapter explore_product_adapter = new CategoryProduct_Adapter(list.get(position).getProducts(), context, fragment);

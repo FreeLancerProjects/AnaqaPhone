@@ -51,5 +51,6 @@ public class CategoryProductDataModel implements Serializable {
 
         public List<SingleProductDataModel> getProducts() {
             return products;
-        }}
+        }
     }
+}

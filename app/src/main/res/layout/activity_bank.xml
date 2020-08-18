@@ -4,71 +4,72 @@
     xmlns:tools="http://schemas.android.com/tools"
 
     >
+
     <data>
+
         <variable
             name="backListener"
-            type="com.anaqaphone.interfaces.Listeners.BackListener"
-            />
+            type="com.anaqaphone.interfaces.Listeners.BackListener" />
+
         <variable
             name="lang"
             type="String" />
 
 
     </data>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:background="@color/gray1"
-        >
+        android:orientation="vertical">
+
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             android:background="@color/second"
             app:contentInsetEnd="0dp"
-            app:contentInsetStart="0dp"
             app:contentInsetLeft="0dp"
             app:contentInsetRight="0dp"
-            >
+            app:contentInsetStart="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:onClick="@{()->backListener.back()}"
-                >
+                android:orientation="horizontal">
+
                 <ImageView
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-                    android:src="@drawable/ic_left_arrow"
-                    android:tint="@color/white"
-                    android:padding="8dp"
                     android:clickable="false"
                     android:longClickable="false"
+                    android:padding="8dp"
                     android:rotation='@{lang.equals("ar")?180:0}'
-                    />
+                    android:src="@drawable/ic_left_arrow"
+                    android:tint="@color/white" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
-                    android:textColor="@color/white"
                     android:clickable="false"
                     android:longClickable="false"
-                    android:textSize="16sp"
                     android:text="@string/banks"
-                    />
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
             </LinearLayout>
         </androidx.appcompat.widget.Toolbar>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recbank"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-           ></androidx.recyclerview.widget.RecyclerView>
-      </LinearLayout>
+            android:layout_height="wrap_content"></androidx.recyclerview.widget.RecyclerView>
+    </LinearLayout>
 </layout>

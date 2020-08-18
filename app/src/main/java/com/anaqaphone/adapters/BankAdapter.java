@@ -32,7 +32,7 @@ public class BankAdapter extends RecyclerView.Adapter<BankAdapter.MyHolder> {
     @NonNull
     @Override
     public MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        BankRowBinding bankRowBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.bank_row,parent,false);
+        BankRowBinding bankRowBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.bank_row, parent, false);
         return new MyHolder(bankRowBinding);
     }
 
@@ -55,7 +55,6 @@ public class BankAdapter extends RecyclerView.Adapter<BankAdapter.MyHolder> {
         public MyHolder(BankRowBinding bankRowBinding) {
             super(bankRowBinding.getRoot());
             this.bankRowBinding = bankRowBinding;
-
 
 
         }

@@ -24,57 +24,50 @@ public class SignUpModel extends BaseObservable {
     public ObservableField<String> error_password = new ObservableField<>();
 
 
-    public boolean isDataValid(Context context)
-    {
-        if (!name.trim().isEmpty()&&
-                !email.trim().isEmpty()&&
-                Patterns.EMAIL_ADDRESS.matcher(email.trim()).matches()&&
+    public boolean isDataValid(Context context) {
+        if (!name.trim().isEmpty() &&
+                !email.trim().isEmpty() &&
+                Patterns.EMAIL_ADDRESS.matcher(email.trim()).matches() &&
                 isTermsAccepted
-        ){
+        ) {
             error_name.set(null);
             error_email.set(null);
             error_password.set(null);
 
             return true;
-        }else
-            {
-                if (name.trim().isEmpty())
-                {
-                    error_name.set(context.getString(R.string.field_required));
+        } else {
+            if (name.trim().isEmpty()) {
+                error_name.set(context.getString(R.string.field_required));
 
-                }else
-                    {
-                        error_name.set(null);
+            } else {
+                error_name.set(null);
 
-                    }
-
-                if (email.trim().isEmpty())
-                {
-                    error_email.set(context.getString(R.string.field_required));
-
-                }else if (!Patterns.EMAIL_ADDRESS.matcher(email.trim()).matches())
-                {
-                    error_email.set(context.getString(R.string.inv_email));
-
-                }else {
-                    error_email.set(null);
-
-                }
-
-
-                if (!isTermsAccepted)
-                {
-                    Toast.makeText(context, R.string.cannot_signup, Toast.LENGTH_SHORT).show();
-                }
-                return false;
             }
+
+            if (email.trim().isEmpty()) {
+                error_email.set(context.getString(R.string.field_required));
+
+            } else if (!Patterns.EMAIL_ADDRESS.matcher(email.trim()).matches()) {
+                error_email.set(context.getString(R.string.inv_email));
+
+            } else {
+                error_email.set(null);
+
+            }
+
+
+            if (!isTermsAccepted) {
+                Toast.makeText(context, R.string.cannot_signup, Toast.LENGTH_SHORT).show();
+            }
+            return false;
+        }
     }
+
     public SignUpModel() {
         setName("");
         setEmail("");
         isTermsAccepted = false;
     }
-
 
 
     @Bindable
@@ -121,7 +114,6 @@ public class SignUpModel extends BaseObservable {
     public void setImage_url(String image_url) {
         this.image_url = image_url;
     }
-
 
 
     public boolean isTermsAccepted() {

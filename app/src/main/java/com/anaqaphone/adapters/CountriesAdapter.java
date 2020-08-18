@@ -22,6 +22,7 @@ public class CountriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private Context context;
     private LayoutInflater inflater;
     private LoginActivity activity;
+
     public CountriesAdapter(List<CountryModel> list, Context context) {
         this.list = list;
         this.context = context;
@@ -68,8 +69,6 @@ public class CountriesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         }
     }
-
-
 
 
 }

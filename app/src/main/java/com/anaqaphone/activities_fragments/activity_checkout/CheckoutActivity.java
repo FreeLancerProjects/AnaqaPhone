@@ -241,11 +241,10 @@ public class CheckoutActivity extends AppCompatActivity implements Listeners.Bac
 
     public void createOrder() {
         addOrderModel.setTotal_price(total_cost);
-        if(isarrive){
+        if (isarrive) {
             addOrderModel.setDelivery_pay(arrive);
             addOrderModel.setDelivery("yes");
-        }
-        else {
+        } else {
             addOrderModel.setDelivery_pay(0);
 
             addOrderModel.setDelivery("no");
@@ -277,8 +276,7 @@ public class CheckoutActivity extends AppCompatActivity implements Listeners.Bac
                                         intent.putExtra("data", orderModel);
                                         setResult(RESULT_OK, intent);
                                         finish();
-                                    }
-                                    else {
+                                    } else {
                                         Intent intent = new Intent(CheckoutActivity.this, TelrActivity.class);
                                         intent.putExtra("data", response.body().getTler());
                                         startActivityForResult(intent, 200);
@@ -353,7 +351,7 @@ public class CheckoutActivity extends AppCompatActivity implements Listeners.Bac
             fragment.onActivityResult(requestCode, resultCode, data);
         }
 
-        if (requestCode == 100||requestCode==200) {
+        if (requestCode == 100 || requestCode == 200) {
             if (resultCode == RESULT_OK) {
                 Toast.makeText(CheckoutActivity.this, getString(R.string.suc), Toast.LENGTH_SHORT).show();
                 Intent intent = getIntent();
@@ -361,7 +359,7 @@ public class CheckoutActivity extends AppCompatActivity implements Listeners.Bac
                 setResult(RESULT_OK, intent);
                 finish();
             } else if (resultCode == RESULT_CANCELED) {
-                Toast.makeText(this,getString(R.string.cancel) , Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.cancel), Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -374,6 +372,6 @@ public class CheckoutActivity extends AppCompatActivity implements Listeners.Bac
             fragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
- 
+
 
 }

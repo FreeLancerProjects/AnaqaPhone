@@ -24,7 +24,7 @@ import java.util.Locale;
 
 import io.paperdb.Paper;
 
-public class OrderActivity extends AppCompatActivity implements Listeners.BackListener{
+public class OrderActivity extends AppCompatActivity implements Listeners.BackListener {
     private ActivityOrderBinding binding;
     private String lang;
     private ViewPagerOrderAdapter adapter;
@@ -34,8 +34,9 @@ public class OrderActivity extends AppCompatActivity implements Listeners.BackLi
     @Override
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
-        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang","ar")));
+        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang", "ar")));
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,10 +45,7 @@ public class OrderActivity extends AppCompatActivity implements Listeners.BackLi
     }
 
 
-
-
-    private void initView()
-    {
+    private void initView() {
         Paper.init(this);
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
         binding.setBackListener(this);
@@ -66,8 +64,6 @@ public class OrderActivity extends AppCompatActivity implements Listeners.BackLi
         adapter.addFragments(fragmentList);
         adapter.addTitles(title);
         binding.pager.setAdapter(adapter);
-
-
 
 
     }

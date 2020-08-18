@@ -285,7 +285,7 @@ public class ProductDetailsActivity extends AppCompatActivity implements Listene
 
     public void show() {
         Intent intent = new Intent(this, ImagesActivity.class);
-        intent.putExtra("data",singleProductDataModel);
+        intent.putExtra("data", singleProductDataModel);
         startActivityForResult(intent, 100);
     }
 }

@@ -4,37 +4,40 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="model"
             type="com.anaqaphone.models.OrderModel.OrdersDetails" />
-        <import type="android.view.View"/>
+
+        <import type="android.view.View" />
     </data>
+
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="20dp"
-        app:contentPadding="5dp"
-        app:cardElevation="3dp"
         android:layout_margin="3dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="3dp"
+        app:contentPadding="5dp"
 
         >
+
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
+            android:layout_height="wrap_content">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
+
                 <ImageView
+                    image="@{model.product_info.image}"
                     android:layout_width="50dp"
                     android:layout_height="70dp"
-                    android:layout_marginTop="8dp"
-                    image="@{model.product_info.image}"
-                    />
+                    android:layout_marginTop="8dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -51,8 +54,9 @@
                     android:text="@{model.product_info.title}"
                     android:textColor="@color/gray3"
                     android:textSize="13sp" />
+
                 <com.iarcuschin.simpleratingbar.SimpleRatingBar
-                   android:id="@+id/simplarate"
+                    android:id="@+id/simplarate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
@@ -74,58 +78,58 @@
                     android:layout_marginBottom="10dp"
 
                     >
+
                     <LinearLayout
                         android:id="@+id/ll"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
                         android:layout_marginStart="5dp"
                         android:layout_marginEnd="5dp"
                         android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
 
                         >
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="13sp"
-                            android:textColor="@color/colorPrimary"
-                            android:singleLine="true"
                             android:clickable="false"
                             android:longClickable="false"
+                            android:singleLine="true"
                             android:text='@{model.product_info.price+" "+@string/sar}'
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="13sp"
 
                             />
                     </LinearLayout>
+
                     <TextView
                         android:id="@+id/tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="@string/amount"
                         android:textColor="@color/black"
                         android:textSize="12sp"
-                        app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        android:text="@string/amount"
-                        />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/tvAmount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:textSize="12sp"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/tv"
-                        android:text='@{String.valueOf(model.amount)}'
-
                         android:layout_marginStart="5dp"
                         android:layout_marginEnd="5dp"
-                        />
+                        android:text='@{String.valueOf(model.amount)}'
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+
+                        app:layout_constraintStart_toEndOf="@id/tv"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -8,8 +8,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
+
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.anaqaphone.R;
 import com.anaqaphone.models.Slider_Model;
@@ -23,6 +25,7 @@ public class SlidingImage_Adapter extends PagerAdapter {
     List<Slider_Model.Data> IMAGES;
     private LayoutInflater inflater;
     Context context;
+
     public SlidingImage_Adapter(Context context, List<Slider_Model.Data> IMAGES) {
         this.context = context;
         this.IMAGES = IMAGES;

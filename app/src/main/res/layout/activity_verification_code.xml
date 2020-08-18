@@ -33,14 +33,13 @@
                     android:id="@+id/tvTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:textColor="@color/gray8"
                     android:layout_marginTop="150dp"
-                    android:textSize="18sp"
                     android:text="@string/enter_verification_code"
-                    />
+                    android:textColor="@color/gray8"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <EditText
                     android:id="@+id/edtCode"
@@ -64,14 +63,13 @@
                     />
 
 
-
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginBottom="50dp"
                     android:layout_marginStart="10dp"
+                    android:layout_marginTop="30dp"
                     android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="50dp"
                     app:cardBackgroundColor="@color/colorPrimary"
                     app:cardCornerRadius="25dp"
                     app:cardElevation="3dp"
@@ -94,7 +92,6 @@
                         />
 
                 </androidx.cardview.widget.CardView>
-
 
 
                 <androidx.constraintlayout.widget.ConstraintLayout

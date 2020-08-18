@@ -46,18 +46,18 @@ public class ProductDetailsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
         MyHolder myHolder = (MyHolder) holder;
-        OrderModel.OrdersDetails  model = list.get(position);
+        OrderModel.OrdersDetails model = list.get(position);
 
         myHolder.binding.setModel(model);
-myHolder.binding.simplarate.setOnRatingBarChangeListener(new SimpleRatingBar.OnRatingBarChangeListener() {
-    @Override
-    public void onRatingChanged(SimpleRatingBar simpleRatingBar, float rating, boolean fromUser) {
-        if(context instanceof OrderDetailsActivity){
-            OrderDetailsActivity productDetailsActivity=(OrderDetailsActivity)context;
-            productDetailsActivity.makerate(list.get(myHolder.getLayoutPosition()).getProduct_id(),rating);
-        }
-    }
-});
+        myHolder.binding.simplarate.setOnRatingBarChangeListener(new SimpleRatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(SimpleRatingBar simpleRatingBar, float rating, boolean fromUser) {
+                if (context instanceof OrderDetailsActivity) {
+                    OrderDetailsActivity productDetailsActivity = (OrderDetailsActivity) context;
+                    productDetailsActivity.makerate(list.get(myHolder.getLayoutPosition()).getProduct_id(), rating);
+                }
+            }
+        });
 
 
     }

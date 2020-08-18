@@ -17,12 +17,12 @@ public class Time_Ago {
 
     public static String getTimeAgo(long time, Context context) {
         long now = Calendar.getInstance().getTimeInMillis();
-        if (time <= 0||time>now) {
+        if (time <= 0 || time > now) {
             return "";
         }
 
 
-        long diff =now-time;
+        long diff = now - time;
 
         if (diff < minute) {
             return context.getString(R.string.just_now);

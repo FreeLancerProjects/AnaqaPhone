@@ -31,15 +31,16 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
-        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang","ar")));
+        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang", "ar")));
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_splash);
         preferences = Preferences.getInstance();
 
-        String path = "android.resource://"+getPackageName()+"/"+R.raw.splash_vid;
+        String path = "android.resource://" + getPackageName() + "/" + R.raw.splash_vid;
         binding.videoView.setVideoPath(path);
         binding.videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
@@ -54,13 +55,11 @@ public class SplashActivity extends AppCompatActivity {
 
                 String session = preferences.getSession(SplashActivity.this);
 
-                if (session.equals(Tags.session_login))
-                {
+                if (session.equals(Tags.session_login)) {
                     Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
                     startActivity(intent);
                     finish();
-                }else
-                {
+                } else {
                     Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
                     startActivity(intent);
                     finish();

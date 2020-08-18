@@ -43,7 +43,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SearchActivity extends AppCompatActivity implements Listeners.BackListener{
+public class SearchActivity extends AppCompatActivity implements Listeners.BackListener {
     private ActivitySearchBinding binding;
     private String lang;
     private List<SingleProductDataModel> offersDataList;
@@ -55,14 +55,15 @@ public class SearchActivity extends AppCompatActivity implements Listeners.BackL
     private int current_page = 1;
     private LinearLayoutManager manager;
     private boolean isFavoriteChange = false;
-    private int square = 1,list=2;
-    private int displayType=square;
+    private int square = 1, list = 2;
+    private int displayType = square;
 
     @Override
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
-        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang","ar")));
+        super.attachBaseContext(Language.updateResources(newBase, Paper.book().read("lang", "ar")));
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,9 +74,7 @@ public class SearchActivity extends AppCompatActivity implements Listeners.BackL
     }
 
 
-
-    private void initView()
-    {
+    private void initView() {
         offersDataList = new ArrayList<>();
         Paper.init(this);
         lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
@@ -84,7 +83,7 @@ public class SearchActivity extends AppCompatActivity implements Listeners.BackL
         binding.progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(this, R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
 
         //productModelList = new ArrayList<>();
-        manager = new GridLayoutManager(this,2);
+        manager = new GridLayoutManager(this, 2);
         binding.recView.setLayoutManager(manager);
         offersAdapter = new OffersAdapter(offersDataList, this, null, displayType);
         binding.recView.setAdapter(offersAdapter);
@@ -131,16 +130,14 @@ public class SearchActivity extends AppCompatActivity implements Listeners.BackL
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (editable.toString().length()>0)
-                {
+                if (editable.toString().length() > 0) {
                     query = editable.toString();
 
                     search();
                     binding.progBar.setVisibility(View.GONE);
                     binding.recView.setVisibility(View.VISIBLE);
-                }else
-                {
-                    query ="";
+                } else {
+                    query = "";
                     //productModelList.clear();
                     //searchAdapter.notifyDataSetChanged();
 
@@ -164,7 +161,6 @@ public class SearchActivity extends AppCompatActivity implements Listeners.BackL
 //        });
 
     }
-
 
 
     private void loadMore(int page) {
@@ -240,6 +236,7 @@ public class SearchActivity extends AppCompatActivity implements Listeners.BackL
 
         }*/
     }
+
     public void search() {
         offersDataList.clear();
         offersAdapter.notifyDataSetChanged();
@@ -267,8 +264,7 @@ public class SearchActivity extends AppCompatActivity implements Listeners.BackL
                                 offersDataList.addAll(response.body().getData());
                                 if (offersDataList.size() > 0) {
                                     offersAdapter.notifyDataSetChanged();
-                                }
-                                else {
+                                } else {
                                     binding.tvNoData.setVisibility(View.VISIBLE);
 
                                 }
@@ -323,12 +319,9 @@ public class SearchActivity extends AppCompatActivity implements Listeners.BackL
     }
 
 
-
-
     @Override
     public void back() {
-        if (isFavoriteChange)
-        {
+        if (isFavoriteChange) {
             setResult(RESULT_OK);
         }
         finish();
@@ -344,8 +337,7 @@ public class SearchActivity extends AppCompatActivity implements Listeners.BackL
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode==100&&resultCode==RESULT_OK)
-        {
+        if (requestCode == 100 && resultCode == RESULT_OK) {
             isFavoriteChange = true;
         }
     }
@@ -356,6 +348,7 @@ public class SearchActivity extends AppCompatActivity implements Listeners.BackL
         intent.putExtra("product_id", model.getId());
         startActivityForResult(intent, 100);
     }
+
     public int like_dislike(SingleProductDataModel productModel, int pos) {
         if (userModel != null) {
             try {
@@ -409,8 +402,7 @@ public class SearchActivity extends AppCompatActivity implements Listeners.BackL
             }
             return 1;
 
-        }
-        else {
+        } else {
 
             Common.CreateDialogAlert(SearchActivity.this, getString(R.string.please_sign_in_or_sign_up));
             return 0;

@@ -52,7 +52,7 @@ public class Common {
 
     }
 
-    public static void CreateDialogAlert(Context context,String msg) {
+    public static void CreateDialogAlert(Context context, String msg) {
         final AlertDialog dialog = new AlertDialog.Builder(context)
                 .create();
 
@@ -64,8 +64,8 @@ public class Common {
                                                  public void onClick(View v) {
 
                                                      dialog.dismiss();
-                                                     if(msg.equals(context.getResources().getString(R.string.please_sign_in_or_sign_up))){
-                                                         Intent intent=new Intent(context, LoginActivity.class);
+                                                     if (msg.equals(context.getResources().getString(R.string.please_sign_in_or_sign_up))) {
+                                                         Intent intent = new Intent(context, LoginActivity.class);
                                                          context.startActivity(intent);
                                                          ((AppCompatActivity) context).finish();
                                                      }
@@ -229,9 +229,9 @@ public class Common {
 
 
         String ext = file.getName().substring(file.getName().lastIndexOf("."));
-        Log.e("ext","_"+ext);
+        Log.e("ext", "_" + ext);
 
-        MultipartBody.Part part = MultipartBody.Part.createFormData(partName, System.currentTimeMillis()+ext, requestBody);
+        MultipartBody.Part part = MultipartBody.Part.createFormData(partName, System.currentTimeMillis() + ext, requestBody);
         return part;
 
     }

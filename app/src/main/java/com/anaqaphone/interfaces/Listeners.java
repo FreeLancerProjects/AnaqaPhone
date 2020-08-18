@@ -1,66 +1,84 @@
 package com.anaqaphone.interfaces;
+
 public interface Listeners {
-    interface BackListener
-    {
+    interface BackListener {
         void back();
     }
-    interface LoginListener{
+
+    interface LoginListener {
         void validate();
+
         void showCountryDialog();
     }
 
-    interface SignUpListener{
+    interface SignUpListener {
 
         void openSheet();
+
         void closeSheet();
+
         void checkDataValid();
+
         void checkReadPermission();
+
         void checkCameraPermission();
     }
 
-    interface SettingActions
-    {
+    interface SettingActions {
         void order();
+
         void charge();
+
         void returns();
+
         void terms();
+
         void aboutApp();
+
         void logout();
+
         void favorite();
+
         void bankAccount();
+
         void share();
+
         void rateApp();
+
         void arLang();
+
         void enLang();
+
         void profile();
+
         void whatsapp();
 
 
     }
 
 
-    interface PaymentTypeAction
-    {
+    interface PaymentTypeAction {
         void onCredit();
+
         void onPaypal();
+
         void onCash();
+
         void onNext();
+
         void onPrevious();
     }
 
 
-    interface NextPreviousAction
-    {
+    interface NextPreviousAction {
         void onNext();
+
         void onPrevious();
     }
-    interface UpdateProfileListener
-    {
+
+    interface UpdateProfileListener {
         void updateProfile();
     }
-
-
-
 
 
 }

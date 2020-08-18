@@ -22,7 +22,6 @@ public class SettingModel implements Serializable {
     }
 
 
-
     public static class Data implements Serializable {
         private String termis_condition;
         private String about_app;
@@ -34,6 +33,7 @@ public class SettingModel implements Serializable {
         private double delivery_value;
         private double tax;
         private double pay_when_recieving;
+
         public String getTermis_condition() {
             return termis_condition;
         }
@@ -62,6 +62,7 @@ public class SettingModel implements Serializable {
         public String getOffer_muted() {
             return offer_muted;
         }
+
         public double getDelivery_value() {
             return delivery_value;
         }

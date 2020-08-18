@@ -50,28 +50,29 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.Cart_Holder> {
         holder.BindData(model);
 
         holder.imgIncrease.setOnClickListener(v -> {
-            ItemCartModel model2 = itemCartModelList.get(holder.getAdapterPosition());
-            int count = model2.getAmount() + 1;
-            holder.tvAmount.setText(String.valueOf(count));
-            model2.setAmount(count);
-            itemCartModelList.set(holder.getAdapterPosition(), model2);
-            fragment_cart.increase_decrease(model2, holder.getAdapterPosition());
-            notifyItemChanged(holder.getAdapterPosition());
-        }
+                    ItemCartModel model2 = itemCartModelList.get(holder.getAdapterPosition());
+                    int count = model2.getAmount() + 1;
+                    holder.tvAmount.setText(String.valueOf(count));
+                    model2.setAmount(count);
+                    itemCartModelList.set(holder.getAdapterPosition(), model2);
+                    fragment_cart.increase_decrease(model2, holder.getAdapterPosition());
+                    notifyItemChanged(holder.getAdapterPosition());
+                }
 
         );
         holder.imgDecrease.setOnClickListener(v -> {
-            ItemCartModel model2 = itemCartModelList.get(holder.getAdapterPosition());
-            int count = model2.getAmount();
-            if (count > 1) {
-                count = count - 1;
-                model2.setAmount(count);
-                holder.tvAmount.setText(String.valueOf(count));
-                itemCartModelList.set(holder.getAdapterPosition(), model2);
-                fragment_cart.increase_decrease(model2, holder.getAdapterPosition());
-                notifyItemChanged(holder.getAdapterPosition());            }
+                    ItemCartModel model2 = itemCartModelList.get(holder.getAdapterPosition());
+                    int count = model2.getAmount();
+                    if (count > 1) {
+                        count = count - 1;
+                        model2.setAmount(count);
+                        holder.tvAmount.setText(String.valueOf(count));
+                        itemCartModelList.set(holder.getAdapterPosition(), model2);
+                        fragment_cart.increase_decrease(model2, holder.getAdapterPosition());
+                        notifyItemChanged(holder.getAdapterPosition());
+                    }
 
-        }
+                }
 
         );
 

@@ -44,7 +44,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class EditProfileActivity extends AppCompatActivity implements Listeners.BackListener , Listeners.UpdateProfileListener {
+public class EditProfileActivity extends AppCompatActivity implements Listeners.BackListener, Listeners.UpdateProfileListener {
     private ActivityEditProfileBinding binding;
     private String lang;
     private EditProfileModel editProfileModel;
@@ -88,8 +88,7 @@ public class EditProfileActivity extends AppCompatActivity implements Listeners.
     }
 
 
-    private void updateUI()
-    {
+    private void updateUI() {
         binding.edtName.setText(userModel.getUser().getName());
         binding.edtEmail.setText(userModel.getUser().getEmail());
 
@@ -97,18 +96,14 @@ public class EditProfileActivity extends AppCompatActivity implements Listeners.
         editProfileModel.setEmail(userModel.getUser().getEmail());
 
 
-        if (userModel.getUser().getLogo()!=null&&!userModel.getUser().getLogo().isEmpty()&&!userModel.getUser().getLogo().equals("0"))
-        {
+        if (userModel.getUser().getLogo() != null && !userModel.getUser().getLogo().isEmpty() && !userModel.getUser().getLogo().equals("0")) {
             binding.iconUpload.setVisibility(View.GONE);
-            Picasso.get().load(Uri.parse(Tags.IMAGE_URL+userModel.getUser().getLogo())).fit().into(binding.image);
+            Picasso.get().load(Uri.parse(Tags.IMAGE_URL + userModel.getUser().getLogo())).fit().into(binding.image);
 
         }
 
 
     }
-
-
-
 
 
     private void checkCameraPermission() {
@@ -142,8 +137,7 @@ public class EditProfileActivity extends AppCompatActivity implements Listeners.
             if (isGranted) {
                 selectImage();
 
-            }
-            else{
+            } else {
                 Toast.makeText(this, "access images denied", Toast.LENGTH_SHORT).show();
             }
 
@@ -164,7 +158,6 @@ public class EditProfileActivity extends AppCompatActivity implements Listeners.
     }
 
 
-
     private Uri getUriFromBitmap(Bitmap bitmap) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
@@ -172,25 +165,20 @@ public class EditProfileActivity extends AppCompatActivity implements Listeners.
     }
 
 
-
     @Override
     public void updateProfile() {
 
-        if (editProfileModel.isDataValid(this))
-        {
-            if(uri!=null)
-            {
+        if (editProfileModel.isDataValid(this)) {
+            if (uri != null) {
                 updateWithImage();
-            }else
-            {
+            } else {
                 updateWithoutImage();
             }
         }
     }
 
 
-    private void updateWithoutImage()
-    {
+    private void updateWithoutImage() {
 
         final ProgressDialog dialog = Common.createProgressDialog(this, getString(R.string.wait));
         dialog.setCancelable(false);
@@ -203,17 +191,16 @@ public class EditProfileActivity extends AppCompatActivity implements Listeners.
 
         try {
             Api.getService(Tags.base_url)
-                    .editClientProfileWithoutImage(userModel.getUser().getToken(),name_part,email_part)
+                    .editClientProfileWithoutImage(userModel.getUser().getToken(), name_part, email_part)
                     .enqueue(new Callback<UserModel>() {
                         @Override
                         public void onResponse(Call<UserModel> call, Response<UserModel> response) {
                             dialog.dismiss();
                             if (response.isSuccessful() && response.body() != null) {
-                                preferences.create_update_userdata(EditProfileActivity.this,response.body());
+                                preferences.create_update_userdata(EditProfileActivity.this, response.body());
                                 Intent intent = getIntent();
-                                if (intent!=null)
-                                {
-                                    setResult(Activity.RESULT_OK,intent);
+                                if (intent != null) {
+                                    setResult(Activity.RESULT_OK, intent);
                                 }
                                 finish();
 
@@ -260,8 +247,8 @@ public class EditProfileActivity extends AppCompatActivity implements Listeners.
 
         }
     }
-    private void updateWithImage()
-    {
+
+    private void updateWithImage() {
 
         final ProgressDialog dialog = Common.createProgressDialog(this, getString(R.string.wait));
         dialog.setCancelable(false);
@@ -270,21 +257,20 @@ public class EditProfileActivity extends AppCompatActivity implements Listeners.
         RequestBody id_part = Common.getRequestBodyText(String.valueOf(userModel.getUser().getId()));
         RequestBody name_part = Common.getRequestBodyText(editProfileModel.getName());
         RequestBody email_part = Common.getRequestBodyText(editProfileModel.getEmail());
-        MultipartBody.Part image_part = Common.getMultiPart(this,uri,"logo");
+        MultipartBody.Part image_part = Common.getMultiPart(this, uri, "logo");
 
         try {
             Api.getService(Tags.base_url)
-                    .editClientProfileWithImage(userModel.getUser().getToken(),name_part,email_part,image_part)
+                    .editClientProfileWithImage(userModel.getUser().getToken(), name_part, email_part, image_part)
                     .enqueue(new Callback<UserModel>() {
                         @Override
                         public void onResponse(Call<UserModel> call, Response<UserModel> response) {
                             dialog.dismiss();
                             if (response.isSuccessful() && response.body() != null) {
-                                preferences.create_update_userdata(EditProfileActivity.this,response.body());
+                                preferences.create_update_userdata(EditProfileActivity.this, response.body());
                                 Intent intent = getIntent();
-                                if (intent!=null)
-                                {
-                                    setResult(Activity.RESULT_OK,intent);
+                                if (intent != null) {
+                                    setResult(Activity.RESULT_OK, intent);
                                 }
                                 finish();
 
