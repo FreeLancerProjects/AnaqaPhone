@@ -3,6 +3,7 @@ package com.anaqaphone.activities_fragments.activity_order.fragments;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.anaqaphone.R;
 import com.anaqaphone.activities_fragments.activity_order.OrderActivity;
@@ -38,7 +40,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Fragment_Previous_Order extends Fragment {
+public class Fragment_Previous_Order extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
 
     private OrderActivity activity;
     private FragmentCurrentPreviousOrderBinding binding;
@@ -73,6 +75,7 @@ public class Fragment_Previous_Order extends Fragment {
         binding.recView.setLayoutManager(new LinearLayoutManager(activity));
         adapter = new OrderAdapter(activity, orderModelList, this);
         binding.recView.setAdapter(adapter);
+        binding.swipeToRefresh.setOnRefreshListener(this);
 
         binding.recView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -236,5 +239,16 @@ public class Fragment_Previous_Order extends Fragment {
         Intent intent = new Intent(activity, OrderDetailsActivity.class);
         intent.putExtra("data", model);
         startActivity(intent);
+    }
+
+    @Override
+    public void onRefresh() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                binding.swipeToRefresh.setRefreshing(false);
+                getOrders();
+            }
+        }, 2000);
     }
 }

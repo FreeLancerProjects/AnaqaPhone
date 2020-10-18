@@ -226,7 +226,6 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
             Picasso.get().load(file).fit().into(binding.image);
             binding.icon.setVisibility(View.GONE);
 
-
         } else if (requestCode == CAMERA_REQ && resultCode == Activity.RESULT_OK && data != null) {
 
             binding.icon.setVisibility(View.GONE);
